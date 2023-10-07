@@ -60,7 +60,7 @@
                             <div class="slds-grid slds-wrap" style="background-color:#F3F0ED;"><!--margin:0px 10px 0px 10px-->
                         <div class="slds-p-right_small slds-col slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
                           <div class="custom-combobox">
-                                <select name="progress" class="custom-select Carouselvaluebottom slds-align_absolute-center" 
+                                <select disabled={item.disable} name="progress" class="custom-select Carouselvaluebottom slds-align_absolute-center" 
                                 onchange={handleChangeSelect} value="25" data-recordid={item.Id} data-id={index}  data-index={index}> <!-- data-id={item.Id} -->
                                   <template for:each={item.loanAmounts} for:index="idx" for:item="curr">
                                     <option  selected={curr.selected} data-idx1={index} data-idx2={idx} key={curr.label} value={curr.label} >${curr.label}</option>
@@ -70,7 +70,7 @@
                         </div>
                         <div class="slds-col slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
                           <template if:false={item.isButtonVisible}> <!-- if:true={addToCartButton} -->
-                      <button class="CarouselAddtocartButton" data-recordid={item.Id} data-id={index} onclick={addToCart} >
+                      <button disabled={item.disable} class="CarouselAddtocartButton" data-recordid={item.Id} data-id={index} onclick={addToCart} >
                                         <!--<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-cart2"
                                         viewBox="0 0 16 16">
                     <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>

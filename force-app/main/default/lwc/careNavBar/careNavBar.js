@@ -2218,12 +2218,16 @@ console.log('2182');
             console.log( eventValues.amountAddedToCart );
             if( eventValues.messageToSend!='NavBar' && eventValues.messageToSend!='Checkout' && 
                 eventValues.messageToSend!='ChangeChampion' && eventValues.messageToSend!='BecomeChampionAddToCart' && 
-                eventValues.messageToSend!='BecomeChampionCurrChange' && eventValues.messageToSend!='BecomeChampionOtherCurrChange' ){
+                eventValues.messageToSend!='BecomeChampionCurrChange' && eventValues.messageToSend!='BecomeChampionOtherCurrChange' 
+                // && eventValues.messageToSend =='AddToCart'
+                ){
                 this.loanidfromparent = eventValues.currentRecordId;
                 this.amounttocart = eventValues.amountAddedToCart;
-    
                 this.startTimer();
                 this.calculateTotalAmount();
+                this.voluntaryDonation = true;
+                this.createDonationTransRecord();
+                localStorage.setItem('isVoluntary', true);
             } else if( eventValues.messageToSend=='Checkout' ){
                 this.carecart = true;
                 var isCC = localStorage.getItem('isCC')

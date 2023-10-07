@@ -147,23 +147,32 @@ export default class CareHomePage_ourLoans extends LightningElement {
                     obj.Button = loan.Loan_Type__c;
                     obj.Loan_Type__c = loan.Loan_Type__c;
                     obj.readMoreLink = this.borrowerUrl + '?loanId='+btoa(loan.Id);
-                    obj.amountFunded = loan.Amount_Funded__c!=undefined?loan.Amount_Funded__c:'';
-                    obj.publishedAmount = loan.Published_Amount_AUD__c!=undefined?'$'+loan.Published_Amount_AUD__c:'';
+                    obj.amountFunded = loan.Amount_Funded__c!=undefined?loan.Amount_Funded__c:0;
+                    obj.publishedAmount = loan.Published_Amount_AUD__c!=undefined?'$'+loan.Published_Amount_AUD__c:'$'+0;
                     obj.Published_Amount_AUD__c = loan.Published_Amount_AUD__c;
                     obj.progress = loan.Funded__c != undefined? 'width:'+(loan.Funded__c >=98 ? 98 : loan.Funded__c)+'%;': 'width:0;';
                     obj.isButtonVisible = false;
+                    obj.disable = false;
                     if(loan.Funded__c > 85){
                         obj.progress+=' background-color:#2a871f;';
+                    }
+                    var pubAmt = loan.Published_Amount_AUD__c == undefined ? 0 : loan.Published_Amount_AUD__c;
+                    var fundAmt =  loan.Amount_Funded__c == undefined?0:loan.Amount_Funded__c;
+                    if( pubAmt == fundAmt ){
+                      obj.disable = true; 
                     }
                     if( cd != undefined ){
                       obj.imageUrl = cd[0].ContentDownloadUrl;
                       obj.style = `background-image: url('${obj.imageUrl}');background-size: cover; background-repeat: no-repeat; background-position: center;`
                     }
-                    obj.selectedAmount = 0;
+                    obj.selectedAmount = 25;
                     var loanAmounts = data.loanAmts != undefined? data.loanAmts.split(';') : [];
                     //console.log('Lo:',loanAmounts);
                     var loanAmtLeftForFunding = loan.Amount_Left_Before_Fully_Funded__c;
                     var LoanAmounts = [];
+                    console.log('AMTLEFT:',loanAmtLeftForFunding);
+                    loanAmtLeftForFunding = loanAmtLeftForFunding== undefined ? pubAmt - fundAmt:loanAmtLeftForFunding;
+
                     if( loanAmtLeftForFunding!=undefined ){
                         var i = 0;
                         while( i< loanAmounts.length ){
@@ -266,11 +275,11 @@ export default class CareHomePage_ourLoans extends LightningElement {
       console.log('before apex call ')
       createTransactionRecord({recordsToInsert: currentPageData})
       .then(result => {
-          console.log('result ', JSON.stringify(result));
-          console.log('currentRecordItem.TransactionId after result ', result[0].Id)
+          //console.log('result ', JSON.stringify(result));
+          //console.log('currentRecordItem.TransactionId after result ', result[0].Id)
           currentRecordItem.TransactionId=result[0].Id;
           currentRecordItem.isButtonVisible = true;
-          console.log('currentRecordItem.TransactionId after result ', currentRecordItem)
+          //console.log('currentRecordItem.TransactionId after result ', currentRecordItem)
   
           if(result[0].Id.length >=15 || result[0].Id.length>=18){
               console.log('currentRecordItem ', currentRecordItem);
@@ -279,8 +288,8 @@ export default class CareHomePage_ourLoans extends LightningElement {
                 //console.log('inside if ')
                 var amt = currentRecordItem.amountFunded;
                 currentRecordItem.amountFunded = Number(amt)+ Number(currentRecordItem.selectedAmount);
-                console.log('-->',currentRecordItem.amountFunded, amt);
-                console.log('-->',currentRecordItem.Published_Amount_AUD__c);
+                //console.log('-->',currentRecordItem.amountFunded, amt);
+                //console.log('-->',currentRecordItem.Published_Amount_AUD__c);
                 var per = (Number(currentRecordItem.selectedAmount) / Number(currentRecordItem.Published_Amount_AUD__c)) * 100;
                 console.log('Per:',per);
                 currentRecordItem.progress = per;
