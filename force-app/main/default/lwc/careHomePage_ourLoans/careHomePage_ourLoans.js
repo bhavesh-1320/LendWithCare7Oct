@@ -208,7 +208,7 @@ export default class CareHomePage_ourLoans extends LightningElement {
                       } else{
                         obj.progress+=' background-color:#ffd700;';
                       }
-                      obj.amountFunded = Number(loan.Amount_Funded__c) + Number(previousLoans[itemIndex].Funded__c);
+                      obj.amountFunded = Number(fundAmt) + Number(previousLoans[itemIndex].Funded__c);
                       selAmt = Number(previousLoans[itemIndex].Funded__c) || 25;
                     }
                     console.log('ss:',selAmt);
@@ -251,6 +251,8 @@ export default class CareHomePage_ourLoans extends LightningElement {
     };
     publish(this.context, CARTMC, message);
   }
+  errorMessageOnTransaction;
+  errorTransaction=false;
   addToCart(event) {
     try{
       this.disabledButton = true;
@@ -384,15 +386,21 @@ export default class CareHomePage_ourLoans extends LightningElement {
       })
       .catch(error =>{
           console.log('error from transaction record insert ', error)
-          console.log('error.body.pageErrors[0].message ', error.body.pageErrors[0].message)
-              this.errorTransaction = true;
-              this.errorMessageOnTransaction = error.body.pageErrors[0].message;
+          // console.log('error.body.pageErrors[0].message ', error.body.pageErrors[0].message)
+          if( error.body!=undefined && error.body.pageErrors!=undefined && error.body.pageErrors.length > 0 ){
+            this.errorTransaction = true;
+            this.errorMessageOnTransaction = error.body.pageErrors[0].message;
+          }    
           
       })
     } catch( err ){
       console.log(err);
     }
 
+  }
+  closeErrorPopup(){
+    this.errorTransaction = false;
+    this.errorMessageOnTransaction = '';
   }
   checkOutToCart(){
     const message = {

@@ -367,8 +367,8 @@ export default class BecomeChangeChampionBox extends LightningElement {
         }
     }
     handleBecomeAChampion(){
-
-        if( this.selectedCurr < this.minOtherCurrency && this.showCurrInput ){
+        console.log(this.selectedCurr);
+        if( this.selectedCurr == undefined || this.selectedCurr== 0 || (this.selectedCurr < this.minOtherCurrency && this.showCurrInput) ){
             console.log('Error if part ');
             this.showError = true;
         } else{

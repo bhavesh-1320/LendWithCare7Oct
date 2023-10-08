@@ -7,7 +7,7 @@
   
   
       <lightning-layout multiple-rows="true" class="paddingcontainer">
-        <lightning-layout-item size="12" class="slds-p-top_xx-large logosIcons" padding="around-small"
+        <lightning-layout-item size="12" class="slds-p-top_x-large logosIcons" 
           small-device-size="12" medium-device-size="12" large-device-size="3">
           <div>
             <!--<p class="lend">Lend</p>
@@ -52,7 +52,7 @@
           </div>
         </div>
         <template if:true={showCmp}>
-          <lightning-layout-item size="12" class="slds-m-top_x-large" padding="around-small" small-device-size="12"
+          <lightning-layout-item size="12" class="slds-m-top_x-large" small-device-size="12"
             medium-device-size="12" large-device-size="3">
             <div class="flags">
               <img src={footerDes.img} alt="flags">
@@ -60,13 +60,15 @@
             </div>
   
             <div class="para">
-              <!--{footerDes.body}-->
+              <!-- {footerDes.body} -->
               <lightning-formatted-rich-text value={footerDes.body}>
               </lightning-formatted-rich-text>
-              
             </div>
           </lightning-layout-item>
         </template>
+  
+  
+  
   
       </lightning-layout>
   
@@ -79,15 +81,13 @@
           <img src={copyright.img} alt="care logo" width="127px" style="margin: 20px 20px 20px 0px">
         </div>
         <br>
-        <div class="slds-align_absolute-center fooDesktop" style="margin-top:-15px">
+        <div class="fooDesktop" style="margin-top:-15px">
           <a href={copyright.link} class="pPolicy"
             style="color:white;font-size:10x;line-height:13px;font-family:'Helvetica Neue Regular';">{copyright.title}
             &nbsp; </a><span style="color:white;font-size:10x;line-height:13px;font-family:'Helvetica Neue Regular';"> |
           </span>
           <p style="color:white;font-size:10x;line-height:13px;font-family:'Helvetica Neue Regular';">&nbsp;
-             <lightning-formatted-rich-text value={copyright.body}>
-              </lightning-formatted-rich-text>
-            </p><br><br>
+            {copyright.body}</p><br><br>
         </div>
         <div class=" fooMobile" style="margin-top:-15px">
           <a href={copyright.link} class="pPolicy"
@@ -95,9 +95,7 @@
             &nbsp;</a><span style="color:white;font-size:10x;line-height:13px;font-family:'Helvetica Neue Regular';"> |
           </span>
           <p style="color:white;font-size:10x;line-height:13px;font-family:'Helvetica Neue Regular';">&nbsp;
-            <lightning-formatted-rich-text value={copyright.body}>
-              </lightning-formatted-rich-text>
-            </p><br><br>
+            {copyright.body}</p><br><br>
         </div>
         <div class="slds-align_absolute-center fooDesktop">
           <p style="color:white;font-size:10x;line-height:13px;font-family:'Helvetica Neue Regular';">{copyright.resv}</p>
@@ -112,7 +110,7 @@
     <div class="footer2 paddingfooter paddings">
   
       <!-- Row 1 -->
-      <lightning-layout multiple-rows class="slds-p-top_xx-large slds-m-left_xx-large slds-m-right_xx-large">
+      <lightning-layout multiple-rows class="slds-p-top_xx-large ">
         <lightning-layout-item size="12" small-device-size="12" medium-device-size="3" large-device-size="3"
           padding="horizontal_large">
   
@@ -172,10 +170,11 @@
               <div class="paranew slds-align_absolute-center">
                 <p class="slds-align_absolute-center"
                   style="color:white;width:80%;text-align:center;margin:20px;font-size:18px;line-height:20px;font-family:'Helvetica Neue Regular';font-weight:100;">
-                  <!--{footerDes.body}-->
+                  <!-- {footerDes.body} -->
                   <lightning-formatted-rich-text value={footerDes.body}>
                   </lightning-formatted-rich-text>
-                  </p>
+                </p>
+  
               </div>
             </div>
           </lightning-layout-item>
@@ -207,10 +206,9 @@
                 <p
                   style="color:white;display:inline-flex;font-size:14px;line-height:18px;font-family:'Helvetica Neue Regular';">
    <!--{copyright.link}--> <a href={TermsandConditionsFile} class="pPolicy"
-                    style="color:white;font-size:14px;line-height:18px;font-family:'Helvetica Neue Regular';" >{copyright.title}
+                    style="color:white;font-size:14px;line-height:18px;font-family:'Helvetica Neue Regular';">{copyright.title}
                     &nbsp; </a><span style="color:white;font-size:14px;"> | </span>
-                  &nbsp; <lightning-formatted-rich-text value={copyright.body}>
-                  </lightning-formatted-rich-text> &nbsp;{copyright.resv}</p>
+                  &nbsp; {copyright.body} &nbsp;{copyright.resv}</p>
                 <!-- <p style="color:white;font-size:14px;margin-top:-3%;" class="slds-align_absolute-center">&nbsp;{copyright.resv}</p><br><br> -->
               </div>
             </div>

@@ -3,7 +3,7 @@ import getContent from '@salesforce/apex/CareHomePageCtrl.getContent';
 import basePath from '@salesforce/community/basePath';
 import TermsandConditions from '@salesforce/resourceUrl/TermsandConditionsFile';
 
-export default class CareFooter extends LightningElement {
+export default class CareHomePage_careFooterDev extends LightningElement {
     lendLogo; //LendWithCareImages+'/logo.png';
     socialMediaIcons=[];
     footerDes;
@@ -48,13 +48,13 @@ export default class CareFooter extends LightningElement {
                         var obj = {'title':val.contentNodes.Title.value, 'style':st, 'showSpan':showSpan,'img':this.imgUrl+val.contentNodes.Image.url, 'idx':idx,'link':val.contentNodes.Link.value!=undefined ?val.contentNodes.Link.value:''};
                         socialMediaArr.push(obj);
                     } else if( val.contentNodes.Tag.value == 'Footer-description' ){
-                        var body = this.htmlDecode(val.contentNodes.Body.value);
-                        /* body = body.replaceAll('&lt;','');
+                        var body = val.contentNodes.Body.value;
+                        body = body.replaceAll('&lt;','');
                         body = body.replaceAll('/p&gt;','');
                         body = body.replaceAll('p&gt;','');
                         body = body.replaceAll('&amp;','');
                         body = body.replaceAll('nbsp;',' ');
-                        body = body.replaceAll('br&gt;',''); */
+                        body = body.replaceAll('br&gt;','');
                         this.footerDes = {'title':val.contentNodes.Title.value, 'img':this.imgUrl+val.contentNodes.Image.url, 'body':body};
                         //console.log('Footer Des : ',this.footerDes);
                     } else if( val.contentNodes.Tag.value == 'Footer-copyright' ){
@@ -66,7 +66,6 @@ export default class CareFooter extends LightningElement {
                         body = body.replaceAll('nbsp;',' ');
                         var b = body.substring( 0, body.indexOf('&#92;') );
                         var cont = body.substring( b.length+6 );
-                        console.log('BBB:',b);
                         this.copyright = {'title':val.contentNodes.Title.value, 'img':this.imgUrl+val.contentNodes.Image.url, 'body':b, 'resv':cont, 'link':val.contentNodes.Link!=undefined?val.contentNodes.Link.value:''};
                     } else if( val.contentNodes.Tag.value == 'Footer-Items' ){
                         var body = val.contentNodes.Body.value;

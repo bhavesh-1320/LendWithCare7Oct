@@ -33,7 +33,7 @@ export default class CareBorrowersPageHeader extends LightningElement {
     loanAmounts=[];
     displayPreviousButtom=false;
     displayNextButtom=true;
-    @api contactid = '003AD00000Bs9xdYAB';
+    // @api contactid = '003AD00000Bs9xdYAB';
     @track currentloandetails;
 
     allLoansPage = window.location.href.substring(0, window.location.href.indexOf('/s')+3)+'careviewallloans';
@@ -127,7 +127,7 @@ export default class CareBorrowersPageHeader extends LightningElement {
                 }
                 this.Loan_Type__c=loan.Loan_Type__c;
                 this.Loan_Description__c=loan.LWC_Loan_Description__c != undefined && loan.LWC_Loan_Description__c !='' ? loan.LWC_Loan_Description__c:loan.Loan_Description__c;
-                this.Amount_Funded__c=loan.Amount_Funded__c!=undefined?loan.Amount_Funded__c : '';
+                this.Amount_Funded__c=loan.Amount_Funded__c!=undefined?loan.Amount_Funded__c : 0;
                 this.Loan_Term_Months__c=loan.Loan_Term_Months__c!=undefined?loan.Loan_Term_Months__c+' months':'';
                 this.Loan_Schedule__c=loan.Loan_Schedule__c;
                 this.Published_Amount_AUD__c=loan.Published_Amount_AUD__c!=undefined?'$'+Number(loan.Published_Amount_AUD__c)+' Goal' : '';

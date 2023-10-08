@@ -666,7 +666,7 @@ export default class CareNavBar extends LightningElement {
         if(this.TopupTransactionId!='' || this.TopupTransactionId!=null || this.TopupTransactionId!=undefined){
             removeTransactionRecord({idToRemove:this.TopupTransactionId})
             .then(result=>{
-                //console.log('result from apex after delete ', JSON.stringify(result))
+                console.log('result from apex after delete topup ', JSON.stringify(result))
                 /*this.totalCartAmount = this.totalCartAmount - this.loanidfromparent[this.indexToRemove].selectedAmount;
                 console.log('current deleting items amount ',this.loanidfromparent[this.indexToRemove].selectedAmount)
                 console.log('after delete items total amount ',this.totalCartAmount)*/
@@ -886,9 +886,10 @@ wiredLenderBalance(lenderValue){
                 this.showApplePay = this.isshowApplePay;
                 this.showGooglePay = this.isshowGooglePay;
             }
-            //console.log('this.lenderBalanceAmount ', this.lenderBalanceAmount)
+            console.log('this.lenderBalanceAmount ', this.lenderBalanceAmount,
+            this.showCreditCard, this.showPaypal, this.showApplePay, this.showGooglePay)
         }else if (error) {
-            //console.log('Error occured from getLenderBalance' + JSON.stringify(error));
+            console.log('Error occured from getLenderBalance' + JSON.stringify(error));
         }
 
 }
@@ -1014,6 +1015,7 @@ wiredLenderBalance(lenderValue){
             var selAmt = localStorage.getItem('SelectedCCAmount');
             this.otherRDAmount = localStorage.getItem('OtherChecked') == 'true';
             this.otherRDAmounts = selAmt;
+            this.rdAmount = selAmt;
             /* this.selectedCurrency = selAmt;
             this.selectedCurr = selAmt; */
             // this.selectedIndex = Number(selIdx);
@@ -1202,8 +1204,11 @@ wiredLenderBalance(lenderValue){
     }
     pageData={};
     totalVDAmount=0;
+    defaultDonationPercentageValue;
     VoluntaryDonationChange(event){
+        this.defaultDonationPercentageValue = event.detail.value;
         this.defaultDonationPercentage = Number(event.detail.value);
+        localStorage.setItem('defaultDonationPercentage',this.defaultDonationPercentage);
         this.donationAmount = Number(event.detail.value);
         if(event.target.value != 'Other' && this.donationAmount != 0){
             this.otherPercentage = false;
@@ -1257,6 +1262,12 @@ wiredLenderBalance(lenderValue){
             console.log('from vd rec creating')
             console.log('REM1317:',this.changeChampionTemplate);
 
+            let defaultValue = localStorage.getItem('defaultDonationPercentage');
+            if(defaultValue != null && defaultValue != 'null'
+            && defaultValue != undefined && defaultValue != 'undefined'){
+                this.defaultDonationPercentage = defaultValue;
+            }
+
             let currentCartItemsTotalAmount =0;
             if(this.loanidfromparent!=undefined && this.loanidfromparent.length >0){
                 currentCartItemsTotalAmount = this.loanidfromparent
@@ -1302,11 +1313,11 @@ wiredLenderBalance(lenderValue){
     return number % 10 === 0 || number % 10 === 5;
     }
 
-
+    otherPercentageValue;
     otherPercentageChange(event){
-        
+        this.otherPercentageValue = event.target.value;
         this.donationAmount = event.target.value;
-       
+       this.defaultDonationPercentage = event.target.value;
         if (this.endsWith5Or0(event.target.value) && event.target.value>25) {
             this.errorMessage=false;
             //this.totalCartAmount=this.calculateTotalSelectedAmount() + ((this.calculateTotalSelectedAmount() * event.target.value)/100);
@@ -1319,7 +1330,13 @@ wiredLenderBalance(lenderValue){
             }
             this.testTotal = currentCartItemsTotalAmount + (currentCartItemsTotalAmount * this.donationAmount)/100 
             + this.topUpAmount + (this.rdData['npe03__Amount__c'] ? Number(this.rdData['npe03__Amount__c']) : 0) ;/* + (this.isAdded ? this.amountLeftToFullyFunded : 0);*/
-            this.testTotal = parseFloat(this.testTotal.toFixed(2))
+            this.testTotal = parseFloat(this.testTotal.toFixed(2));
+                
+                clearTimeout(this.delayTimeout);
+                console.log('537 line ')
+                this.delayTimeout = setTimeout(() => {
+                    this.createDonationTransRecord();
+                },3000);
         } else {
             this.errorMessage=true;
             let currentCartItemsTotalAmount =0;
@@ -1332,6 +1349,21 @@ wiredLenderBalance(lenderValue){
             this.testTotal = currentCartItemsTotalAmount + (currentCartItemsTotalAmount * 0)/100 
             + this.topUpAmount + (this.rdData['npe03__Amount__c'] ? Number(this.rdData['npe03__Amount__c']) : 0) ;/* + (this.isAdded ? this.amountLeftToFullyFunded : 0);*/
             this.testTotal = parseFloat(this.testTotal.toFixed(2));
+
+            if(this.pageData['Id'] != null){
+                removeTransactionRecord({idToRemove:this.pageData['Id']})
+                .then(result=>{
+                    console.log('after deleting 0 vd trans ', result);
+                    this.pageData['Id'] = null;
+                    this.calculateTotalSelectedAmount();
+                    })
+                .catch(error=>{
+                    console.log('error while deleting vd ', JSON.stringify(error))
+                })
+
+            }
+
+
         }
                 
     }
@@ -1487,6 +1519,7 @@ wiredLenderBalance(lenderValue){
             this.CartChangeChampion=false;
             this.thirdPage=false;
             this.isRemainingBalance = false;
+            this.checkPreviousChangeChampion();
         }
         else if(this.currentStep == "4"){
             this.thirdPage=true;
@@ -1665,6 +1698,7 @@ wiredLenderBalance(lenderValue){
             }).catch((error) => {
                 this.paymentError = this.reduceErrors(error);
                 console.log('error -> ', error);
+                this.isLoading = false;
             }).finally(() => {
                 if(!(this.rdAmount && this.rdAmount > 0)) {
                     this.isLoading = false;
@@ -1681,6 +1715,7 @@ wiredLenderBalance(lenderValue){
             }).catch((error) => {
                 this.paymentError = this.reduceErrors(error);
                 console.log('error -> ', error);
+                this.isLoading = false;
             }).finally(() => {
                 this.isLoading = false;
             });
@@ -1693,10 +1728,15 @@ wiredLenderBalance(lenderValue){
 
             processPaymentByCard(request)
             .then((data) => {
-                this.setThankYouPayNow(data);
+                if(this.rdAmount && this.rdAmount > 0) {
+                    this.processRDFromCart();
+                } else {
+                    this.setThankYouPayNow(data);
+                }
             }).catch((error) => {
                 this.paymentError = this.reduceErrors(error);
                 console.log('error -> ', error);
+                this.isLoading = false;
             }).finally(() => {
                 this.isLoading = false;
             });
@@ -1710,7 +1750,8 @@ wiredLenderBalance(lenderValue){
             contactId: this.contactid,
             tokenId: this.rdToken.id,
             paymentTypeId: this.rdToken.card.id,
-            amount: this.rdAmount
+            amount: this.rdAmount,
+            cardResponse: JSON.stringify(this.rdToken)
         };
 
         this.isLoading = true;
@@ -1720,6 +1761,7 @@ wiredLenderBalance(lenderValue){
         }).catch((error) => {
             this.paymentError = this.reduceErrors(error);
             console.log('error -> ', error);
+            this.isLoading = false;
         }).finally(() => {
             this.isLoading = false;
         });
@@ -1943,7 +1985,7 @@ wiredLenderBalance(lenderValue){
             console.log('Voluntary donation trans id ', this.pageData['Id'] ? this.pageData['Id']:0);
             console.log('TopupTransactionId ', this.TopupTransactionId);
         
-        if(this.LenderTopup == true && this.topUpAmount < 10){
+        if(this.LenderTopup == true && this.topUpAmount < 2){
              this.errorMessageTopup = true;
              console.log('1592 line')
         }
@@ -2308,6 +2350,12 @@ console.log('2332');
 
     connectedCallback() {
 
+        let defaultValue = localStorage.getItem('defaultDonationPercentage');
+        if(defaultValue != null && defaultValue != 'null'
+        && defaultValue != undefined && defaultValue != 'undefined'){
+            this.defaultDonationPercentage = defaultValue;
+        }
+        
         this.isLoading = true;
         getStripePaymentConfigs().then((data) => {
             this.showCreditCard = data['Allow_Credit_Card__c'];
@@ -2448,7 +2496,13 @@ console.log('2527');
         const topupAmountfromStorage = localStorage.getItem('topupAmountfromStorage');
         console.log('topupAmountfromStorage from connected ', topupAmountfromStorage);
         if(isTopup == 'true'){
-            this.topupData['Id'] = this.TopupTransactionId; 
+            if(this.TopupTransactionId != null && this.TopupTransactionId != 'null'){
+                this.topupData['Id'] = this.TopupTransactionId;
+            }
+            else{
+                this.topupData['Id'] = null;
+            }
+             
             this.LenderTopup = true;
             this.topUpAmount = Number(topupAmountfromStorage);
             //console.log('1523 line navbar ',this.LenderTopup)
@@ -2594,29 +2648,6 @@ console.log('2690');
         },5000)
         
         }
-
-        var sessionVal = sessionStorage.getItem('UniqueValue');
-        if( sessionVal!= '' && sessionVal!=' ' && sessionVal != undefined && sessionVal == '1234' ){
-            this.carecart = true;
-            this.CartModules = true;
-            this.firstPage = true;
-            this.signInCC = true;
-            sessionStorage.setItem('UniqueValue',undefined);
-            var isCC = localStorage.getItem('isCC')
-            if( isCC!= undefined && isCC!= 'undefined' ){
-                this.checkPreviousChangeChampion();
-            }
-            /* checkSessionValue( {'sessionId':sessionVal} ).then( res=>{
-                if( res=='Success' ){
-                    this.carecart = true;
-                    this.CartModules = true;
-                    this.firstPage = true;
-                }
-                sessionStorage.setItem('UniqueValue',undefined);
-            } ).catch(err=>{
-
-            }); */
-        }
         this.debounceTimeout = null;
         const currentPageUrl = window.location.href;
         var currentPageUrl2 = currentPageUrl.substring(0, currentPageUrl.indexOf('/s')+3);
@@ -2633,6 +2664,30 @@ console.log('2690');
                                     'login':currentPageUrl2+'login',
                                     'createAccount': createAcc
                                 };
+        if( window.location.href == this.navComponentLinks['CareDashboard'] ){
+            var sessionVal = sessionStorage.getItem('UniqueValue');
+            if( sessionVal!= '' && sessionVal!=' ' && sessionVal != undefined && sessionVal == '1234' ){
+                this.carecart = true;
+                this.CartModules = true;
+                this.firstPage = true;
+                this.signInCC = true;
+                sessionStorage.setItem('UniqueValue',undefined);
+                var isCC = localStorage.getItem('isCC')
+                if( isCC!= undefined && isCC!= 'undefined' ){
+                    this.checkPreviousChangeChampion();
+                }
+                /* checkSessionValue( {'sessionId':sessionVal} ).then( res=>{
+                    if( res=='Success' ){
+                        this.carecart = true;
+                        this.CartModules = true;
+                        this.firstPage = true;
+                    }
+                    sessionStorage.setItem('UniqueValue',undefined);
+                } ).catch(err=>{
+    
+                }); */
+            }
+        }
         //console.log('Current page URL:', currentPageUrl);
         if(currentPageUrl.includes('careviewallloans')){
             this.isVisible=false;

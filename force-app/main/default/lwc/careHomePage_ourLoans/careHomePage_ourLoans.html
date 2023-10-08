@@ -2,7 +2,23 @@
   <!-- <c-care-nav-bar onfromnavbar={fromNavBar}
     carecart={checkout} loanidfromparent={loanIdsToChild} amounttocart={amountAddedToCart} loanids={loanIdsToCart}
     ondelete={handleDelete}></c-care-nav-bar> -->
-
+    <template if:true={errorTransaction}>
+      <section role="dialog" tabindex="-1" aria-modal="true" aria-label="Meaningful description of the modal content"
+        class="slds-modal slds-fade-in-open">
+        <div ><!-- class="slds-modal__container" -->
+          <button style="max-width:75%;" class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse slds-align_absolute-center" onclick={closeErrorPopup}>
+      
+      close
+      </button>
+          <div style="width:75%" class="slds-modal__content slds-p-around_medium slds-modal__content_headless slds-align_absolute-center" id="modal-content-id-1">
+            <p class="slds-align_absolute-center">{errorMessageOnTransaction}</p>
+          </div>
+    
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open " role="presentation"></div>
+    </template>
+    
   <lightning-layout class="slds-p-top_xx-large slds-p-bottom_xx-large pad" multiple-rows="true">
     <lightning-layout-item size="12" class="ourLoansHeadings">
       <h3 class="slds-p-bottom_large section-heading section-heading-num ourLoansHeadings">

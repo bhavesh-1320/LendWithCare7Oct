@@ -387,7 +387,7 @@ close
         <lightning-combobox
               name="progress"
               
-              value={defaultDonationPercentage}
+              value={defaultDonationPercentageValue}
               
               options={combobox2Options}
               onchange={VoluntaryDonationChange} >
@@ -395,7 +395,7 @@ close
         <template if:true={otherPercentage}>
           <p class="VolPara">Other % value</p>
         <lightning-input type="number" variant="standard" name="name" onchange={otherPercentageChange}
-        placeholder="%"></lightning-input>
+        placeholder="%" value={otherPercentageValue}></lightning-input>
         </template>
         <template if:true={errorMessage}>
         <p class="VolPara"><span style="color:red">amount should be whole number and more than 25</span></p>
@@ -418,7 +418,7 @@ close
         
         
         <lightning-input type="number" variant="standard" name="name" value={topUpAmount} onchange={lenderTopupAmountChanges}
-        placeholder="$"></lightning-input>
+        placeholder="$" step="0.01"></lightning-input>
         
         <template if:true={errorMessageTopup}>
         <p class="VolPara"><span style="color:red">amount should be more than $2</span></p>
