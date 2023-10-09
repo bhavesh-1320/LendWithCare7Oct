@@ -1,0 +1,41 @@
+.dummy{
+	color : black;
+}
+
+
+@media only screen and (max-width: 600px){
+.donut{
+	display: block;
+	width: 250px;
+}
+}
+@media only screen and (min-width: 600px){
+.donut{
+	display: block;
+	width: 290px !important;
+}
+}
+@media only screen and (min-width: 768px){
+.donut{
+	display: block;
+	width: 350px !important;
+}
+}
+@media only screen and (min-width: 992px){
+.donut{
+	display: block;
+	width: 450px !important;
+}
+}
+@media only screen and (min-width: 1200px){
+.donut{
+	display: block;
+	width: 410px !important;
+}
+}
+@media only screen and (min-width: 1480px){
+.donut{
+	display: block;
+	width: 450px !important;
+}
+}

@@ -10,6 +10,7 @@ import getAllLoansDev from '@salesforce/apex/LWC_AllLoansCtrl.getAllLoansDev';
 import getYourTransactionDetails from '@salesforce/apex/LWC_AllLoansCtrl.getYourTransactionDetails';
 import getContactInfo from '@salesforce/apex/LWC_AllLoansCtrl.getContactInfo';
 import putContactInfo from '@salesforce/apex/LWC_AllLoansCtrl.putContactInfo';
+import getCurrentUser from '@salesforce/apex/LWC_AllLoansCtrl.getCurrentUser';
 
 //import { NavigationMixin } from 'lightning/navigation';
 //import { refreshApex } from '@salesforce/apex';
@@ -37,7 +38,7 @@ const columns = [
 
 export default class carouselcmp_Homepage extends LightningElement {
 
-    @api contactid = '003AD00000Bs9xdYAB'; //gowsic contact id
+    @api contactid;// = '003AD00000Bs9xdYAB'; //gowsic contact id
     dasAvatarpic = DashboardPersonAvatars;
     avatarpic = greenfield;
     AvatarImg;
@@ -178,17 +179,27 @@ export default class carouselcmp_Homepage extends LightningElement {
             this.loansdata = [];
         }
     }*/
-
-    getLoansForCarousel(){
-        getAllLoansDev()
+    noLoans = false;
+    contentDis;
+    @api getLoansForCarousel( fValue ){
+        console.log('llContactId:',this.contactid);
+        getAllLoansDev({'contactId':this.contactid, 'filter':fValue})
         .then(result => {
-                this.loansdata = result;
+            console.log('TRRANS:',result, this.contactid);
+            if( result == undefined || (result != undefined && result.length <=0) ){
+                this.noLoans = true;
+            } else{
+                this.noLoans = false;
+                this.loansdata = result.Loan;
+                this.contentDis = result.ContentDistribution;
+                console.log('LDATa:',this.loansdata);
                 this.getcorousal();
-                //console.log('Result All Loans-->'+ JSON.stringify(this.loansdata));
-            })
-            .catch(error => {
-                console.log(error);
-            });
+            }
+            //console.log('Result All Loans-->'+ JSON.stringify(this.loansdata));
+        })
+        .catch(error => {
+            console.log(error);
+        });
     }
 
     formatCompletedDate(dateString) {
@@ -198,10 +209,30 @@ export default class carouselcmp_Homepage extends LightningElement {
         const year = date.getFullYear();
         return `${day}-${month}-${year}`;
     }
-
+    currentUser(){
+        getCurrentUser()
+        .then(result => {
+            console.log('current user -dashboard ', JSON.stringify(result))
+            this.contactid = result.Contact.Id;
+            console.log('this.contactid--> getCurrentUser() ', this.contactid);
+            /* if( this.contactid!=undefined ){
+                this.getContactFields();
+            } */
+        })
+        .catch(error => {
+            console.log('error ', JSON.stringify(error))
+        })
+    }
+    borrowerUrl;
     connectedCallback() {
-
-        this.getLoansForCarousel();
+        var bUrl = window.location.href;
+        bUrl = bUrl!= undefined? bUrl.substring(0,bUrl.lastIndexOf('/')) : '';
+        this.borrowerUrl = bUrl+'/careborrowers';
+        setTimeout(() => {
+            this.getLoansForCarousel('All');
+            
+        }, 3000);
+        
         // getCommunityUser()
         //     .then(result => {
         //         console.log('Result: ', result);
@@ -272,17 +303,27 @@ export default class carouselcmp_Homepage extends LightningElement {
 
 
     getcorousal() {
+        this.carouselItems = [];
         this.loansdata.forEach(loan => {
+            var cd = this.contentDis!=undefined ? this.contentDis[loan.Id]:undefined;
+            var imgBgStyle;
+            if( cd != undefined ){
+                var imgUrl = cd[0].ContentDownloadUrl;
+                imgBgStyle = `background-image: url('${imgUrl}');background-size: cover; background-repeat: no-repeat;`;
+            }
+            var country = loan.Borrower__r !=undefined ? loan.Borrower__r.City__c != undefined ?loan.Borrower__r.City__c +'-'+loan.Borrower__r.Country__c:loan.Borrower__r.Country__c : '';
             let carouselItem = {
                 id: loan.Id,
+                readMoreLink:this.borrowerUrl + '?loanId='+btoa(loan.Id),
+                getcarbackImage:imgBgStyle,
                 imageUrl: LendWithCareImages + '/client1.png',
-                title: loan.Loan_Title__c,
-                location: (loan.Borrower__r?.Postcode__c) ? loan.Borrower__r?.Postcode__c : '' +' '+ loan.Borrower__r?.Country__c,
-                description: loan.Loan_Description__c.length > 30 ? loan.Loan_Description__c.substring(0, 30) + "..." : loan.Loan_Description__c,
-                Lent: '',
+                title: loan.Loan_Title__c!=undefined && loan.Loan_Title__c.length>50 ?loan.Loan_Title__c.substring(0,51):loan.Loan_Title__c,
+                location: country,
+                description: loan.Loan_Purpose__c != undefined && loan.Loan_Purpose__c !='' ? loan.Loan_Purpose__c.length > 80 ? loan.Loan_Purpose__c.substring(0, 80) + "..." : loan.Loan_Purpose__c: loan.Loan_Purpose__c!=undefined?loan.Loan_Purpose__c.length > 80 ? loan.Loan_Purpose__c.substring(0, 80) + "..." : loan.Loan_Purpose__c : '',
+                Lent: loan.Amount_Funded__c!=undefined?loan.Amount_Funded__c:0,
                 Goal: loan.Funded__c == 100 ? 'Goal Reached!' : 0,
                 Button: loan.Loan_Type__c,
-                widthValue: 'width:' + (loan.Loan__r?.Funded__c != null ? loan.Funded__c : '0') + '%;',
+                //widthValue: 'width:' + (loan.Loan__r?.Funded__c != null ? loan.Funded__c : '0') + '%;',
                 progress: loan.Funded__c,
                 Funded__c: loan.Amount_Funded__c?loan.Amount_Funded__c:0,
                 Published_Amount_AUD__c: parseFloat(loan.Published_Amount_AUD__c).toFixed(2),
@@ -294,7 +335,12 @@ export default class carouselcmp_Homepage extends LightningElement {
         //console.log('4 Car Items-->'+this.firstFourItems.length);
         //console.log('Total Car Items-->'+ JSON.stringify(this.carouselItems));
     }
+    rendered = false;
     renderedCallback(){
+        if( !this.rendered ){
+            this.currentUser();
+            this.rendered = true;
+        }
         const progressBarElements = this.template.querySelectorAll('.progressBarInner');
     //console.log('ele2');
 

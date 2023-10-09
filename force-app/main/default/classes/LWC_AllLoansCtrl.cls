@@ -300,19 +300,75 @@ public without sharing class LWC_AllLoansCtrl {
     }
     
     @AuraEnabled(Cacheable=true)
-    public static list<Loan__c> getAllLoansDev(){
+    public static Map<String, Object> getAllLoansDev( Id contactId, String filter ){
         // This function will cover the allLoans, allLoans Filter, allLoans sort related story
-        
-        // MAD-64 test development
-        
-        String strLoanSoql = 'Select Id, Name, Published_Date__c, Loan_Title__c,Borrower__r.Postcode__c, Borrower__r.Country__c,';
+        Map<String, Object> loanContentDisMap = new Map<String, Object>();
+        String transactionQuery = 'SELECT Loan__c FROM Transaction__c WHERE Lender__c = \''+contactid+'\' AND Type__c = \'Loan\'';
+        if( filter != 'All' ){
+            transactionQuery+=' AND Loan__r.Stage__c = \''+filter+'\'';
+        } else{
+            transactionQuery+=' AND ( Loan__r.Stage__c = \'Fundraising\' OR Loan__r.Stage__c = \'Active\' OR Loan__r.Stage__c = \'Repaid\' )';
+        }
+        List<Transaction__c> transactions = Database.query(transactionQuery);
+        if( transactions.size() > 0 ){
+            Set<Id> loanIds = new Set<Id>();
+            for( Transaction__c t : transactions ){
+                loanIds.add( t.Loan__c );
+            }
+            List<Loan__c> loans = [   Select Id, Name,Amount_Left_Before_Fully_Funded__c, 
+                                Published_Amount_AUD__c, Published_Date__c, Loan_Title__c, Borrower__r.City__c, Borrower__r.Country__c,
+                                Location_of_Business__c,Loan_Description__c, Loan_Purpose__c, LWC_Loan_Description__c, 
+                                Loan_Principal_Disbursed_AUD__c, Loan_Term_Months__c, Loan_Schedule__c, Loan_Type__c,
+                                Number_of_Lenders__c, Amount_Funded__c, Funded__c, CMS_Key__c, 
+                                (SELECT Id, ContentDocumentId, ContentDocument.Title FROM ContentDocumentLinks) From Loan__c 
+                                WHERE Id IN :loanIds              
+                            ];
+            loanContentDisMap.put('Loan', (Object)loans);
+            Set<Id> contentDocumentIds = new Set<Id>();
+            if( !loans.isEmpty() && loans.size()>0 ){
+                Map<Id, Id> loanIdContentDocIdsMap = new Map<Id, Id>();
+                Map<Id, String> contentDocumentIdTitleMap = new Map<Id, String>();
+                for( Loan__c loan : loans ){
+                    for( ContentDocumentLink cdl : loan.ContentDocumentLinks ){
+                        if( cdl.ContentDocument.Title.contains('_cover') && !cdl.ContentDocument.Title.contains('_round') ){
+                            contentDocumentIdTitleMap.put( cdl.ContentDocumentId, cdl.ContentDocument.Title );
+                            loanIdContentDocIdsMap.put( cdl.ContentDocumentId, loan.Id );
+                            contentDocumentIds.add( cdl.ContentDocumentId );
+                        }
+                    }
+                }
+                if( !contentDocumentIds.isEmpty() ){
+                    List<ContentDistribution> cds = [SELECT ContentDownloadUrl, ContentDocumentId FROM ContentDistribution 
+                                                     WHERE ContentDocumentId IN :contentDocumentIds
+                                                    ];
+                    Map<Id, List<ContentDistribution>> loanIdContentDisMap = new Map<Id, List<ContentDistribution>>();
+                    for( ContentDistribution cd : cds ){
+                        if( loanIdContentDocIdsMap.containsKey(cd.ContentDocumentId) ){
+                            //If loan Id is not there then add it
+                            if( !loanIdContentDisMap.containsKey( loanIdContentDocIdsMap.get(cd.ContentDocumentId)) ){
+                                loanIdContentDisMap.put( loanIdContentDocIdsMap.get(cd.ContentDocumentId), new List<ContentDistribution>());
+                            }
+                            if( contentDocumentIdTitleMap.containsKey(cd.ContentDocumentId) ){
+                                cd.Name = contentDocumentIdTitleMap.get(cd.ContentDocumentId);
+                            }
+                            loanIdContentDisMap.get(loanIdContentDocIdsMap.get(cd.ContentDocumentId)).add( cd );
+                        }
+                    }
+                    loanContentDisMap.put( 'ContentDistribution', (Object)loanIdContentDisMap );
+                    return loanContentDisMap;
+                }
+            }
+            return loanContentDisMap;
+        }
+        return null;
+        /* String strLoanSoql = 'Select Id, Loan_Purpose__c, Name, Published_Date__c, Loan_Title__c,Borrower__r.Postcode__c, Borrower__r.Country__c,';
         strLoanSoql += ' Loan_Description__c, Loan_Term_Months__c, Loan_Schedule__c, Loan_Type__c,';
-        strLoanSoql += ' Number_of_Lenders__c, Amount_Funded__c, Funded__c, CMS_Key__c, Published_Amount_AUD__c From Loan__c ';
+        strLoanSoql += ' Number_of_Lenders__c, Amount_Funded__c, Funded__c, Published_Amount_AUD__c From Loan__c ';
         strLoanSoql += ' Where (Stage__c != \'Cancelled\' AND Stage__c != \'Repaid\' AND Stage__c != \'Written off\' AND Stage__c != \'Expired\')'; 
-        strLoanSoql += ' AND Loan_Proposal_Status__c=\'Published\'';
+        strLoanSoql += ' AND Loan_Proposal_Status__c=\'Published\' AND Lender__c = \''+contactId+'\'';
         
         //strLoanSoql += ' Limit 10';
-        return Database.query(strLoanSoql);
+        return Database.query(strLoanSoql); */
     }
     
     @AuraEnabled(Cacheable=true)

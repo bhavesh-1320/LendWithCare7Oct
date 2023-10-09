@@ -1,0 +1,58 @@
+<template>
+   
+<div class="yourImpact pad">
+	<div class="grid-containerLayout">
+		<div>
+			<div class="yourimpact">
+				<div style="width:100%">
+					<h3 class="section-headings" style="margin:0px 40px 40px 0px;float:left;">{val1}</h3>
+				</div>
+				<div class="chartback">
+					<div>
+						<h3 class="slds-align_absolute-center" 
+							style="float:left;font-weight:800;margin-top:20px;font-family: 'Helvetica Neue Bold Pro';font-size:16px;line-height:20px;color:#002A3A;width:100%;display:flex;justify-content:center;margin-bottom:10px;">
+							Types of loans funded
+						</h3>
+					</div>
+					<div class="slds-align_absolute-center" style="display:grid">
+						<div class="slds-align_absolute-center">
+							<c-donut-chart contactid={contactid}></c-donut-chart>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div>
+			<div class="carouselImpact">
+				<div class=" slds-align_absolute-left">
+					<h3 class="headingcar">Breakdown</h3>
+				</div>
+				<div class="sliderImpact" style={sliderStylesImpact}>
+					<template for:each={carouselItemsImpact} for:item="item" for:index="index">
+						<div key={item.id} class="slide">
+							<div class="slide-content">
+								<div class="CarContentImpact">
+									<h3 class="carTitleImpact">{item.title}</h3>
+	
+									<p class="carParaImpact">{item.description}</p>
+								</div>
+							</div>
+						</div>
+					</template>
+				</div>
+				<div style="display:flex;justify-content:center">
+					<div class="dots">
+						<button class="NaviButton" style="background:none;margin-top:-18px"  onclick={previousSlideImpact} >&#10094;</button>
+						<template for:each={carouselItemsImpact} for:item="item" for:index="index">
+							<span key={item.id} class="dotClass" onclick={handleDotClickImpact} data-index={index}></span>
+						</template>
+						<button class="NaviButton" style="background:none;margin-top:-18px" onclick={nextSlideImpact}>&#10095;</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</template>

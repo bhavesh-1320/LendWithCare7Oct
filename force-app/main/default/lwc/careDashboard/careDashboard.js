@@ -469,7 +469,7 @@ export default class CareDashboard extends LightningElement {
         this.carouselItems = [];
         this.stage = event.target.value;
         this.isLoading = true;
-        this.template.querySelector("c-carouselcmp_-homepage").handleChange(this.stage);
+        this.template.querySelector("c-carouselcmp_-homepage").getLoansForCarousel(this.stage);
     }
 
     get backAvatarImage() {
