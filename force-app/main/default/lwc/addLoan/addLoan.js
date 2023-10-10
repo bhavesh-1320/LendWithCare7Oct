@@ -86,11 +86,11 @@ export default class AddLoan extends LightningElement {
                     } */
                     this.loanDetails = obj;
                     console.log('obj[0]',obj[0]);
-                    var p = ((Number(obj[0].Amount_Funded__c)+Number(selAmt)) / Number(obj[0].Published_Amount_AUD__c)) * 100;
+                    this.amtFunded = obj[0].Amount_Funded__c!=undefined?obj[0].Amount_Funded__c:0;
+                    var p = ((Number(this.amtFunded)+Number(selAmt)) / Number(obj[0].Published_Amount_AUD__c)) * 100;
                     console.log('PPPP:',p);
-                    this.passCurrencyProgress(Number(obj[0].Amount_Funded__c)+Number(selAmt), p);
+                    this.passCurrencyProgress(Number(this.amtFunded)+Number(selAmt), p);
                     console.log('LOANAN:',this.loanamt);
-                    this.amtFunded = obj[0].Amount_Funded__c;
                     this.pubAmt = obj[0].Published_Amount_AUD__c;
                 }
             }).catch( err=>{
@@ -245,7 +245,7 @@ export default class AddLoan extends LightningElement {
                 }
                 lAmts.push({label:v.label, selected:sel});
             }
-            this.amtFunded = this.amtFunded-this.selectedAmount;
+            this.amtFunded = this.amtFunded == undefined || this.amtFunded == 0 ? 0: this.amtFunded-this.selectedAmount;
             console.log('{{',this.amtFunded, this.pubAmt);
             var p = (Number(this.amtFunded) / Number(this.pubAmt))*100;
             this.passCurrencyProgress( this.amtFunded, p );

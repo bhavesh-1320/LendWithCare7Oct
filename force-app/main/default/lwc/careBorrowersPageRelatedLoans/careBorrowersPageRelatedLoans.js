@@ -39,7 +39,7 @@ export default class CareBorrowersPageRelatedLoans extends LightningElement {
     loanAmounts=[];
     displayPreviousButtom=false;
     displayNextButtom=true;
-    @api contactid = '003AD00000Bs9xdYAB';
+    @api contactid; //= '003AD00000Bs9xdYAB';
     @track currentloandetails;
 
     allLoansPage = window.location.href.substring(0, window.location.href.indexOf('/s')+3)+'careviewallloans';
@@ -90,8 +90,7 @@ export default class CareBorrowersPageRelatedLoans extends LightningElement {
             console.log('-->',this.carouselItems[matchingObjDataIndex].Lent, this.carouselItems[matchingObjDataIndex].selectedAmount);
             // var l = this.carouselItems[matchingObjDataIndex].Lent!=undefined ? this.carouselItems[matchingObjDataIndex].Lent.replaceAll('$',''):this.carouselItems[matchingObjDataIndex].Lent;
             this.carouselItems[matchingObjDataIndex].Lent = Number(this.carouselItems[matchingObjDataIndex].Lent) - Number(this.carouselItems[matchingObjDataIndex].selectedAmount);
-            console.log(JSON.parse(JSON.stringify(this.carouselItems[matchingObjDataIndex])));
-            console.log('AAA:',this.carouselItems[matchingObjDataIndex].Lent, this.carouselItems[matchingObjDataIndex].Goal);
+            this.carouselItems[matchingObjDataIndex].Amount_Funded__c = this.carouselItems[matchingObjDataIndex].Lent;
             var g = this.carouselItems[matchingObjDataIndex].Goal;
             g = g.replaceAll('$','');
             var per = (Number(this.carouselItems[matchingObjDataIndex].Lent) / Number(g)) * 100;
@@ -196,7 +195,7 @@ export default class CareBorrowersPageRelatedLoans extends LightningElement {
                         } else{
                             progressStyle = 'background-color: #ffd700;width:'+fundLen+'%;';
                         }
-                        var amtLeftForFunding = val.Amount_Left_Before_Fully_Funded__c;
+                        var amtLeftForFunding = val.Amount_Left_Before_Fully_Funded__c==undefined?val.Published_Amount_AUD__c:val.Amount_Left_Before_Fully_Funded__c;
                         var relLoanAmounts = [];
                         if( amtLeftForFunding!=undefined ){
                             var i = 0;
@@ -242,7 +241,9 @@ export default class CareBorrowersPageRelatedLoans extends LightningElement {
                             if(per > 85){
                                 obj.progress+=' background-color:#2a871f;';
                             } */
-                            val.Amount_Funded__c = Number(val.Amount_Funded__c) + Number(previousLoans[itemIndex].Funded__c);
+                            val.Amount_Funded__c = val.Amount_Funded__c==undefined?0:Number(val.Amount_Funded__c);
+                            var amtFF = val.Amount_Funded__c==undefined?0:Number(val.Amount_Funded__c);
+                            val.Amount_Funded__c =  amtFF+ Number(previousLoans[itemIndex].Funded__c);
                             selAmt = Number(previousLoans[itemIndex].Funded__c);
                             console.log('ss:',selAmt);
                             var per = (Number(val.Amount_Funded__c) / Number(val.Published_Amount_AUD__c)) * 100;
@@ -263,22 +264,30 @@ export default class CareBorrowersPageRelatedLoans extends LightningElement {
                         // var loanAmounts = lAmts;
                         // console.log('lAmts:',lAmts);
                         //
+                        var dis = false;
+                        if( val.Amount_Funded__c == val.Published_Amount_AUD__c ){
+                            dis = true;
+                        }
                         var obj = {
                             'Id':val.Id,
                             'progressStyle':progressStyle,
                             'id': i,
                             'loanAmts':lAmts,
                             'imageUrl': `background-image: url('${imgUrl}');background-size: cover; background-repeat: no-repeat;`,
-                            'title': val.Loan_Title__c,
+                            'title': val.Loan_Title__c!=undefined && val.Loan_Title__c.length>50 ?val.Loan_Title__c.substring(0,51)+'...':val.Loan_Title__c,
+                            'Loan_Title__c': val.Loan_Title__c,
                             'location' : relCountry,
-                            'description': val.LWC_Loan_Description__c != undefined && val.LWC_Loan_Description__c !='' ? val.LWC_Loan_Description__c.length > 40 ? val.LWC_Loan_Description__c.substring(0, 40) + "..." : val.LWC_Loan_Description__c: val.Loan_Description__c!=undefined?val.Loan_Description__c.length > 40 ? val.Loan_Description__c.substring(0, 40) + "..." : val.Loan_Description__c : '',
+                            'Country__c' : relCountry,
+                            //'description': val.LWC_Loan_Description__c != undefined && val.LWC_Loan_Description__c !='' ? val.LWC_Loan_Description__c.length > 40 ? val.LWC_Loan_Description__c.substring(0, 40) + "..." : val.LWC_Loan_Description__c: val.Loan_Description__c!=undefined?val.Loan_Description__c.length > 40 ? val.Loan_Description__c.substring(0, 40) + "..." : val.Loan_Description__c : '',
+                            'description': val.Loan_Purpose__c != undefined && val.Loan_Purpose__c !='' ? val.Loan_Purpose__c.length > 80 ? val.Loan_Purpose__c.substring(0, 80) + "..." : val.Loan_Purpose__c: val.Loan_Purpose__c!=undefined?val.Loan_Purpose__c.length > 80 ? val.Loan_Purpose__c.substring(0, 80) + "..." : val.Loan_Purpose__c : '',
                             // val.Loan_Description__c!=undefined? val.Loan_Description__c.length > 40 ? val.Loan_Description__c.substring(0, 40) + "..." : val.Loan_Description__c : '',
-                            'Lent': val.Amount_Funded__c!=undefined?val.Amount_Funded__c : '',
+                            'Lent': val.Amount_Funded__c!=undefined?val.Amount_Funded__c : 0,
                             'Goal': val.Published_Amount_AUD__c!=undefined?'$'+Number(val.Published_Amount_AUD__c) : '',
                             'Button': val.Loan_Type__c,
                             'readMoreLink' : this.borrowerUrl + '?loanId='+btoa(val.Id),
                             'isButtonVisible':isButtonVisible,
-                            'selectedAmount':selAmt
+                            'selectedAmount':selAmt,
+                            'disable':dis
                         };
                         relatedLoans.push( obj );
                     }
@@ -346,6 +355,7 @@ export default class CareBorrowersPageRelatedLoans extends LightningElement {
                     console.log( 'AMT:',currentRecordItem.Lent );
                     console.log( 'AMT:',currentRecordItem.Goal );
                     currentRecordItem.Lent = Number(amt)+ Number(currentRecordItem.selectedAmount);
+                    currentRecordItem.Amount_Funded__c = Number(amt)+ Number(currentRecordItem.selectedAmount);
                     var per = (Number(currentRecordItem.selectedAmount) / Number(goal)) * 100;
                     currentRecordItem.progress = per;
                     currentRecordItem.Funded__c = currentRecordItem.selectedAmount;
@@ -417,8 +427,8 @@ export default class CareBorrowersPageRelatedLoans extends LightningElement {
           .catch(error =>{
               console.log('error from transaction record insert ', error)
               console.log('error.body.pageErrors[0].message ', error.body.pageErrors[0].message)
-                  this.errorTransaction = true;
-                  this.errorMessageOnTransaction = error.body.pageErrors[0].message;
+            this.errorTransaction = true;
+            this.errorMessageOnTransaction = error.body.pageErrors[0].message;
               
           }) 
         } catch( err ){
@@ -433,6 +443,12 @@ export default class CareBorrowersPageRelatedLoans extends LightningElement {
 // CarouselBan = CarBanner;
 Plus = PlusIC;
 slides=[];
+errorMessageOnTransaction;
+  errorTransaction=false;
+closeErrorPopup(){
+    this.errorTransaction = false;
+    this.errorMessageOnTransaction = '';
+  }
 
 /* slides=[
         {

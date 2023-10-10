@@ -69,7 +69,7 @@ export default class CareOurImpactYourImpact extends LightningElement {
                     description: 'Jobs created'
                 },
                 {
-                    title: 'TBD',
+                    title: data.PeopleHelped,
                     description: 'People helped'
                 },
         ];
@@ -185,7 +185,7 @@ export default class CareOurImpactYourImpact extends LightningElement {
         this.isDropdownOpenAbout = !this.isDropdownOpenAbout;
     }
     connectedCallback() {
-        Promise.all([
+        /* Promise.all([
             loadStyle(this, LendWithCareJSCss + '/bootstrap.min.css'),
             loadStyle(this, LendWithCareJSCss + '/css2.css'),
             loadStyle(this, LendWithCareJSCss + '/slick.css'),
@@ -204,7 +204,7 @@ export default class CareOurImpactYourImpact extends LightningElement {
             })
             .catch(error => {
                 console.log("failed to load the scripts:", error);
-            });
+            }); */
         this.getScreenSize();
         window.addEventListener('resize', this.getScreenSize.bind(this));
         

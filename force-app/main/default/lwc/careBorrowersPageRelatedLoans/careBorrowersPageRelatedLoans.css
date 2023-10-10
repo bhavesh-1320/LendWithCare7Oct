@@ -42,7 +42,19 @@
   font-family: 'Sketchetik Fill Bold';
   }
   
-  
+  .closeBtn{
+    background: #FEBE10;
+    border-radius: 4px;
+    padding: 12px 0px;
+    width: 380px;
+    font-family: 'Sketchetik Fill Bold';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 16px;
+    text-align: center;
+    color: #163B54;
+  }
   .loanSchedule{
     display:inline;
     font-size:30px;

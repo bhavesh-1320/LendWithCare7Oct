@@ -80,7 +80,7 @@ export default class CareBorrowersPageHeader extends LightningElement {
                     childComponent.currentloandetails = loan;	
                 }
                 console.log('LOANOO:',loan);
-                var loanAmtLeftForFunding = result.Loan[0].Amount_Left_Before_Fully_Funded__c;
+                var loanAmtLeftForFunding = result.Loan[0].Amount_Left_Before_Fully_Funded__c != undefined?result.Loan[0].Amount_Left_Before_Fully_Funded__c : result.Loan[0].Published_Amount_AUD__c;
                 var LoanAmounts = [];
                 if( loanAmtLeftForFunding!=undefined ){
                     var i = 0;
@@ -128,10 +128,11 @@ export default class CareBorrowersPageHeader extends LightningElement {
                 this.Loan_Type__c=loan.Loan_Type__c;
                 this.Loan_Description__c=loan.LWC_Loan_Description__c != undefined && loan.LWC_Loan_Description__c !='' ? loan.LWC_Loan_Description__c:loan.Loan_Description__c;
                 this.Amount_Funded__c=loan.Amount_Funded__c!=undefined?loan.Amount_Funded__c : 0;
+                console.log('131-->',this.Amount_Funded__c);
                 this.Loan_Term_Months__c=loan.Loan_Term_Months__c!=undefined?loan.Loan_Term_Months__c+' months':'';
                 this.Loan_Schedule__c=loan.Loan_Schedule__c;
                 this.Published_Amount_AUD__c=loan.Published_Amount_AUD__c!=undefined?'$'+Number(loan.Published_Amount_AUD__c)+' Goal' : '';
-                if( loan.Stage__c=='Active' || loan.Amount_Left_Before_Fully_Funded__c==0 ){
+                if( loan.Stage__c=='Active' || loanAmtLeftForFunding==0 ){
                     this.showCart = false;
                 }
                 this.Funded__c = loan.Funded__c;
@@ -171,6 +172,8 @@ export default class CareBorrowersPageHeader extends LightningElement {
 
     handleProgressChange( event ){
         this.Amount_Funded__c = event.detail.amtFunded;
+        // this.Amount_Funded__c = this.Amount_Funded__c!=undefined?this.Amount_Funded__c:0;
+        console.log('176-->',this.Amount_Funded__c);
         var len = event.detail.progress;
         if( len > 85 ){
             len-=1;

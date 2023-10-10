@@ -1522,8 +1522,8 @@ html {
   border: none;
 }
   .pad{
-  padding-left: 7%;
-  padding-right: 7%;
+  padding-left: 20px;
+  padding-right: 20px;
   
 }
   .browse-project-detail
@@ -1718,6 +1718,7 @@ display: none;
   .pad{
   padding-left: 10%;
   padding-right: 10%;
+  
 }
   .browse-project-detail{
     text-align: center;
@@ -2311,6 +2312,10 @@ text-align:  left;
 }
 .ImagesMob{
   display: none;
+}
+.pad{
+  padding-left: 10%;
+  padding-right: 10%;
 }
 }
 

@@ -155,6 +155,8 @@ export default class CareHomePage_ourLoans extends LightningElement {
                     obj.disable = false;
                     if(loan.Funded__c > 85){
                         obj.progress+=' background-color:#2a871f;';
+                    } else{
+                        obj.progress+=' background-color:#ffd700';
                     }
                     var pubAmt = loan.Published_Amount_AUD__c == undefined ? 0 : loan.Published_Amount_AUD__c;
                     var fundAmt =  loan.Amount_Funded__c == undefined?0:loan.Amount_Funded__c;
@@ -298,6 +300,8 @@ export default class CareHomePage_ourLoans extends LightningElement {
                 currentRecordItem.Funded__c = currentRecordItem.selectedAmount;
                 /* if(per > 85){
                   currentRecordItem.progress+=' background-color:#2a871f;';
+                } else{
+                  currentRecordItem.progress+=' background-color:#ffd700';
                 } */
               }
               var myAA = localStorage.getItem('myArray');
@@ -357,6 +361,8 @@ export default class CareHomePage_ourLoans extends LightningElement {
                   updatedItem.selectedAmount = pageData['Amount__c'];
                   if(per > 85){
                     updatedItem.progress+=' background-color:#2a871f;';
+                  } else{
+                    updatedItem.progress+=' background-color:#ffd700';
                   }
                   // Create a new array with the updated item
                   const updatedItems = [...this.carouselItems];

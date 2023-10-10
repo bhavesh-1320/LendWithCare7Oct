@@ -551,7 +551,7 @@ public without sharing class LWC_AllLoansCtrl {
                         }
                     }
                 }
-                String strLoanTypeSoql = 'SELECT Id,Amount_Left_Before_Fully_Funded__c, (SELECT ContentDocumentId, ContentDocument.Title FROM ContentDocumentLinks ), Loan_Title__c, Borrower__r.Name, Amount_Funded__c, Borrower__r.Description, Borrower__r.Postcode__c, Borrower__r.Country__c, Loan_Description__c, LWC_Loan_Description__c, Funded__c, Published_Amount_AUD__c, Loan_Type__c, Loan_Term_Months__c, Loan_Schedule__c FROM Loan__c WHERE Loan_Type__c = \'' + String.escapeSingleQuotes(loans[0].Loan_Type__c) + '\' AND Id !=\''+loanId+'\' ORDER BY CreatedDate DESC LIMIT 4';
+                String strLoanTypeSoql = 'SELECT Id,Loan_Purpose__c,Amount_Left_Before_Fully_Funded__c, (SELECT ContentDocumentId, ContentDocument.Title FROM ContentDocumentLinks ), Loan_Title__c, Borrower__r.Name, Amount_Funded__c, Borrower__r.Description, Borrower__r.Postcode__c, Borrower__r.Country__c, Loan_Description__c, LWC_Loan_Description__c, Funded__c, Published_Amount_AUD__c, Loan_Type__c, Loan_Term_Months__c, Loan_Schedule__c FROM Loan__c WHERE Loan_Type__c = \'' + String.escapeSingleQuotes(loans[0].Loan_Type__c) + '\' AND Id !=\''+loanId+'\' ORDER BY CreatedDate DESC LIMIT 4';
                 relatedLoans =  Database.query(strLoanTypeSoql);
 
                 Set<Id> contentDocumentIdsRelLoans = new Set<Id>();
@@ -753,17 +753,23 @@ public without sharing class LWC_AllLoansCtrl {
         
         // Querying the Breakdown data.
         // Contact contactRecord = [SELECT Id, Name, Total_Loans__c, Champion__c,Auto_Relend__c, Lender_Balance__c, Total_People_Helped__c, Profile_Picture__c FROM Contact WHERE Id = :contactId LIMIT 1];
-        AggregateResult sumOfTransactionsAmount = [SELECT SUM(Amount__c) FROM Transaction__c ];
+        AggregateResult sumOfTransactionsAmount = [SELECT SUM(Loan__r.Amount_Funded__c) FROM Transaction__c WHERE Type__c = 'Loan'];
         AggregateResult sumOfLoansJobsCreated = [SELECT SUM(Jobs_Created__c) FROM Loan__c ];
         AggregateResult sumOfTotalLoans = [SELECT count(Id) FROM Loan__c ];
         
+        AggregateResult sumOfPeopleHelped = [SELECT sum(Borrower__r.Dependants__c), sum(Jobs_Created__c), sum(Number_of_Employees__c) FROM Loan__c];
         // Extracting values from AggregateResult
         Integer totalTransactionsAmount = sumOfTransactionsAmount != null && sumOfTransactionsAmount.get('expr0')!=null ? ((Decimal)sumOfTransactionsAmount.get('expr0')).intValue() : 0;
         Integer sumOfJobsCreated = sumOfLoansJobsCreated != null && sumOfLoansJobsCreated.get('expr0')!=null ? ((Decimal)sumOfLoansJobsCreated.get('expr0')).intValue() : 0;
         Integer totalLoans = sumOfTotalLoans != null  && sumOfTotalLoans.get('expr0')!=null? ((Integer)sumOfTotalLoans.get('expr0')) : 0;
-        
+        Integer peopleHelped = 0;
+        if( sumOfPeopleHelped!= null ){
+            peopleHelped+= sumOfPeopleHelped.get('expr0')!=null? ((Decimal)sumOfPeopleHelped.get('expr0')).intValue() : 0;
+            peopleHelped+= sumOfPeopleHelped.get('expr1')!=null? ((Decimal)sumOfPeopleHelped.get('expr1')).intValue() : 0;
+            peopleHelped+= sumOfPeopleHelped.get('expr2')!=null? ((Decimal)sumOfPeopleHelped.get('expr2')).intValue() : 0;
+        }
         // ContactData contactData = new ContactData(contactRecord, totalTransactionsAmount, sumOfJobsCreated,mapOfTypeAndAmount);
-        return new Map<String, Integer>{'NumberOfLoans'=>totalLoans, 'totalAmountLent'=>totalTransactionsAmount, 'JobsCreated'=>sumOfJobsCreated};
+        return new Map<String, Integer>{'NumberOfLoans'=>totalLoans, 'totalAmountLent'=>totalTransactionsAmount, 'JobsCreated'=>sumOfJobsCreated, 'PeopleHelped'=>peopleHelped};
     }
 
     @AuraEnabled(cacheable=true)
@@ -1061,16 +1067,23 @@ public without sharing class LWC_AllLoansCtrl {
     public static Contact getLenderBalance(string conId){
         return [select Id, Name,Lender_Balance__c,MobilePhone,Postcode__c,Email  from Contact where id=:conId];
     }
+    
     @AuraEnabled
     public static Transaction__c donateFromDashboard(Transaction__c rec){
         
-        Contact lenderDetails = [select Lender_Balance__c from contact where id=:rec.Lender__c limit 1];
+        Contact lenderDetails = [select Lender_Balance__c, Id, FirstName, LastName, Name, Email, Phone, Stripe_Customer_Id__c, CurrencyIsoCode, AccountId from contact where id=:rec.Lender__c limit 1];
         if(lenderDetails.Lender_Balance__c >= rec.Amount__c){
             try{
                 rec.Completed_Date__c = system.today();
                 rec.Status__c = 'Completed';
+                rec.Transaction_Date__c = System.now();
+                rec.Added_To_Cart__c = true;
                 insert rec;
-                                
+                 
+                CheckoutUtility.processTransactionsAndPayment(new List<Id>{rec.Id}, lenderDetails, rec.Amount__c, new Map<String, Object>());
+                
+                rec.Added_To_Cart__c = false;
+                update rec;                
             }
             catch(exception e){
                 system.debug('can not create donation records ' + e);
