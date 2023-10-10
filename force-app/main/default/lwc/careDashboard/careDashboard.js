@@ -15,6 +15,7 @@ import updateCommunicationPreference from '@salesforce/apex/LWC_AllLoansCtrl.upd
 import updateCommunicationPreferences from '@salesforce/apex/LWC_AllLoansCtrl.updateCommunicationPreferences';
 import getCommunicationPreferences from '@salesforce/apex/LWC_AllLoansCtrl.getCommunicationPreferences';
 import getCurrentUser from '@salesforce/apex/LWC_AllLoansCtrl.getCurrentUser';
+import TermsandConditions from '@salesforce/resourceUrl/TermsandConditionsFile';
 
 import getContent from '@salesforce/apex/CareHomePageCtrl.getContent';
 import downloadPDF from '@salesforce/apex/CareHomePageCtrl.getPdfFileAsBase64String';
@@ -47,7 +48,8 @@ const columns = [
 
 export default class CareDashboard extends LightningElement {
 
-    @track contactid; //gowsic contact id
+    @track contactid; //gowsic contact 
+    TermsandConditionsFile = TermsandConditions;
     dasAvatarpic = DashboardPersonAvatars;
     avatarpic = greenfield;
     AvatarImg;
@@ -64,7 +66,7 @@ export default class CareDashboard extends LightningElement {
     transactionEmail;
     donationEmail;
     @track UserName;
-    @track AmountValues;
+    @track AmountValues =0;
     @track PlaceholderAmountValues;
     @track TotalLoans;
     @track JobsCreated;
@@ -400,9 +402,9 @@ export default class CareDashboard extends LightningElement {
     ClosePersonalDetails() {
         this.PersonalDetails = false;
     }
-   /* openWithdrawPopup() {
+   openWithdrawPopup() {
         this.withdrawPopup = true;
-    }*/
+    }
     openDonatePopup() {
         this.donatePopup = true;
     }
@@ -656,7 +658,7 @@ export default class CareDashboard extends LightningElement {
         // Ensure donationAmount is defined and parsed properly from the input
         const donationAmount = parseFloat(this.donationAmount);
         console.log('parseFloat(this.AmountValues) ', parseFloat(this.AmountValues));
-    /*
+    
         if (donationAmount == null && donationAmount <= 0) {
             alert('Donation amount must be greater than 0');
             document.getElementById('donationInput').addEventListener('focus', function() {
@@ -686,7 +688,7 @@ export default class CareDashboard extends LightningElement {
             })
             
             // Create transaction Record and update the value of lendersamount with the values.
-        }*/
+        }
     }
     
     handlezerobalanceDonatebutton() {

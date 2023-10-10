@@ -256,7 +256,7 @@ input[type="checkbox"]:checked {
 .navBar{
     display: flex;
     height: 75px;
-    
+    z-index: 20;
 }
 .menuitems{
     display: flex;
@@ -289,6 +289,7 @@ input[type="checkbox"]:checked {
   background: white;
   //padding: 20px;
   width: 400px;
+  z-index:20;
 }
 
 .slds-float_left {
@@ -1045,6 +1046,7 @@ h3 {
   //padding: 20px;
   width: 400px;
   height: calc(100% - 48px);
+  z-index:20;
 }
 .search-header {
   margin-bottom: 20px;

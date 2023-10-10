@@ -3,7 +3,7 @@
 		<c-care-nav-bar lender-topup={LenderTopup} carecart={carecart}
 		onfromnavbar={fromNavBar}
 		></c-care-nav-bar>
-		<lightning-layout multiple-rows class="slds-p-around_x-large ">
+		<lightning-layout multiple-rows class="pad">
 			<lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6"
 				>
 				<div class="grid-container1">
@@ -30,92 +30,27 @@
 						</div>
 					</div>
 				</div>
-				<!--<lightning-layout multiple-rows>
-				<lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6"
-					padding="horizontal-small">
-					<div>
-							<div class="proContainer item1">
-								<img src={dasAvatarpic} alt="profilepic" class="image1" />
-								<div class="image2" style={backAvatarImage}></div>	
-							</div>
-							
-					</div>
-				</lightning-layout-item>
-				
-				<lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6"
-					padding="horizontal-small">
-					<div class="item2 MobSizes">
-						<h3 class="H3headsMob" >Welcome back</h3>
-						<h3 class="H3headsMob1" >Cassie</h3>
-					</div>
-				</lightning-layout-item>
-				
-				</lightning-layout>-->
+
 			</lightning-layout-item>
-			<lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6"
-				>
-				<!--<div class="slds-align_absolute-center UpdateDivs Mobupdatesvalues">
-					<h3 style="font-size:30px;line-height:41px;font-family: 'Helvetica Neue Bold Pro';color:white;">
-						Updates</h3>
-					<div class="UpdateButton">
-						<div class="custom-box">4</div>
-						<p style="font-size: 22px;line-height:30px;font-family: 'Helvetica Neue Bold Pro';"
-							onclick={navigateToBorrowerupdates}>Borrower updates</p>
-					</div>
-					<br>
-					<div class="UpdateButton">
-						<div class="custom-box">2</div>
-						<p style="font-size: 22px;line-height:30px;font-family: 'Helvetica Neue Bold Pro';">Repayments
-							made</p>
-					</div>
-				</div>-->
+			<lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6">
+
 			</lightning-layout-item>
 		</lightning-layout>
-		<!---<lightning-layout multiple-rows>
-		  <lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6"
-			  padding="horizontal-small">
-			  <div class="slds-align_absolute-left item3  MobValues">
-				  <div><p style="color:white;margin-top:10px;text-align:right;">$55.00</p></div>
-			  </div>
-		  </lightning-layout-item>
-		  </lightning-layout>-->
+
 		<lightning-layout multiple-rows class="pad">
-			<lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6"
-				>
-				<!--<div class="item3 slds-align_absolute-center BannerButtons">
-				<button type="button" class="btn ButtonMakeaLoan" style="font-size: 22px;line-height:18px;font-family: 'Helvetica Neue Bold Pro';width:auto;">Make another loan</button>
-				</div>-->
-				<!--<div class="UpdateButtonMakAnotherloan">
-					
-					 <a style="font-family: 'Helvetica Neue Bold Pro';font-size: 16px;line-height: 21px;" onclick={gotoViewAllLoansPage}>Make another loan</a>
-				</div> -->
+			<lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6">
+
 				<button class="UpdateButtonMakAnotherloan" onclick={gotoViewAllLoansPage}>Make another loan</button>
 			</lightning-layout-item>
 		</lightning-layout>
 	</div>
-	<!--<div class="displayupdates">
-		<div class="slds-align_absolute-center UpdateDivs">
-			<h3 style="font-size:30px;line-height:41px;font-family: 'Helvetica Neue Bold Pro';color:white;">Updates</h3>
-			<div class="UpdateButton">
-				<div class="custom-box">4</div>
-				<button onclick={navigateTocarebecomechangechampionURL}>Borrower updates</button>
-				<p style="color:#002A3A;font-size: 22px;line-height:30px;font-family: 'Helvetica Neue Bold Pro';">Borrower updates</p>
-		</div>
-			<br>
-			<div class="UpdateButton">
-				<div class="custom-box">2</div>
-				<p style="color:#002A3A;font-size: 22px;line-height:30px;font-family: 'Helvetica Neue Bold Pro';">
-					Repayments made</p>
-			</div>
-		</div>
-	</div>-->
-	<!-- Row 1 -->
-	<lightning-layout multiple-rows class="pad">
-		<lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6"
-			>
+
+
+	<div class="grid-containerLayoutImpact pad">
+		<div>
 			<div class="yourimpact ">
 				<div style="width:100%" class="">
-					<h3 class="section-headings" style="margin:30px 30px 30px 0px;">Your
+					<h3 class="section-headings">Your
 						<span style="color:#E4761E">&nbsp;Impact</span>
 					</h3>
 				</div>
@@ -132,82 +67,36 @@
 					</div>
 				</div>
 			</div>
-		</lightning-layout-item>
-		<lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6"
-			>
-			<!--<div class="carouselImpact">
-			 <div class="headingcar slds-align_absolute-left">
-				 <h3>Breakdown</h3>
-			 </div>
-			 <div class="sliderImpact" style={sliderStylesImpact}>
-				 <template for:each={carouselItemsImpact} for:item="item" for:index="index">
-					 <div key={item.id} class="slide">
-						 <div class="slide-content">
-							 <div class="CarContentImpact">
-								 <h3 class="carTitleImpact">{item.title}</h3>
-			 
-								 <p class="carParaImpact">{item.description}</p>
-							 </div>
-						 </div>
-					 </div>
-				 </template>
-			 </div>
-			 <div style="display:flex;justify-content:center">
-				 <div class="dots">
-					 <template for:each={carouselItemsImpact} for:item="item" for:index="index">
-						 <button key={item.id} class={dotClass} onclick={handleDotClickImpact} data-index={index}></button>
-					 </template>
-				 </div>
-				 <div style="margin-top:5px;margin-left:20px">
-					 <button style="color:black;background:none;border:none;box-shadow:none;width:2px" onclick={previousSlideImpact}>&lt;</button>
-					 <button style="margin-left:20px;color:black;background:none;border:none;width:2px;box-shadow:none;" onclick={nextSlideImpact}>&gt;</button>
-				 </div>
-			 </div>
-			 </div>-->
+		</div>
+		<div>
+			<div class="OnlyShowInDesktop" style="width:100%">
+				<h3 class="section-headings">
+				</h3>
+			</div>
 			<!-- Row 1 -->
 			<lightning-layout multiple-rows class="OnlyShowInDesktop MobBreakdown slds-p-top_xx-large">
-				<lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="12"
-					>
-					<h3
-						style="font-size:30px;line-height:38px;font-family:'Sketchetik Fill Bold';font-weight:800;color:#002A3A;">
+				<lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="12">
+					<h3 class="StyleBreakdown">
 						Breakdown
 					</h3>
 				</lightning-layout-item>
-				<!--<lightning-layout-item size="12" small-device-size="5" medium-device-size="5" large-device-size="5"
-					padding="horizontal-small">
-					<div class="CarContentImpact">
-						<h3 class="carTitleImpact">{TotalLoans}</h3>
-						<p class="carParaImpact" style="font-family: 'Helvetica Neue Bold Pro';">Number of loans</p>
-					</div>
-				</lightning-layout-item>
-				<lightning-layout-item size="12" small-device-size="5" medium-device-size="5" large-device-size="5"
-					padding="horizontal-small">
-					<div class="CarContentImpact">
-						<h3 class="carTitleImpact">
-							${Totalamountlent}
-							<span style="font-size:12px;color:#E4761E">
-								00
-							</span>
-						</h3>
-						<p class="carParaImpact" style="font-family: 'Helvetica Neue Bold Pro';">Total amount lent</p>
-					</div>
-				</lightning-layout-item>-->
-
+			
 			</lightning-layout>
-
+			
 			<!-- Row 2 -->
 			<lightning-layout multiple-rows class="OnlyShowInDesktop ">
 				<div class="grid-containerDashB">
 					<div class="CarContentImpact">
 						<h3 class="carTitleImpact">{TotalLoans}</h3>
-						<p class="carParaImpact" style="font-family: 'Helvetica Neue Bold Pro';padding-top:10px;">Number of loans</p>
+						<p class="carParaImpact" style="font-family: 'Helvetica Neue Bold Pro';padding-top:10px;">Number of loans
+						</p>
 					</div>
 					<div class="CarContentImpact">
 						<h3 class="carTitleImpact">
 							${Totalamountlent}
 							<span style="font-size:12px;color:#E4761E">
-																<!--.00-->
-															</span>
+																			<!--.00-->
+																		</span>
 						</h3>
 						<p class="carParaImpact" style="font-family: 'Helvetica Neue Bold Pro';">Total amount lent</p>
 					</div>
@@ -220,35 +109,22 @@
 						<p class="carParaImpact" style="font-family: 'Helvetica Neue Bold Pro';">People helped</p>
 					</div>
 				</div>
-				<!--<lightning-layout-item size="12" small-device-size="5" medium-device-size="5" large-device-size="5"
-					padding="horizontal-small">
-					<div class="CarContentImpact">
-						<h3 class="carTitleImpact">{JobsCreated}</h3>
-						<p class="carParaImpact" style="font-family: 'Helvetica Neue Bold Pro';">Jobs created</p>
-					</div>
-				</lightning-layout-item>
-				<lightning-layout-item size="12" small-device-size="5" medium-device-size="5" large-device-size="5"
-					padding="horizontal-small">
-					<div class="CarContentImpact">
-						<h3 class="carTitleImpact">{Peoplehelped}</h3>
-						<p class="carParaImpact" style="font-family: 'Helvetica Neue Bold Pro';">People helped</p>
-					</div>
-				</lightning-layout-item>-->
 				<template if:false={Champion}>
-					<lightning-layout-item size="12" small-device-size="12" medium-device-size="12"
-						large-device-size="12" padding="horizontal-small">
+					<lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="12">
 						<button onclick={navigateTocarebecomechangechampionURL}
-							style="width:auto;padding:17px 30px 17px 30px;border:none;font-family:'Helvetica Neue Bold Pro';font-size:22;line-height:18px;">&#x2606;
-							Become a Change Champion</button>
+										style="display:inline-flex;width:auto;padding:20px 35px 15px 35px;border:none;font-family:'Helvetica Neue Bold Pro';font-size:22px;line-height:18px;"><span style="font-size:35px;margin:2px 8px 0px 0px;">&#x2606;</span>
+										Become a Change Champion</button>
 					</lightning-layout-item>
 				</template>
 			</lightning-layout>
+			
 			<div class="Onlyshowinmobile">
+									<div class="headingcar">
+										<h3 class="StyleBreakdown">
+											Breakdown</h3>
+									</div>
 				<div class="carouselImpact">
-					<div class="headingcar">
-						<h3 style="font-family:Sketchetik Fill Bold;font-size:30px;line-height:38px;color:#002A3A;">
-							Breakdown</h3>
-					</div>
+
 					<div class="sliderImpact" style={sliderStylesImpact}>
 						<template for:each={carouselItemsImpact} for:item="item" for:index="index">
 							<div key={item.id} class="slides">
@@ -261,28 +137,31 @@
 							</div>
 						</template>
 					</div>
-					<div style="display:flex;justify-content:center">
-						<div class="dots">
-							<button class="NaviButton" style="background:none;margin-top:-18px"
-								onclick={previousSlideImpact}>&lt;</button>
-							<template for:each={carouselItemsImpact} for:item="item" for:index="index">
-								<span key={item.id} class="dotClass" onclick={handleDotClickImpact}
-									data-index={index}></span>
-							</template>
-							<button class="NaviButton" style="background:none;margin-top:-18px"
-								onclick={nextSlideImpact}>&gt;</button>
-						</div>
+
+				</div>
+				<div style="display:flex;justify-content:center">
+					<div class="dots">
+						<button class="NaviButton" style="background:none;margin-top:-18px"
+															onclick={previousSlideImpact}>&#10094;</button>
+						<template for:each={carouselItemsImpact} for:item="item" for:index="index">
+							<span key={item.id} class="dotClass" onclick={handleDotClickImpact}
+																data-index={index}></span>
+						</template>
+						<button class="NaviButton" style="background:none;margin-top:-18px"
+															onclick={nextSlideImpact}>&#10095;	</button>
 					</div>
 				</div>
-				 <div class="" style="margin:30px 0px 0px 0px;width:-webkit-fill-available;">
-				<button style="width:-webkit-fill-available;padding:17px 30px 17px 30px;border:none;">&#x2606; Become a change champion</button>
-				</div> 
+				<div class="" style="margin:30px 0px 0px 0px;width:-webkit-fill-available;">
+					<button style="width:-webkit-fill-available;padding:17px 30px 17px 30px;border:none;">&#x2606; Become a change champion</button>
+				</div>
 			</div>
-		</lightning-layout-item>
-	</lightning-layout>
-	<lightning-layout class="slds-p-top_xx-large backloanscolor pad" multiple-rows="true">
-		<lightning-layout-item size="12" class="slds-p-top_small slds-p-bottom_small">
-			<h3 class=" yourloanheading">
+		</div>
+	</div>
+
+
+	<lightning-layout class="backloanscolor pad" multiple-rows="true">
+		<lightning-layout-item size="12" class="slds-p-top_small">
+			<h3 class="section-headings yourloanheading">
 				<!-- section-heading section-heading-num-->
 				<span class="clr_navyblue">Your </span><span class="clr_orange ">loans</span>
 			</h3>
@@ -301,123 +180,36 @@
 		<lightning-layout-item size="12" class="slds-p-top_small">
 			<div class="carouselCustom">
 				<c-carouselcmp_-homepage></c-carouselcmp_-homepage>
-				<!-- <div class="sliderCustom" style={sliderStyles}>
-					<template for:each={carouselItems} for:item="item" for:index="index">
-						<div key={item.id} class="slide">
-							<div class="slide-content">
-								<div class="ImageDiv" style={getcarbackImage}></div> -->
-				<!--<img src={item.imageUrl} alt={item.title} />-->
-				<!-- <div class="CarContent">
-									<h3 class="carTitle">{item.title}</h3>
-									<div class="locastions">
-										<div>
-											<svg xmlns="http://www.w3.org/2000/svg" style="margin: -5px 4px 0 0;"
-												width="16" height="16" fill="#002A3A" class="bi bi-geo-alt"
-												viewBox="0 0 16 16">
-												<path
-													d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
-												<path
-													d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-											</svg>
-										</div>
-										<div>
-											<p
-												style="font-family: 'Helvetica Neue Bold Pro';font-size:14px;line-height:16px;">
-												{item.location}</p>
-										</div>
-									</div>
-									<p class="carPara">{item.description}</p>
-									<button class="carButton">{item.Button}</button><br>
-									<a
-										style="color:#002A3A;font-size:15px;line-height:16px;font-family:'Helvetica Neue Bold Pro';">View
-										project ></a>
-								</div>
-								<div class="BottomDiv">
-									<div style="display:block;width:100%;">
-										<div class="progressBar">
-											<div class="progressBarInner" style={item.widthValue}></div>
-										</div>
-										<div style="display:flex;justify-content: right;margin-right:10px;"> -->
-				<!--<p style="color:white;width:40%;margin-left:10px">{item.Lent}</p>-->
-				<!-- <p
-												style="color:#F3F0ED;font-size:12px;line-height:12px;font-family:'Helvetica Neue Bold Pro';margin-top:7.5px">
-												{item.Goal}</p>
-										</div>
-									</div> -->
-				<!--<div class="shoppingCart">
-							   <img src={shopicon}/>
-									 </div>-->
-				<!-- </div>
-							</div>
-						</div>
-					</template>
-				</div>
-				<div style="display:flex;justify-content:center;margin-top:50px;">
-					<div class="dots">
-						<button class="NaviButton" style="background:none;margin-top:-17px"
-							onclick={previousSlide}>&#10094;</button>
-						<template for:each={carouselItems} for:item="item" for:index="index">
-							<span key={item.id} class="dotClass" onclick={handleDotClick} data-index={index}></span>
-						</template>
-						<button class="NaviButton" style="background:none;margin-top:-17px"
-							onclick={nextSlide}>&#10095;</button>
-					</div>
-				</div> -->
+
 			</div>
 		</lightning-layout-item>
 	</lightning-layout>
 	<div class="OnlyShowInDesktopAccount">
-		<lightning-layout multiple-rows class="pad">
-			<lightning-layout-item size="12" small-device-size="12" medium-device-size="6"
-				large-device-size="6">
-				<!--   -->
-				<h3 class="section-headings text-left" style="margin: 30px 0px 30px 0px;">Your <span
-						style="color:#E4761E">Account</span></h3>
-				<lightning-layout multiple-rows>
-					<lightning-layout-item size="12" small-device-size="12" medium-device-size="12"
-						large-device-size="12" >
-						<div class="MoneyAvailable">
-							<div class="TextStyle">
-								<h3
-									style="font-size:53px;color:#E4761E;line-height:53px;font-family: 'Sketchetik Fill Bold';">
-									${AmountValues}
-									<span
-										style="color: #E4761E;font-size: 29px;line-height: 34px;font-family: 'Sketchetik Fill Bold';">.00</span>
-								</h3>
-								<p style="font-family: 'Helvetica Neue Bold Pro';font-size:20px;line-height:27px;">Money
-									available in your account</p>
-							</div>
-						</div>
-					</lightning-layout-item>
-				</lightning-layout>
-			</lightning-layout-item>
-			<lightning-layout-item size="12" class="slds-p-top_small" small-device-size="12" medium-device-size="6"
-				large-device-size="6">
-				<!-- Row 1 -->
-				<lightning-layout multiple-rows class="MobBreakdown slds-p-top_xx-large">
-					<lightning-layout-item size="12" small-device-size="12" medium-device-size="12"
-						large-device-size="12" padding="horizontal-small">
-						<h3
-							style="font-size:30px;font-weight:800;color:#002A3A;margin-left:15px;line-height:38px;font-family: 'Sketchetik Fill Bold';">
-							Breakdown
-						</h3>
-					</lightning-layout-item>
-					<!--<lightning-layout-item size="12" small-device-size="6" medium-device-size="6" large-device-size="6"
-						padding="horizontal-small">
-						<div class="CarContentImpact">
-							<h3 class="carTitleImpact">${Repaidbyborrower}<span class="carPArPoints">.00</span></h3>
-							<p class="carParaImpact">Repaid by borrower</p>
-						</div>
-					</lightning-layout-item>
-					<lightning-layout-item size="12" small-device-size="6" medium-device-size="6" large-device-size="6"
-						padding="horizontal-small">
-						<div class="CarContentImpact">
-							<h3 class="carTitleImpact">${Donated}<span class="carPArPoints">.00</span></h3>
-							<p class="carParaImpact">Donated</p>
-						</div>
-					</lightning-layout-item>-->
 
-				</lightning-layout>
+	
+
+		<div class="grid-containerLayoutImpact pad">
+			<div>
+				<h3 class="section-headings text-left">Your <span
+									style="color:#E4761E">account</span></h3>
+				<div class="MoneyAvailable">
+					<div class="TextStyle">
+						<h3 style="font-size:60px;color:#E4761E;line-height:69px;font-family: 'Sketchetik Fill Bold';">
+							${AmountValues}
+							<span
+													style="color: #E4761E;font-size: 40px;line-height: 57px;font-family: 'Sketchetik Fill Bold';">.00</span>
+						</h3>
+						<p style="font-family: 'Helvetica Neue Bold Pro';font-size:20px;line-height:27px;">Money
+							available in your account</p>
+					</div>
+				</div>
+			</div>
+			<div>
+				<h3 class="section-headings text-left" style="height:40px"></h3>
+				<h3
+					style="font-size:30px;font-weight:800;color:#002A3A;margin-left:15px;line-height:38px;font-family: 'Sketchetik Fill Bold';">
+					Breakdown
+				</h3>
 				<div class="grid-containerDashB">
 					<div class="CarContentImpact">
 						<h3 class="carTitleImpact">${Repaidbyborrower}<span class="carPArPoints">.00</span></h3>
@@ -437,47 +229,30 @@
 						<p class="carParaImpact">Withdrawn from your account</p>
 					</div>
 				</div>
-				<!-- Row 2 -->
-				<!--<lightning-layout multiple-rows>
-					<lightning-layout-item size="12" small-device-size="6" medium-device-size="6" large-device-size="6"
-						padding="horizontal-small">
-						<div class="CarContentImpact">
-							<h3 class="carTitleImpact">${Addedtoyouraccount}<span class="carPArPoints">.00</span></h3>
-							<p class="carParaImpact">Added to your account</p>
-						</div>
-					</lightning-layout-item>
-					<lightning-layout-item size="12" small-device-size="6" medium-device-size="6" large-device-size="6"
-						padding="horizontal-small">
-						<div class="CarContentImpact">
-							<h3 class="carTitleImpact">${Withdrawnfromyouraccount}<span class="carPArPoints">.00</span>
-							</h3>
-							<p class="carParaImpact">Withdrawn from your account</p>
-						</div>
-					</lightning-layout-item>
+			</div>
+		</div>
 
-				</lightning-layout>-->
-			</lightning-layout-item>
-		</lightning-layout>
 		<hr>
+
 		<lightning-layout multiple-rows class="pad">
 			<lightning-layout-item size="12" small-device-size="12" medium-device-size="4" large-device-size="4">
 				<div class="withdraw">
 					<a onclick={handleRedirectWithdraw} style="color:#002A3A;font-weight:800;"><span
-							style="font-size:25px;font-weight:bold;float:left;">&rarr;</span>&nbsp;
+							style="font-size:25px;font-weight:bold;display:flex;float:left;">&rarr;</span>&nbsp;
 						Withdraw</a>
 				</div>
 			</lightning-layout-item>
 			<lightning-layout-item size="12" small-device-size="12" medium-device-size="4" large-device-size="4">
 				<div class="Donate">
 					<a onclick={openDonatePopup} style="color:#002A3A;font-weight:800;"><span
-							style="font-size:25px;font-weight:bold;float:left;">&rarr;</span>&nbsp;
+							style="font-size:25px;font-weight:bold;display:flex;float:left;">&rarr;</span>&nbsp;
 						Donate</a>
 				</div>
 			</lightning-layout-item>
 			<lightning-layout-item size="12" small-device-size="12" medium-device-size="4" large-device-size="4">
 				<div class="TopUpAcc">
-					<a onclick={topupLenderBalance} style="color:#002A3A;font-weight:800;"><span
-							style="font-size:25px;font-weight:bold;float:left;">&rarr;</span>&nbsp;
+					<a onclick={topupLenderBalance} style="color:#002A3A;font-size:16px;line-height:16px;font-family:''Helvetica Neue Bold Pro';"><span
+							style="font-size:25px;font-weight:bold;display:flex;float:left;">&rarr;</span>&nbsp;
 						Top up account</a>
 				</div>
 			</lightning-layout-item>
@@ -599,37 +374,12 @@
 		</div>
 	</template>
 
-	<!-- <template if:true={donatePopup}>
-		<div class="search-overlay">
-		   <div class="search">
-			  <div style="display: flex; align-items: center;padding-top:10px">
-				 <div>
-					<a class="closes-button" style="padding-left:20px" onclick={closePopup}>
-					   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" viewBox="0 0 16 16">
-						  <path fill-rule="evenodd"
-							 d="M5.646 8l4.95-4.95a.5.5 0 0 0-.708-.708L4.04 7.646a.5.5 0 0 0 0 .708L9.888 13.95a.5.5 0 0 0 .708-.708L5.646 8z" />
-					   </svg>
-					</a>
-				 </div>
-				 <div style="flex: 1; text-align: center;padding-right:20px">
-					<h3 style="font-weight: 800; margin: 0;font-size:20px;line-height:20px;font-family:'Sketchetik Fill Bold';color:#002A3A;">Donate</h3>
-				 </div>
-			  </div>
-			  <hr style="margin: 10px 0px 0px 0px">
-			  <div class="search-header" style="padding: 0px 20px 0px 20px">
-				 <h3 class="donateMessage"> Fill here </h3>
-				 <hr style="margin: 10px 0px 0px 0px">
-				 <button class="custombuttomwithdraw" style="width: -webkit-fill-available;margin-bottom:10px;" onclick={closePopup}>Close window</button>
-			  </div>
-		   </div>
-		</div>
-	 </template> -->
 
 	<div class="Onlyshowinmobile">
 		<lightning-layout multiple-rows class="pad">
 			<lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="6">
 				<!--  padding="around-small" -->
-				<h3 class="section-headings text-left" style="margin: 30px 30px 30px 0px;">Your <span
+				<h3 class="section-headings text-left">Your <span
 						style="color:#E4761E">Account</span></h3>
 				<lightning-layout multiple-rows>
 					<lightning-layout-item size="12" small-device-size="12" medium-device-size="12"
@@ -637,35 +387,35 @@
 						<!-- padding="horizontal-small" -->
 						<div class="MoneyAvailableMobile slds-m-bottom_small">
 							<div class="TextStyleMobile">
-								<h3 style="font-size:40px;color:#E4761E;font-family: 'Sketchetik Fill Bold';">
+								<h3 style="font-size:60px;color:#E4761E;line-height:69px;font-family: 'Sketchetik Fill Bold';">
 									${AmountValues}<span
-										style="color: #E4761E;font-size: 29px;line-height: 34px;font-family: 'Sketchetik Fill Bold';">.00</span>
+										style="color: #E4761E;font-size: 40px;line-height: 57px;font-family: 'Sketchetik Fill Bold';">.00</span>
 								</h3>
 								<p style="font-weight:800">Money available in your account</p>
 							</div>
 						</div>
 						<div class="container" style="padding:0px 0px 0px 0px;">
 							<button style="background-color:#F3F0ED" onclick={openWithdrawPopup}>
-								<span style="font-size:25px;font-weight:bold;">&rarr;</span>
+								<span style="font-size:25px;font-weight:bold;display:flex;float:left">&rarr;</span>
 								&nbsp; Withdraw
 							</button>
 							<button style="background-color:#F3F0ED" onclick={openDonatePopup}>
-								<span style="font-size:25px;font-weight:bold;">&rarr;</span>
+								<span style="font-size:25px;font-weight:bold;display:flex;float:left">&rarr;</span>
 								&nbsp; Donate
 							</button>
 						</div>
 						<div class="withdrawMobile">
-							<a onclick={topupLenderBalance} style="color:#002A3A;font-family:'Helvetica Neue Bold Pro';"><span
-									style="font-size:25px;font-weight:bold;">&rarr;</span>&nbsp;
+							<a onclick={topupLenderBalance} style="color:#002A3A;font-size:16px;line-height:16px;font-family:''Helvetica Neue Bold Pro';"><span
+									style="font-size:25px;font-weight:bold;display:flex;float:left">&rarr;</span>&nbsp;
 								Top up account</a>
 						</div>
 						<div style="display:inline-flex;margin:10px 10px 10px 0px" class="slds-align_absolute-center">
-							<lightning-input type="checkbox" class="CheckboxACCMargin" variant="standard" name="name"></lightning-input>
+							<lightning-input type="checkbox" class="" variant="standard" name="name"></lightning-input>
 							<p
 								style="font-size:18px;line-height:18px;color:#002A3A;margin-left:12px;font-family: 'Helvetica Neue Regular';">
 								I would like my payments to be set to auto-relend. To view more information about
-								auto-relend payments view our
-								Terms & Conditions.
+								auto-relend payments view our 
+								<a href={TermsandConditionsFile}>Terms & Conditions.</a>
 							</p>
 						</div>
 					</lightning-layout-item>
@@ -695,13 +445,13 @@
 					<div style="display:flex;justify-content:center">
 						<div class="dots">
 							<button class="NaviButton" style="background:none;margin-top:-18px"
-								onclick={previousSlideImpact}>&lt;</button>
+								onclick={previousSlideImpact}>&#10094;</button>
 							<template for:each={carouselItemsImpact} for:item="item" for:index="index">
 								<span key={item.id} class="dotClass" onclick={handleDotClickImpact}
 									data-index={index}></span>
 							</template>
 							<button class="NaviButton" style="background:none;margin-top:-18px"
-								onclick={nextSlideImpact}>&gt;</button>
+								onclick={nextSlideImpact}>&#10095;</button>
 						</div>
 					</div>
 				</div>
@@ -713,7 +463,7 @@
 			<lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
 				<!-- padding="horizontal-small" -->
 				<div style="margin:10px 10px 30px 0px;">
-					<h3 class="section-headingsAccSett">Account<span style="color:#E4761E">&nbsp;Settings</span></h3>
+					<h3 class="section-headingsAccSett">Account<span style="color:#E4761E">&nbsp;settings</span></h3>
 				</div>
 			</lightning-layout-item>
 			<template if:true={CommunicationsPreferences}>
@@ -840,7 +590,7 @@
 		<div class="slds-grid slds-wrap">
 			<div class="slds-col slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12">
 				<div class="" style="margin:30px 0px 0px 0px">
-					<h3 class="section-headingsAccSett">Your <span style="color:#E4761E">Transactions </span></h3>
+					<h3 class="section-headingsAccSett">Your <span style="color:#E4761E">transactions </span></h3>
 				</div>
 			</div>
 		</div>
@@ -1015,13 +765,13 @@
 		<!-- Row 5 -->
 		<template if:true={showTransaction}>
 			<lightning-layout multiple-rows>
-				<lightning-layout-item size="12" class="slds-p-top_small slds-p-right_small" small-device-size="3" medium-device-size="6" large-device-size="6" >
+				<lightning-layout-item size="12" class="slds-p-top_small slds-p-right_small" small-device-size="12" medium-device-size="6" large-device-size="6" >
 						<div class="widthstyle">
 							<button class="PillsButtonEnd" onclick={handleViewTransactionsClick} if:true={showButton}>View more
 											transactions</button>
 						</div>
 				</lightning-layout-item>
-				<lightning-layout-item size="12" class="slds-p-top_small" small-device-size="3" medium-device-size="6" large-device-size="6">
+				<lightning-layout-item size="12" class="slds-p-top_small" small-device-size="12" medium-device-size="6" large-device-size="6">
 						<div class="widthstyleDonate">
 							<button class="PillsButtonEnd" data-template="LWC Transaction PDF" onclick={handleDownload}>Download statement</button>
 						</div>
@@ -1229,13 +979,13 @@
 			</template>
 		</div>
 		<lightning-layout multiple-rows>
-			<lightning-layout-item size="12" class="slds-p-top_small slds-p-right_small" small-device-size="3"
+			<lightning-layout-item size="12" class="slds-p-top_small" small-device-size="12"
 				medium-device-size="6" large-device-size="6">
 				<div class="widthstyle">
 					<button class="PillsButtonEnd">View more transactions</button>
 				</div>
 			</lightning-layout-item>
-			<lightning-layout-item size="12" class="slds-p-top_small" small-device-size="3" medium-device-size="6"
+			<lightning-layout-item size="12" class="slds-p-top_small" small-device-size="12" medium-device-size="6"
 				large-device-size="6">
 				<div class="widthstyle">
 					<button data-template="LWC Transaction PDF" onclick={handleDownload} class="PillsButtonEnd">Download statement</button>

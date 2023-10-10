@@ -237,14 +237,7 @@ p {
 
 
 
-.section-headings {
-  font-style: normal;
-  font-weight: 800;
-  font-size: 50px;
-  line-height: 45px;
-  font-family: 'Sketchetik Fill Bold';
-  color: #002A3A;
-}
+
 
 .section-heading {
   font-style: normal;
@@ -913,7 +906,6 @@ body {
 }
 
 a {
-  font-family: 'Helvetica';
   text-decoration: none;
   outline: none;
 }
@@ -1215,6 +1207,74 @@ h2 span {
 
 
 @media only screen and (max-width: 600px) {
+  .PillsButton {
+  display: flex;
+  background: white;
+  justify-content: center;
+  border-radius: 30px;
+  border: none;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+
+.PillsButton.selected {
+  display: flex;
+  background: #472175;
+  justify-content: center;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+
+.PillsButton:hover {
+  display: flex;
+  background: #472175;
+  justify-content: center;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+  .StyleBreakdown{
+  font-size:20px;
+  line-height:25px;
+  font-family:'Sketchetik Fill Bold';
+  font-weight:800;
+  color:#002A3A;
+}
+  .ChartTypeLoans{
+  float:left;
+  margin:20px 20px 20px 35px;
+  font-family: 'Helvetica Neue Bold Pro';
+  font-size:16px;
+  line-height:20px;
+}
+  .section-headings {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 37px;
+  font-family: 'Sketchetik Fill Bold';
+  color: #002A3A;
+  margin:30px 30px 30px 0px;
+}
+  .grid-containerLayoutImpact {
+  display: grid;
+  grid-template-columns: 100%;
+  gap:0px 0px;
+}
   .Acc {
   width: 100%;
   margin-top: 70px;
@@ -1234,10 +1294,16 @@ h2 span {
   .withdraw {
     background: #F3F0ED;
     padding: 10px;
+    margin: 10px;
     text-align: center;
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 16px;
     line-height: 16px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
   }
 
     .withdrawComPre {
@@ -1249,6 +1315,11 @@ h2 span {
     font-size: 16px;
     line-height: 16px;
     width: 100%;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
   }
 
   .Donate {
@@ -1259,6 +1330,11 @@ h2 span {
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 16px;
     line-height: 16px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
   }
 
   .TopUpAcc {
@@ -1269,6 +1345,10 @@ h2 span {
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 16px;
     line-height: 16px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .section-headingsAccSett {
@@ -1334,23 +1414,23 @@ h2 span {
   }
 
   .CarContentImpact {
-    margin: 15px 15px 15px 0px;
     background-color: #F3F0ED;
     padding: 15px;
+    margin: 0px 10px 0px 0px;
     width: auto;
     min-width: auto;
     min-height: auto;
+    border-radius: 8px;
   }
 
   .UpdateButtonMakAnotherloan {
     background: #FEBE10;
-    padding: 17px;
+    padding: 18px 20px 17px 20px;
     border-radius: 4px;
-    border-width: 1px;
-    border-color: #FEBE10;
-    width: 335px;
+    border-style: none;
+    width: -webkit-fill-available;
     height: 48px;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
     color: #002A3A;
     font-size: 16px;
     line-height: 16px;
@@ -1361,11 +1441,11 @@ h2 span {
 
   .UpdateButtonMakAnotherloan:hover {
     background: #472175;
-    padding: 17px;
+    padding: 18px 20px 17px 20px;
     border-radius: 4px;
-    width: 335px;
+    width: -webkit-fill-available;
     height: 48px;
-    margin-bottom: 50px;
+    margin-bottom: 40px;
     border-color: white;
     border-width: 1px;
     color: white;
@@ -1374,8 +1454,7 @@ h2 span {
     font-family: 'Helvetica Neue Bold Pro';
     display: flex;
     justify-content: center;
-    border-style: solid;
-    max-width: 500px;
+    border-style: none;
   }
 
   .pad {
@@ -1436,7 +1515,7 @@ h2 span {
 
   .carouselImpact {
     position: relative;
-    overflow: hidden;
+    overflow: auto;
   }
 
   .sliderImpact {
@@ -1444,6 +1523,7 @@ h2 span {
     transition: transform 0.5s;
     width: 300%;
     margin-bottom: 40px;
+    margin-top: 25px;
   }
 
   .carouselImpactBreak {
@@ -1498,10 +1578,6 @@ h2 span {
     display: none;
   }
 
-  .MobBreakdown {
-    margin-top: 0px;
-  }
-
   .displaygridsys {
     display: block;
     width: 100%;
@@ -1543,8 +1619,8 @@ h2 span {
     background: white;
     justify-content: center;
     border: none;
-    font-size: 21px;
-    line-height: 17px;
+    font-size: 16px;
+    line-height: 16px;
     font-family: 'Helvetica Neue Bold Pro';
     width: -webkit-fill-available;
   }
@@ -1555,14 +1631,82 @@ h2 span {
     color: white;
     justify-content: center;
     border: none;
-    font-size: 21px;
-    line-height: 17px;
+    font-size: 16px;
+    line-height: 16px;
     font-family: 'Helvetica Neue Bold Pro';
     width: -webkit-fill-available;
   }
 }
 
 @media only screen and (min-width: 600px) {
+  .PillsButton {
+  display: flex;
+  background: white;
+  justify-content: center;
+  border-radius: 30px;
+  border: none;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+
+.PillsButton.selected {
+  display: flex;
+  background: #472175;
+  justify-content: center;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+
+.PillsButton:hover {
+  display: flex;
+  background: #472175;
+  justify-content: center;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+    .StyleBreakdown{
+  font-size:20px;
+  line-height:25px;
+  font-family:'Sketchetik Fill Bold';
+  font-weight:800;
+  color:#002A3A;
+}
+  .ChartTypeLoans{
+  float:left;
+  margin:20px 20px 20px 35px;
+  font-family: 'Helvetica Neue Bold Pro';
+  font-size:16px;
+  line-height:20px;
+}
+    .section-headings {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 37px;
+  font-family: 'Sketchetik Fill Bold';
+  color: #002A3A;
+  margin:30px 30px 30px 0px;
+}
+    .grid-containerLayoutImpact {
+  display: grid;
+  grid-template-columns: 100%;
+  gap: 0px 0px;
+}
     .Acc {
   width: 100%;
   margin-top: 70px;
@@ -1582,10 +1726,16 @@ h2 span {
   .withdraw {
     background: #F3F0ED;
     padding: 10px;
+    margin: 10px;
     text-align: center;
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 16px;
     line-height: 16px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
   }
   .withdrawComPre {
     background: #F3F0ED;
@@ -1596,6 +1746,11 @@ h2 span {
     font-size: 16px;
     line-height: 16px;
     width: 100%;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
   }
 
   .Donate {
@@ -1606,6 +1761,11 @@ h2 span {
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 16px;
     line-height: 16px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
   }
 
   .TopUpAcc {
@@ -1616,6 +1776,10 @@ h2 span {
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 16px;
     line-height: 16px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .section-headingsAccSett {
@@ -1681,24 +1845,26 @@ h2 span {
   }
 
   .CarContentImpact {
-    margin: 15px 15px 15px 0px;
     background-color: #F3F0ED;
     padding: 15px;
+    margin: 0px 10px 0px 0px;
     width: auto;
     min-width: auto;
     min-height: auto;
+    border-radius: 8px;
   }
 
   .UpdateButtonMakAnotherloan {
     background: #FEBE10;
-   padding: 17px;
+    padding: 22px 20px 17px 20px;
     border-radius: 4px;
-    width: 335px;
-    height: 48px;
-    margin-bottom: 50px;
+    border-style: none;
+    width: -webkit-fill-available;
+    height: 58px;
+    margin-bottom: 40px;
     color: #002A3A;
-    font-size: 16px;
-    line-height: 16px;
+    font-size: 22px;
+    line-height: 18px;
     font-family: 'Helvetica Neue Bold Pro';
     display: flex;
     justify-content: center;
@@ -1706,20 +1872,20 @@ h2 span {
 
   .UpdateButtonMakAnotherloan:hover {
     background: #472175;
-    padding: 17px;
+    padding: 22px 20px 17px 20px;
     border-radius: 4px;
-    width: 335px;
-    height: 48px;
-    margin-bottom: 50px;
+    width: -webkit-fill-available;
+    height: 58px;
+    margin-bottom: 40px;
     border-color: white;
     border-width: 1px;
     color: white;
-    font-size: 16px;
-    line-height: 16px;
+    font-size: 22px;
+    line-height: 18px;
     font-family: 'Helvetica Neue Bold Pro';
     display: flex;
     justify-content: center;
-    border-style: solid;
+    border-style: none;
   }
 
   .pad {
@@ -1761,7 +1927,7 @@ h2 span {
 
   .carouselImpact {
     position: relative;
-    overflow: hidden;
+    overflow: auto;
   }
 
   .sliderImpact {
@@ -1769,6 +1935,7 @@ h2 span {
     transition: transform 0.5s;
     width: 300%;
     margin-bottom: 40px;
+    margin-top: 25px;
   }
 
   .carouselImpactBreak {
@@ -1826,10 +1993,6 @@ h2 span {
     display: none;
   }
 
-  .MobBreakdown {
-    margin-top: 0px;
-  }
-
   .displaygridsys {
     display: block;
     width: 100%;
@@ -1871,8 +2034,8 @@ h2 span {
     background: white;
     justify-content: center;
     border: none;
-    font-size: 21px;
-    line-height: 17px;
+    font-size: 16px;
+    line-height: 16px;
     font-family: 'Helvetica Neue Bold Pro';
     width: -webkit-fill-available;
   }
@@ -1883,8 +2046,8 @@ h2 span {
     color: white;
     justify-content: center;
     border: none;
-    font-size: 21px;
-    line-height: 17px;
+    font-size: 16px;
+    line-height: 16px;
     font-family: 'Helvetica Neue Bold Pro';
     width: -webkit-fill-available;
   }
@@ -1910,6 +2073,74 @@ h2 span {
 }
 
 @media only screen and (min-width: 768px) {
+  .PillsButton {
+  display: flex;
+  background: white;
+  justify-content: center;
+  border-radius: 30px;
+  border: none;
+  font-size: 20px;
+  line-height: 27px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+
+.PillsButton.selected {
+  display: flex;
+  background: #472175;
+  justify-content: center;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  font-size: 20px;
+  line-height: 27px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+
+.PillsButton:hover {
+  display: flex;
+  background: #472175;
+  justify-content: center;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  font-size: 20px;
+  line-height: 27px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+    .StyleBreakdown{
+  font-size:30px;
+  line-height:38px;
+  font-family:'Sketchetik Fill Bold';
+  font-weight:800;
+  color:#002A3A;
+}
+  .ChartTypeLoans{
+  float:left;
+  margin:20px 20px 20px 45px;
+  font-family: 'Helvetica Neue Bold Pro';
+  font-size:20px;
+  line-height:27px;
+}
+      .section-headings {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 50px;
+  line-height: 45px;
+  font-family: 'Sketchetik Fill Bold';
+  color: #002A3A;
+  margin:30px 30px 30px 0px;
+}
+      .grid-containerLayoutImpact {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 0px 50px;
+}
     .Acc {
   width: 80%;
   margin-top: 70px;
@@ -1917,7 +2148,7 @@ h2 span {
   display: block;
 }
   .grid-container1 {
-  justify-content: center;
+  justify-content: left;
   display: grid;
   grid-template-columns: 120px auto;
   gap: 20px;
@@ -1944,10 +2175,16 @@ h2 span {
   .withdraw {
     background: #F3F0ED;
     padding: 10px;
+    margin: 10px;
     text-align: center;
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 16px;
     line-height: 16px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
   }
     .withdrawComPre {
     background: #F3F0ED;
@@ -1958,6 +2195,11 @@ h2 span {
     font-size: 16px;
     line-height: 16px;
     width: 100%;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
   }
 
   .Donate {
@@ -1968,6 +2210,11 @@ h2 span {
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 16px;
     line-height: 16px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
   }
 
   .TopUpAcc {
@@ -1978,18 +2225,23 @@ h2 span {
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 16px;
     line-height: 16px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .MoneyAvailable {
     background: #F3F0ED;
-    height: 290px;
+    min-height: 290px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
   }
 
   .TextStyle {
-    padding-left: 25px;
-    padding-top: 205px;
-    text-align: left;
+  padding: 15px;
   }
 
   .carTitleImpact {
@@ -2046,21 +2298,22 @@ h2 span {
   }
 
   .CarContentImpact {
-    margin: 15px 15px 15px 0px;
     background-color: #F3F0ED;
     padding: 15px;
     width: -webkit-fill-available;
     min-width: auto;
     min-height: auto;
+    border-radius: 8px;
   }
 
   .UpdateButtonMakAnotherloan {
     background: #FEBE10;
-    padding: 20px;
+    padding: 22px 20px 17px 20px;
     border-radius: 4px;
-        width: 386px;
+    border-style: none;
+    width: 386px;
     height: 58px;
-    margin-bottom: 100px;
+    margin-bottom: 40px;
     color: #002A3A;
     font-size: 22px;
     line-height: 18px;
@@ -2071,11 +2324,11 @@ h2 span {
 
   .UpdateButtonMakAnotherloan:hover {
     background: #472175;
-    padding: 20px;
+    padding: 22px 20px 17px 20px;
     border-radius: 4px;
-        width: 386px;
+    width: 386px;
     height: 58px;
-    margin-bottom: 100px;
+    margin-bottom: 40px;
     border-color: white;
     border-width: 1px;
     color: white;
@@ -2084,7 +2337,7 @@ h2 span {
     font-family: 'Helvetica Neue Bold Pro';
     display: flex;
     justify-content: center;
-    border-style: solid;
+    border-style: none;
   }
 
   .pad {
@@ -2122,11 +2375,12 @@ h2 span {
     margin-top: 35px;
     margin-bottom: 35px;
     width: 100%;
+    min-height: 330px;
   }
 
   .carouselImpact {
     position: relative;
-    overflow: hidden;
+    overflow: auto;
   }
 
   .sliderImpact {
@@ -2134,6 +2388,7 @@ h2 span {
     transition: transform 0.5s;
     width: 100%;
     margin-bottom: 40px;
+    margin-top: 25px;
   }
 
   .carouselImpactBreak {
@@ -2188,10 +2443,6 @@ h2 span {
 
   .MobValues {
     margin-top: -125px;
-  }
-
-  .MobBreakdown {
-    margin-top: 25px;
   }
 
   .displaygridsys {
@@ -2273,14 +2524,82 @@ h2 span {
 
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
+  .PillsButton {
+  display: flex;
+  background: white;
+  justify-content: center;
+  border-radius: 30px;
+  border: none;
+  font-size: 20px;
+  line-height: 27px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+
+.PillsButton.selected {
+  display: flex;
+  background: #472175;
+  justify-content: center;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  font-size: 20px;
+  line-height: 27px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+
+.PillsButton:hover {
+  display: flex;
+  background: #472175;
+  justify-content: center;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  font-size: 20px;
+  line-height: 27px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+      .StyleBreakdown{
+  font-size:30px;
+  line-height:38px;
+  font-family:'Sketchetik Fill Bold';
+  font-weight:800;
+  color:#002A3A;
+}
+  .ChartTypeLoans{
+  float:left;
+  margin:20px 20px 20px 45px;
+  font-family: 'Helvetica Neue Bold Pro';
+  font-size:20px;
+  line-height:27px;
+}
+        .section-headings {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 50px;
+  line-height: 45px;
+  font-family: 'Sketchetik Fill Bold';
+  color: #002A3A;
+  margin:30px 30px 30px 0px;
+}
+      .grid-containerLayoutImpact {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 0px 50px;
+}
     .Acc {
-  width: 80%;
+  width: 100%;
   margin-top: 70px;
   margin-bottom: 70px;
   display: block;
 }
   .grid-container1 {
-  justify-content: center;
+  justify-content: left;
   display: grid;
   grid-template-columns: 120px auto;
   gap: 20px;
@@ -2307,10 +2626,16 @@ h2 span {
   .withdraw {
     background: #F3F0ED;
     padding: 10px;
+    margin: 10px;
     text-align: center;
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 22px;
     line-height: 18px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
   }
 
     .withdrawComPre {
@@ -2321,7 +2646,12 @@ h2 span {
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 22px;
     line-height: 18px;
-    width: 100%;
+    width: 466px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
   }
 
   .Donate {
@@ -2332,6 +2662,11 @@ h2 span {
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 22px;
     line-height: 18px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
   }
 
   .TopUpAcc {
@@ -2342,18 +2677,23 @@ h2 span {
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 22px;
     line-height: 18px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .MoneyAvailable {
     background: #F3F0ED;
-    height: 410px;
+    min-height: 340px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
   }
 
   .TextStyle {
-    padding-left: 25px;
-    padding-top: 205px;
-    text-align: left;
+  padding: 15px;
   }
 
   .carTitleImpact {
@@ -2410,19 +2750,20 @@ h2 span {
   }
 
   .CarContentImpact {
-    margin: 15px 15px 15px 0px;
     background-color: #F3F0ED;
     padding: 15px;
     width: 100%;
     min-width: auto;
     min-height: auto;
+    border-radius: 8px;
   }
 
   .UpdateButtonMakAnotherloan {
     background: #FEBE10;
-    padding: 20px;
+    padding: 22px 20px 17px 20px;
     border-radius: 4px;
-        width: 386px;
+    border-style: none;
+    width: 386px;
     height: 58px;
     margin-bottom: 40px;
     color: #002A3A;
@@ -2435,9 +2776,9 @@ h2 span {
 
   .UpdateButtonMakAnotherloan:hover {
     background: #472175;
-    padding: 20px;
+    padding: 22px 20px 17px 20px;
     border-radius: 4px;
-        width: 386px;
+    width: 386px;
     height: 58px;
     margin-bottom: 40px;
     border-color: white;
@@ -2448,7 +2789,7 @@ h2 span {
     font-family: 'Helvetica Neue Bold Pro';
     display: flex;
     justify-content: center;
-    border-style: solid;
+    border-style: none;
   }
 
   .pad {
@@ -2509,7 +2850,7 @@ h2 span {
 
   .carouselImpact {
     position: relative;
-    overflow: hidden;
+    overflow: auto;
   }
 
   .sliderImpact {
@@ -2517,6 +2858,7 @@ h2 span {
     transition: transform 0.5s;
     width: 100%;
     margin-bottom: 40px;
+    margin-top: 25px;
   }
 
   .carouselImpactBreak {
@@ -2571,10 +2913,6 @@ h2 span {
 
   .MobValues {
     margin-top: -125px;
-  }
-
-  .MobBreakdown {
-    margin-top: 25px;
   }
 
   .displaygridsys {
@@ -2635,15 +2973,83 @@ h2 span {
   }
 }
 
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 993px) and (max-width: 1095px){
+  .PillsButton {
+  display: flex;
+  background: white;
+  justify-content: center;
+  border-radius: 30px;
+  border: none;
+  font-size: 20px;
+  line-height: 27px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+
+.PillsButton.selected {
+  display: flex;
+  background: #472175;
+  justify-content: center;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  font-size: 20px;
+  line-height: 27px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+
+.PillsButton:hover {
+  display: flex;
+  background: #472175;
+  justify-content: center;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  font-size: 20px;
+  line-height: 27px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+      .StyleBreakdown{
+  font-size:30px;
+  line-height:38px;
+  font-family:'Sketchetik Fill Bold';
+  font-weight:800;
+  color:#002A3A;
+}
+  .ChartTypeLoans{
+  float:left;
+  margin:20px 20px 20px 45px;
+  font-family: 'Helvetica Neue Bold Pro';
+  font-size:20px;
+  line-height:27px;
+}
+        .section-headings {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 50px;
+  line-height: 45px;
+  font-family: 'Sketchetik Fill Bold';
+  color: #002A3A;
+  margin:30px 30px 30px 0px;
+}
+     .grid-containerLayoutImpact {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 0px 50px;
+}
     .Acc {
-  width: 80%;
+  width: 100%;
   margin-top: 70px;
   margin-bottom: 70px;
   display: block;
 }
   .grid-container1 {
-  justify-content: center;
+  justify-content: left;
   display: grid;
   grid-template-columns: 120px auto;
   gap: 20px;
@@ -2652,7 +3058,7 @@ h2 span {
   .grid-containerTransactions{
   display: grid;
   grid-template-columns: auto auto auto auto auto;
-  gap: 10px 100px;
+  gap: 10px 60px;
   padding: 0px;
 }
     .CheckboxACCMargin{
@@ -2670,10 +3076,16 @@ h2 span {
   .withdraw {
     background: #F3F0ED;
     padding: 10px;
+    margin: 10px;
     text-align: center;
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 22px;
     line-height: 18px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
   }
 
     .withdrawComPre {
@@ -2684,7 +3096,12 @@ h2 span {
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 22px;
     line-height: 18px;
-    width: 100%;
+    width: 466px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
   }
 
   .Donate {
@@ -2695,6 +3112,11 @@ h2 span {
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 22px;
     line-height: 18px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
   }
 
   .TopUpAcc {
@@ -2705,18 +3127,23 @@ h2 span {
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 22px;
     line-height: 18px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .MoneyAvailable {
     background: #F3F0ED;
-    height: 352px;
+    min-height: 340px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
   }
 
   .TextStyle {
-    padding-left: 25px;
-    padding-top: 218px;
-    text-align: left;
+  padding: 15px;
   }
 
   .carTitleImpact {
@@ -2773,19 +3200,20 @@ h2 span {
   }
 
   .CarContentImpact {
-    margin: 15px 15px 15px 0px;
     background-color: #F3F0ED;
     padding: 15px;
     width: 100%;
     min-width: auto;
     min-height: auto;
+    border-radius: 8px;
   }
 
   .UpdateButtonMakAnotherloan {
     background: #FEBE10;
-    padding: 20px;
+    padding: 22px 20px 17px 20px;
     border-radius: 4px;
-        width: 386px;
+    border-style: none;
+    width: 386px;
     height: 58px;
     margin-bottom: 40px;
     color: #002A3A;
@@ -2798,9 +3226,9 @@ h2 span {
 
   .UpdateButtonMakAnotherloan:hover {
     background: #472175;
-    padding: 20px;
+    padding: 22px 20px 17px 20px;
     border-radius: 4px;
-        width: 386px;
+    width: 386px;
     height: 58px;
     margin-bottom: 40px;
     border-color: white;
@@ -2811,7 +3239,7 @@ h2 span {
     font-family: 'Helvetica Neue Bold Pro';
     display: flex;
     justify-content: center;
-    border-style: solid;
+    border-style: none;
   }
 
   .pad {
@@ -2858,7 +3286,7 @@ h2 span {
 
   .yourimpact {
     display: block;
-    width: 90%;
+    width: 100%;
   }
 
   .chartback {
@@ -2872,8 +3300,7 @@ h2 span {
 
   .carouselImpact {
     position: relative;
-    overflow: hidden;
-    margin: 60px 60px 60px 60px;
+    overflow: auto;
   }
 
   .sliderImpact {
@@ -2881,6 +3308,7 @@ h2 span {
     transition: transform 0.5s;
     width: 100%;
     margin-bottom: 40px;
+    margin-top: 25px;
   }
 
   .carouselImpactBreak {
@@ -2937,8 +3365,456 @@ h2 span {
     margin-top: -125px;
   }
 
-  .MobBreakdown {
+  .displaygridsys {
+    display: block;
+    width: 50%;
+  }
+
+  .styletransactionmodule {
+    background-color: white;
+    border-radius: 30px;
+    width: -webkit-fill-available;
+    padding: 0px;
+  }
+
+  .displayupdates {
+    display: none;
+  }
+
+  .BannerButtons {
+    display: grid;
+    margin-bottom: 50px;
+    margin-top: 0px;
+  }
+
+  .OnlyShowInDesktop {
+    display: flex;
+  }
+
+  .Onlyshowinmobile {
+    display: none;
+  }
+
+  .OnlyShowInDesktopAccount {
+    display: block;
+  }
+
+  .PillsButtonEnd {
+    display: flex;
+    background: white;
+    justify-content: center;
+    border: none;
+    font-size: 21px;
+    line-height: 17px;
+    font-family: 'Helvetica Neue Bold Pro';
+    width: -webkit-fill-available;
+  }
+
+  .PillsButtonEnd:hover {
+    display: flex;
+    background: #472175;
+    color: white;
+    justify-content: center;
+    border: none;
+    font-size: 21px;
+    line-height: 17px;
+    font-family: 'Helvetica Neue Bold Pro';
+    width: -webkit-fill-available;
+  }
+}
+
+@media only screen and (min-width: 1096px) {
+  .PillsButton {
+  display: flex;
+  background: white;
+  justify-content: center;
+  border-radius: 30px;
+  border: none;
+  font-size: 20px;
+  line-height: 27px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+
+.PillsButton.selected {
+  display: flex;
+  background: #472175;
+  justify-content: center;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  font-size: 20px;
+  line-height: 27px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+
+.PillsButton:hover {
+  display: flex;
+  background: #472175;
+  justify-content: center;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  font-size: 20px;
+  line-height: 27px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+      .StyleBreakdown{
+  font-size:30px;
+  line-height:38px;
+  font-family:'Sketchetik Fill Bold';
+  font-weight:800;
+  color:#002A3A;
+}
+  .ChartTypeLoans{
+  float:left;
+  margin:20px 20px 20px 45px;
+  font-family: 'Helvetica Neue Bold Pro';
+  font-size:20px;
+  line-height:27px;
+}
+        .section-headings {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 50px;
+  line-height: 45px;
+  font-family: 'Sketchetik Fill Bold';
+  color: #002A3A;
+  margin:30px 30px 30px 0px;
+}
+      .grid-containerLayoutImpact {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 0px 50px;
+}
+    .Acc {
+  width: 100%;
+  margin-top: 70px;
+  margin-bottom: 70px;
+  display: block;
+}
+  .grid-container1 {
+  justify-content: left;
+  display: grid;
+  grid-template-columns: 120px auto;
+  gap: 20px;
+  padding: 10px;
+}
+  .grid-containerTransactions{
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  gap: 10px 100px;
+  padding: 0px;
+}
+    .CheckboxACCMargin{
+    margin-top: -2px;
+  }
+  .section-headingsAccSett {
+    font-style: normal;
+    font-weight: 800;
+    font-size: 50px;
+    line-height: 45px;
+    font-family: 'Sketchetik Fill Bold';
+    color: #002A3A;
+  }
+
+  .withdraw {
+    background: #F3F0ED;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    font-family: 'Helvetica Neue Bold Pro';
+    font-size: 22px;
+    line-height: 18px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
+  }
+
+    .withdrawComPre {
+    background: #F3F0ED;
+    padding: 10px;
+    margin-bottom:10px;
+    text-align: center;
+    font-family: 'Helvetica Neue Bold Pro';
+    font-size: 22px;
+    line-height: 18px;
+    width: 466px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
+  }
+
+  .Donate {
+    background: #F3F0ED;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    font-family: 'Helvetica Neue Bold Pro';
+    font-size: 22px;
+    line-height: 18px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
+  }
+
+  .TopUpAcc {
+    background: #F3F0ED;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    font-family: 'Helvetica Neue Bold Pro';
+    font-size: 22px;
+    line-height: 18px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .MoneyAvailable {
+    background: #F3F0ED;
+    min-height: 340px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .TextStyle {
+  padding: 15px;
+  }
+
+  .carTitleImpact {
+    font-size: 53px;
+    line-height: 53px;
+    font-family: 'Sketchetik Fill Bold';
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #E4761E;
+  }
+
+  .carParaImpact {
+    font-size: 20px;
+    line-height: 27px;
+    font-family: 'Helvetica Neue Bold Pro';
+    color: #002A3A;
+
+  }
+
+  .carPArPoints {
+    font-size: 29px;
+    line-height: 34px;
+    font-family: 'Sketchetik Fill Bold';
+    color: #E4761E;
+  }
+
+  .custom-box1 {
+    font-size: 20px;
+    line-height: 27px;
+    font-family: 'Helvetica Neue Bold Pro';
+    color: #472175;
+
+  }
+
+  .custom-box2 {
+    font-size: 20px;
+    line-height: 27px;
+    font-family: 'Helvetica Neue Bold Pro';
+    color: #5C8F39;
+  }
+
+  .custom-box3 {
+    font-size: 20px;
+    line-height: 27px;
+    font-family: 'Helvetica Neue Bold Pro';
+    color: #E4761E;
+  }
+
+  .custom-box4 {
+    font-size: 20px;
+    line-height: 27px;
+    font-family: 'Helvetica Neue Bold Pro';
+    color: #AC381E;
+  }
+
+  .CarContentImpact {
+    background-color: #F3F0ED;
+    padding: 15px;
+    width: 100%;
+    min-width: auto;
+    min-height: auto;
+    border-radius: 8px;
+  }
+
+  .UpdateButtonMakAnotherloan {
+    background: #FEBE10;
+    padding: 22px 20px 17px 20px;
+    border-radius: 4px;
+    border-style: none;
+    width: 386px;
+    height: 58px;
+    margin-bottom: 40px;
+    color: #002A3A;
+    font-size: 22px;
+    line-height: 18px;
+    font-family: 'Helvetica Neue Bold Pro';
+    display: flex;
+    justify-content: center;
+  }
+
+  .UpdateButtonMakAnotherloan:hover {
+    background: #472175;
+    padding: 22px 20px 17px 20px;
+    border-radius: 4px;
+    width: 386px;
+    height: 58px;
+    margin-bottom: 40px;
+    border-color: white;
+    border-width: 1px;
+    color: white;
+    font-size: 22px;
+    line-height: 18px;
+    font-family: 'Helvetica Neue Bold Pro';
+    display: flex;
+    justify-content: center;
+    border-style: none;
+  }
+
+  .pad {
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+
+  .item1 {
+    order: 1;
+  }
+
+  .item2 {
+    order: 2;
+  }
+
+  .image1 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+    width: 115px;
+    height: 120px
+  }
+
+  .image2 {
+    position: absolute;
+    top: 5px;
+    right: 2px;
+    background: red;
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+  }
+
+  .Usernames {
+    display: flex;
+    justify-content: left;
+  }
+
+  .UpdateDivs {
+    display: block;
+    max-width: 500px;
+  }
+
+  .yourimpact {
+    display: block;
+    width: 100%;
+  }
+
+  .chartback {
+    display: grid;
+    background: #F3F0ED;
+    border-radius: 5px;
+    margin-top: 35px;
+    margin-bottom: 35px;
+    width: 100%;
+    min-height: 365px;
+  }
+
+  .carouselImpact {
+    position: relative;
+    overflow: auto;
+    margin: 60px 60px 60px 60px;
+  }
+
+  .sliderImpact {
+    display: flex;
+    transition: transform 0.5s;
+    width: 100%;
+    margin-bottom: 40px;
     margin-top: 25px;
+  }
+
+  .carouselImpactBreak {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sliderImpactBreak {
+    display: flex;
+    transition: transform 0.5s;
+    width: 100%;
+    margin-bottom: 40px;
+  }
+
+  .carouselCustom {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sliderCustom {
+    display: flex;
+    transition: transform 0.5s;
+    width: 100%;
+  }
+
+  .MobSizes {
+    display: block;
+    margin-left: 10px;
+    margin-top: 15px;
+  }
+
+  .H3headsMob {
+    color: white;
+    font-size: 16px;
+    line-height: 22px;
+    font-family: 'Helvetica Neue Bold Pro';
+
+  }
+
+  .H3headsMob1 {
+    color: white;
+    font-size: 30px;
+    line-height: 36px;
+    font-family: 'Sketchetik Fill Bold';
+    font-weight: 800;
+  }
+
+  .Mobupdatesvalues {
+    margin-top: 0px;
+    display: block;
+  }
+
+  .MobValues {
+    margin-top: -125px;
   }
 
   .displaygridsys {
@@ -3000,14 +3876,91 @@ h2 span {
 }
 
 @media only screen and (min-width: 1480px) {
+  .PillsButton {
+  display: flex;
+  background: white;
+  justify-content: center;
+  border-radius: 30px;
+  border: none;
+  font-size: 20px;
+  line-height: 27px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+
+.PillsButton.selected {
+  display: flex;
+  background: #472175;
+  justify-content: center;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  font-size: 20px;
+  line-height: 27px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+
+.PillsButton:hover {
+  display: flex;
+  background: #472175;
+  justify-content: center;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  font-size: 20px;
+  line-height: 27px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+      .StyleBreakdown{
+  font-size:30px;
+  line-height:38px;
+  font-family:'Sketchetik Fill Bold';
+  font-weight:800;
+  color:#002A3A;
+}
+  .ChartTypeLoans{
+  float:left;
+  margin:20px 20px 20px 45px;
+  font-family: 'Helvetica Neue Bold Pro';
+  font-size:20px;
+  line-height:27px;
+}
+        .section-headings {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 50px;
+  line-height: 45px;
+  font-family: 'Sketchetik Fill Bold';
+  color: #002A3A;
+  margin:30px 30px 30px 0px;
+}
+    .chartback {
+    display: grid;
+    background: #F3F0ED;
+    border-radius: 5px;
+    margin-top: 35px;
+    margin-bottom: 35px;
+    width: 100%;
+    min-height: 365px;
+  }
+      .grid-containerLayoutImpact {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  gap: 0px 50px;
+}
     .Acc {
-  width: 80%;
+  width: 100%;
   margin-top: 70px;
   margin-bottom: 70px;
   display: block;
 }
   .grid-container1 {
-  justify-content: center;
+  justify-content: left;
   display: grid;
   grid-template-columns: 120px auto;
   gap: 20px;
@@ -3038,10 +3991,16 @@ h2 span {
   .withdraw {
     background: #F3F0ED;
     padding: 10px;
+    margin: 10px;
     text-align: center;
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 22px;
     line-height: 18px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
   }
 
     .withdrawComPre {
@@ -3052,7 +4011,12 @@ h2 span {
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 22px;
     line-height: 18px;
-    width: 100%;
+    width: 466px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
   }
 
   .Donate {
@@ -3063,6 +4027,11 @@ h2 span {
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 22px;
     line-height: 18px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
   }
 
   .TopUpAcc {
@@ -3073,18 +4042,23 @@ h2 span {
     font-family: 'Helvetica Neue Bold Pro';
     font-size: 22px;
     line-height: 18px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .MoneyAvailable {
     background: #F3F0ED;
-    height: 340px;
+    min-height: 315px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
   }
 
   .TextStyle {
-    padding-left: 25px;
-    padding-top: 205px;
-    text-align: left;
+  padding: 15px;
   }
 
   .carTitleImpact {
@@ -3141,19 +4115,20 @@ h2 span {
   }
 
   .CarContentImpact {
-    margin: 15px 15px 15px 0px;
     background-color: #F3F0ED;
     padding: 15px;
     width: 100%;
     min-width: auto;
     min-height: auto;
+    border-radius: 8px;
   }
 
   .UpdateButtonMakAnotherloan {
     background: #FEBE10;
-    padding: 20px;
+    padding: 22px 20px 17px 20px;
     border-radius: 4px;
-        width: 386px;
+    border-style: none;
+    width: 386px;
     height: 58px;
     margin-bottom: 40px;
     color: #002A3A;
@@ -3166,9 +4141,9 @@ h2 span {
 
   .UpdateButtonMakAnotherloan:hover {
     background: #472175;
-    padding: 20px;
+    padding: 22px 20px 17px 20px;
     border-radius: 4px;
-        width: 386px;
+    width: 386px;
     height: 58px;
     margin-bottom: 40px;
     border-color: white;
@@ -3179,16 +4154,11 @@ h2 span {
     font-family: 'Helvetica Neue Bold Pro';
     display: flex;
     justify-content: center;
-    border-style: solid;
+    border-style: none;
   }
 }
 
-/*Carousel Starts*/
-.sliderImpact {
-  display: flex;
-  transition: transform 0.5s;
-  margin-bottom: 40px;
-}
+
 
 .sliderImpactBreak {
   display: flex;
@@ -3197,18 +4167,19 @@ h2 span {
 }
 
 .slide {
-  flex: 0 0 calc(100% / 4);
+  flex: 0 0 calc(1128px / 4);
   /* Adjust the percentage value based on the number of visible cards */
-  min-width: calc(100% / 4);
+  min-width: calc(1128px / 4);
   /* Adjust the percentage value based on the number of visible cards */
   border-radius: 5px;
   padding-right: 10px;
 }
 
 .slides {
-  flex: 0 0 calc(100% / 4);
+  flex: 0 0 calc(700px / 4);
   /* Adjust the percentage value based on the number of visible cards */
-  min-width: calc(100% / 4);
+  min-width: calc(700px / 4);
+  max-width: calc(920px / 4);
   /* Adjust the percentage value based on the number of visible cards */
   background-color: none;
   border-radius: 5px;
@@ -3319,8 +4290,8 @@ h2 span {
   background-color: #422371;
   margin: 0;
   height: 60px;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -3404,11 +4375,14 @@ h2 span {
 
 .MoneyAvailableMobile {
   background: #F3F0ED;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  border-radius: 8px;
 }
 
 .TextStyleMobile {
-  padding: 25px;
-  text-align: left;
+  padding: 15px;
 }
 
 .LinkStyle {
@@ -3419,55 +4393,16 @@ h2 span {
 
 .withdrawMobile {
   background: #F3F0ED;
-  padding: 10px;
+  padding: 15px 15px 10px 15px;
   margin-top: 10px;
   text-align: center;
   font-family: 'Helvetica Neue Bold Pro';
-
+  border-radius: 4px;
 }
 
 
 
-.PillsButton {
-  display: flex;
-  background: white;
-  justify-content: center;
-  border-radius: 30px;
-  border: none;
-  font-size: 20px;
-  line-height: 27px;
-  font-family: 'Helvetica Neue Bold Pro';
-  padding: 5px 15px 5px 15px;
-  width: fit-content;
-}
 
-.PillsButton.selected {
-  display: flex;
-  background: #472175;
-  justify-content: center;
-  color: white;
-  border-radius: 30px;
-  border: none;
-  font-size: 20px;
-  line-height: 27px;
-  font-family: 'Helvetica Neue Bold Pro';
-  padding: 5px 15px 5px 15px;
-  width: fit-content;
-}
-
-.PillsButton:hover {
-  display: flex;
-  background: #472175;
-  justify-content: center;
-  color: white;
-  border-radius: 30px;
-  border: none;
-  font-size: 20px;
-  line-height: 27px;
-  font-family: 'Helvetica Neue Bold Pro';
-  padding: 5px 15px 5px 15px;
-  width: fit-content;
-}
 
 .widthstyle {
   width: 100%;
@@ -3487,7 +4422,6 @@ h2 span {
 .backloanscolor {
   background-color: #F3F0ED;
   margin-top: 40px;
-  margin-bottom: 40px;
 }
 
 .dotClass {
@@ -3540,22 +4474,18 @@ h2 span {
 
 .custom-select {
   width: auto;
-  /* Adjust the width as needed */
-  padding: 8px;
   border: none;
+  border-radius: 4px;
+  padding: 8px;
   font-family: 'Helvetica Neue Bold Pro';
   font-size: 22px;
   line-height: 28px;
   background-color: white;
-
   color: #002A3A;
-
 }
 
 .custom-combobox {
-  //border: 2px solid #002A3A; /* Adjust the color and width as needed */
   border-radius: 4px;
-  padding: 4px;
   display: inline-block;
   width: 50%;
 }
@@ -3576,7 +4506,7 @@ h2 span {
 
 .container button {
   border: none;
-  border-radius: 5px;
+  border-radius: 4px;
   font-size: 16px;
   font-weight: 800;
   padding: 20px;
@@ -3603,7 +4533,7 @@ h2 span {
 .AmountValues {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
+  margin-top: 45px;
 }
 
 tr:nth-child(even) {
@@ -3706,13 +4636,13 @@ tr:nth-child(odd) {
 .grid-containerDashB {
   display: grid;
   grid-template-columns: auto auto;
-  gap: 10px 20px;
-  padding: 10px;
+  gap: 20px 20px;
+  margin: 20px 0px 20px 0px;
 }
-.ChartTypeLoans{
-  float:left;
-  margin:20px 20px 20px 45px;
-  font-family: 'Helvetica Neue Bold Pro';
-  font-size:20px;
-  line-height:27px;
+.carouselImpact::-webkit-scrollbar {
+    width: 0.1rem;
+    background-color: transparent;
+}
+.carouselImpact::-webkit-scrollbar-thumb {
+    background-color: transparent;
 }

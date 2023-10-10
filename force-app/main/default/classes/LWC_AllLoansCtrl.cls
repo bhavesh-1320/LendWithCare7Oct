@@ -1307,6 +1307,13 @@ public without sharing class LWC_AllLoansCtrl {
 			upsert rec; 
         return rec;
     }
-    
+    @AuraEnabled
+    public static String getAlert() {
+        List<LWC_Alert__c> eAlerts = [Select Id, Message__c, StartDateTime__c, EndDateTime__c, Status__c From LWC_Alert__c Where Status__c='Active' AND StartDateTime__c <=: System.Now() AND EndDateTime__c >=: System.Now()];
+        if( !eAlerts.isEmpty() && eAlerts.size() > 0 ){
+            return eAlerts[0].Message__c;
+        }
+        return null;
+    }
     
 }
