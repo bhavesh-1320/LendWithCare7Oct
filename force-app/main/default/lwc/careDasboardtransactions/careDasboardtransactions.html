@@ -1,11 +1,12 @@
 <template>
+   <lightning-spinner if:true={spin}></lightning-spinner>
    <div class="headers">
       <!--<img src={banner} alt="banner">-->
       <c-care-nav-bar></c-care-nav-bar>
       <lightning-layout multiple-rows class="slds-p-bottom_xx-large">
          <lightning-layout-item size="12" class="slds-p-around_small" small-device-size="6" medium-device-size="6"
             large-device-size="3">
-            <a href="https://careaustralia--mfadev.sandbox.my.site.com/LendwithCare/s/caredashboard"
+            <a href={dashboardLink}
                style="color:white;font-family: 'Helvetica Neue Bold';">&#60; <u>Dashboard</u></a>
          </lightning-layout-item>
          <lightning-layout-item size="12" class="slds-p-horizontal_small" small-device-size="12" medium-device-size="12"
@@ -16,7 +17,7 @@
             large-device-size="12" class="slds-align_absolute-center">
             <div class="button-container">
                <button class="button classPills {Onselection}" data-type="All" onclick={handleButtonClick}>All</button>
-               <button class="button classPills {Onselection}" data-type="Top Up" onclick={handleButtonClick}>Top
+               <button class="button classPills {Onselection}" data-type="Topup" onclick={handleButtonClick}>Top
                   up</button>
                <button class="button classPills {Onselection}" data-type="Loan"
                   onclick={handleButtonClick}>Loan</button>
@@ -201,7 +202,7 @@
          </div>
       </lightning-layout-item>-->
 
-      <template if:true={transactions}>
+      <template if:true={showTable}>
          <table>
 				  <tr style="background-color:#472175;">
 							<td style="font-family: 'Helvetica';
@@ -332,7 +333,7 @@
 										<div style="margin-left: 20px;">
 											<button disabled={transaction.disableDownloadButton}
 												class={transaction.downloadButtonClass} title="Download"
-												data-transaction-id={transaction.Id} onclick={handleDownloadClick}
+												data-transaction-id={transaction.Id} onclick={handleDownload}
 												style="width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; padding: 0; border-radius:8px; border: none;">
 												<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
 													stroke="currentColor" width="16" height="16">
@@ -349,8 +350,8 @@
             </tbody>
          </table>
       </template>
-      <template if:false={transactions}>
-         <div class="slds-text-color_weak slds-m-around_medium">
+      <template if:false={showTable}>
+         <div class="slds-text-color_weak slds-m-around_medium" style="text-align: center; font-size: 2rem; font-weight: bold;">
             No transactions found.
          </div>
       </template>

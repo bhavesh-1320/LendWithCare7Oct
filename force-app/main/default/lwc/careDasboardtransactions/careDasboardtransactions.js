@@ -10,6 +10,7 @@ import MicroFinanceBanner from '@salesforce/resourceUrl/MicroFinanceBanner';
 import MicrofinanceMobileBanner from '@salesforce/resourceUrl/MicrofinanceMobileBanner';
 import getYourTransactionDetails from '@salesforce/apex/LWC_AllLoansCtrl.getYourTransactionDetails';
 import Amount from '@salesforce/schema/Opportunity.Amount';
+import downloadPDF from '@salesforce/apex/CareHomePageCtrl.getPdfFileAsBase64String';
 
 const columns = [
   { label: 'Completed Date', fieldName: 'Completed_Date__c', type: 'date', initialWidth: 150 },
@@ -35,7 +36,8 @@ const columns = [
 
 export default class CareDasboardtransactions extends LightningElement {
 
-    @track isLoading = false;
+  spin = false;
+  @track isLoading = false;
   @track isSelected = false;
   @track showButton = true;
   @track screenWidth;
@@ -45,6 +47,7 @@ export default class CareDasboardtransactions extends LightningElement {
   @track type = 'All'
   @track showAll = true;
   columns = columns;
+  dashboardLink;
 
   lendLogo = LendWithCareImages + '/logo.png';
   Mfpara2 = Mfpara2;
@@ -63,9 +66,10 @@ export default class CareDasboardtransactions extends LightningElement {
   fromDate = '';
   toDate = '';
   filterValues = null;
-
+  showTable = false;
   @wire(getYourTransactionDetails, { type: '$type', contactId: '$contactid', showAll: '$showAll', sortValue: '$sortValue', filterValues: '$filterValues'}) //: { type: "All", fromAmount: "100", toAmount: "200", fromDate: "2023-08-10", toDate: "2023-09-22" }
   wiredTransactionData({ error, data }) {
+    console.log('Wireee');
     this.isLoading = false;
 
     // let formattedDate = new Date(data[0].Completed_Date__c).toLocaleDateString("en-GB");
@@ -77,6 +81,11 @@ export default class CareDasboardtransactions extends LightningElement {
         disableDownloadButton: transaction.Type__c !== 'Donation',
         downloadButtonClass: transaction.Type__c === 'Donation' ? 'slds-show' : 'slds-hide',
       }));
+      if( this.transactions!=undefined && this.transactions.length >0 ){
+        this.showTable = true;
+      } else{
+        this.showTable = false;
+      }
     } else {
       console.error('Error loading data:', error);
     }
@@ -146,25 +155,33 @@ export default class CareDasboardtransactions extends LightningElement {
     ];
   }
   MostRecentChange(event) {
-    this.sortValue = 'MostRecent';
-    this.isLoading = true;
+    if( this.sortValue!='MostRecent' ){
+      this.sortValue = 'MostRecent';
+      this.isLoading = true;
+    }
     console.log('sortValue: ' + this.sortValue);
   }
   OldestChange(event) {
-    this.sortValue = 'Oldest';
-    this.isLoading = true;
-    console.log('sortValue: ' + this.sortValue);
+    if( this.sortValue!='Oldest' ){
+      this.sortValue = 'Oldest';
+      this.isLoading = true;
+      console.log('sortValue: ' + this.sortValue);
+    }
 
   }
   HighestLowestChange(event) {
-    this.sortValue = 'HighestLowest';
-    this.isLoading = true;
-    console.log('sortValue: ' + this.sortValue);
+    if( this.sortValue!='HighestLowest' ){
+      this.sortValue = 'HighestLowest';
+      this.isLoading = true;
+      console.log('sortValue: ' + this.sortValue);
+    }
   }
   LowestHighestChange(event) {
-    this.sortValue = 'LowestHighest';
-    this.isLoading = true;
-    console.log('sortValue: ' + this.sortValue);
+    if( this.sortValue!='LowestHighest' ){
+      this.sortValue = 'LowestHighest';
+      this.isLoading = true;
+      console.log('sortValue: ' + this.sortValue);
+    }
   }
 
   get backgroundImage() {
@@ -184,6 +201,9 @@ export default class CareDasboardtransactions extends LightningElement {
 
   }
   connectedCallback() {
+    const currentPageUrl = window.location.href;
+    var currentPageUrl2 = currentPageUrl.substring(0, currentPageUrl.indexOf('/s') + 3);
+    this.dashboardLink = currentPageUrl2+'caredashboard';
     this.extractContactIdFromUrl();
     this.getScreenSize();
     window.addEventListener('resize', this.getScreenSize.bind(this));
@@ -271,9 +291,42 @@ export default class CareDasboardtransactions extends LightningElement {
     this.refreshData();
 }
 
-// const jsDate = new Date(); // Some JavaScript date
-// const formattedDate = jsDate.toLocaleDateString("en-GB"); // Format as per en-GB locale
-// console.log(formattedDate);
+handleDownload(event){
+  try{
+      this.spin = true;
+      var tId = event.currentTarget.dataset.transactionId;
 
+      downloadPDF({'transactionIds':tId, 'ContactId':this.contactid, 'template':'LWC Donation PDF'}).then(response => {
+          const binaryString = atob(response); // Decode the Base64 string to binary
+              const byteArray = new Uint8Array(binaryString.length);
+              for (let i = 0; i < binaryString.length; i++) {
+                  byteArray[i] = binaryString.charCodeAt(i);
+              }
+              console.log('bStr:',binaryString);
+              // Create a Blob from the Uint8Array
+              const blob = new Blob([byteArray], { type: 'application/pdf' });
+              this.spin = false;
+              // Create a temporary anchor element to trigger the download
+              const url = window.URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = 'LWC Donation PDF.pdf';
+              document.body.appendChild(a);
+              a.click();
+
+              // Cleanup
+              window.URL.revokeObjectURL(url);
+              document.body.removeChild(a);
+
+      }).catch(error => {
+          this.spin = false;
+          console.log('Error: ' +error.toString());
+          console.log('Error: ' +JSON.parse(JSON.stringify(error)));
+          console.log('Error: ' +JSON.stringify(error));
+      });
+  }catch(err){
+      console.log(err);
+  }
+}
 
 }

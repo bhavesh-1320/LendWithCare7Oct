@@ -709,6 +709,7 @@ export default class CareDashboard extends LightningElement {
     } */
     handleDownload(event){
         try{
+            this.isLoading = true;
             var tIds = '';
             for( var transaction of this.transactions ){
                 tIds += transaction.Id +',';
@@ -732,7 +733,7 @@ export default class CareDashboard extends LightningElement {
                     console.log('bStr:',binaryString);
                     // Create a Blob from the Uint8Array
                     const blob = new Blob([byteArray], { type: 'application/pdf' });
-
+                    this.isLoading = false;
                     // Create a temporary anchor element to trigger the download
                     const url = window.URL.createObjectURL(blob);
                     const a = document.createElement('a');
@@ -746,6 +747,7 @@ export default class CareDashboard extends LightningElement {
                     document.body.removeChild(a);
 
             }).catch(error => {
+                this.isLoading = false;
                 console.log('Error: ' +error.toString());
                 console.log('Error: ' +JSON.parse(JSON.stringify(error)));
                 console.log('Error: ' +JSON.stringify(error));
