@@ -11,6 +11,7 @@ import MicrofinanceMobileBanner from '@salesforce/resourceUrl/MicrofinanceMobile
 import getYourTransactionDetails from '@salesforce/apex/LWC_AllLoansCtrl.getYourTransactionDetails';
 import Amount from '@salesforce/schema/Opportunity.Amount';
 import downloadPDF from '@salesforce/apex/CareHomePageCtrl.getPdfFileAsBase64String';
+import getCurrentUser from '@salesforce/apex/LWC_AllLoansCtrl.getCurrentUser';
 
 const columns = [
   { label: 'Completed Date', fieldName: 'Completed_Date__c', type: 'date', initialWidth: 150 },
@@ -108,14 +109,18 @@ export default class CareDasboardtransactions extends LightningElement {
     this.isFilter = false;
   }
   resetFiltervalues(){
-  location.reload();
-  selectedfilterType = 'All';
-  sortValue = 'MostRecent';
-  fromAmount = '';
-  toAmount = '';
-  fromDate = '';
-  toDate = '';
-  filterValues = null;
+  // location.reload();
+    this.selectedfilterType = 'All';
+    this.type = 'All';
+    this.sortValue = 'MostRecent';
+    this.fromAmount = '';
+    this.toAmount = '';
+    this.fromDate = '';
+    this.toDate = '';
+    this.filterValues = {};
+    console.log('Refreshing data');
+    console.log(this.type, this.sortValue);
+    this.refreshData();
   }
 
   openSort() {
@@ -219,10 +224,36 @@ export default class CareDasboardtransactions extends LightningElement {
   }
 
   extractContactIdFromUrl() {
+    this.spin = true;
     const urlParams = new URLSearchParams(window.location.search);
     var Id = urlParams.get('Id');
     //this.contactid = atob(Id); // decrypt the ID from care dashboard
-    this.contactid = Id;
+    /* if( this.contactid == undefined || this.contactid=='' || this.contactid==null ){
+      const currentUrl = window.location.href;
+      const newUrllogin = currentUrl.replace(/\/s\/[^/]+/, '/s/' + 'login/');
+      window.location.assign(newUrllogin);
+    } */
+    getCurrentUser()
+    .then(result => {
+        if (result.Contact.Id == null || result.Contact.Id==undefined || result.Contact.Id=='') {
+            const currentUrl = window.location.href;
+            const newUrllogin = currentUrl.replace(/\/s\/[^/]+/, '/s/' + 'login/');
+            window.location.assign(newUrllogin);
+        } 
+        this.contactid = Id;
+        this.spin = false;
+        /* if( this.contactid!=undefined ){
+            this.getContactFields();
+        } */
+    })
+    .catch(error => {
+        // this.spin = false;
+        console.log('Error:',error);
+        const currentUrl = window.location.href;
+        const newUrllogin = currentUrl.replace(/\/s\/[^/]+/, '/s/' + 'login/');
+        window.location.assign(newUrllogin);
+        this.contactid = Id;
+    })
     console.log('this.contactId @@@ : ' + this.contactid);
   }
 
@@ -239,6 +270,7 @@ export default class CareDasboardtransactions extends LightningElement {
     console.log('@@@@@dataset' + event.target.dataset.type);
   }
   refreshData() {
+    console.log('Refreshingg');
     refreshApex(this.wiredTransactionData).then(() => {
       // Reset isLoading after data has been refreshed
       this.isLoading = false;

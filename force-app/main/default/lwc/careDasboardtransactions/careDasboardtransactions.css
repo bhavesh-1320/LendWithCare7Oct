@@ -1138,6 +1138,10 @@ h2 span {
 
 
 @media only screen and (max-width: 600px) {
+  .pad{
+    padding-left: 20px;
+    padding-right: 20px;
+  }
 .menuitems{
 display: none;
 }
@@ -1189,6 +1193,10 @@ display: none;
 }
 }
 @media only screen and (min-width: 600px) {
+    .pad{
+    padding-left: 10%;
+    padding-right: 10%;
+  }
 .menuitems{
 display: none;
 }
@@ -1227,6 +1235,10 @@ display: none;
 }
 }
 @media only screen and (min-width: 768px) {
+      .pad{
+    padding-left: 10%;
+    padding-right: 10%;
+  }
 .menuitems{
 display: flex;
 width: 120%;
@@ -1261,6 +1273,10 @@ font-family: 'Sketchetik Fill Bold';
 }
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
+      .pad{
+    padding-left: 10%;
+    padding-right: 10%;
+  }
 .menuitems{
 display: flex;
 font-family: 'Sketchetik Fill Bold';
@@ -1293,6 +1309,10 @@ font-family: 'Sketchetik Fill Bold';
 }
 }
 @media only screen and (min-width: 1200px) {
+      .pad{
+    padding-left: 10%;
+    padding-right: 10%;
+  }
 .menuitems{
 display: flex;
 font-family: 'Sketchetik Fill Bold';
@@ -1325,6 +1345,10 @@ font-family: 'Sketchetik Fill Bold';
 }
 }
 @media only screen and (min-width: 1500px) {
+      .pad{
+    padding-left: 10%;
+    padding-right: 10%;
+  }
 .menuitems{
 display: flex;
 font-family: 'Sketchetik Fill Bold';
@@ -1421,6 +1445,16 @@ font-family: 'Sketchetik Fill Bold';
   border: none;
   padding: 10px 20px 10px 20px;
 }
+
+.classPillsdefault{
+  background-color: white;
+  color: #002A3A;
+  width: auto;
+  border-radius: 20px;
+  border: none;
+  padding: 10px 20px 10px 20px;
+}
+
 .classPills.selected,
 .classPills:hover{
   background-color: #E4761E;

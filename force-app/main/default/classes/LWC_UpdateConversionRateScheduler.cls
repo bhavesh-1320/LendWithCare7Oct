@@ -5,11 +5,18 @@
 * Description	:		Run at 1:00 Daily to update the FX Rate
 */
 global class LWC_UpdateConversionRateScheduler Implements Schedulable{
+    Set<String> currencies = new Set<String>{'AUD'};
+        public LWC_UpdateConversionRateScheduler(){
+            
+        }    
+    public LWC_UpdateConversionRateScheduler( String curr ){
+        currencies.add( curr );
+    }
     global void execute(SchedulableContext sc)
     {
         // Checking last login dates for Lender and tagging date on Lender record
         map<String, Contact> lenderContactsMap = new map<String, Contact>();
-        list<User> lenderUsers = [SELECT Id, Name, ContactId, LastLoginDate FROM User WHERE Profile.Name = 'Lender' AND IsActive=true];
+        list<User> lenderUsers = [SELECT Id, Name, ContactId, LastLoginDate FROM User WHERE Profile.Name = 'Lender' AND IsActive=true AND MobilePhone !=null];
         set<String> conIds = new set<String>();
         for(User u: lenderUsers){
             conIds.add(u.ContactId);
@@ -61,7 +68,7 @@ global class LWC_UpdateConversionRateScheduler Implements Schedulable{
         }
             
         // as the callout is not possible from schedule class, used Queuable apex to make callouts
-        System.enqueueJob(new LWC_UpdateConversionRateQueuable());
+        System.enqueueJob(new LWC_UpdateConversionRateQueuable(currencies));
         //Database.executeBatch( new LWC_UpdateConversionRateBatch(), 2 );
     }
 }

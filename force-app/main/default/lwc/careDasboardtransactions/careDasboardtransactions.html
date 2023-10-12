@@ -3,7 +3,7 @@
    <div class="headers">
       <!--<img src={banner} alt="banner">-->
       <c-care-nav-bar></c-care-nav-bar>
-      <lightning-layout multiple-rows class="slds-p-bottom_xx-large">
+      <lightning-layout multiple-rows class="slds-p-bottom_xx-large pad">
          <lightning-layout-item size="12" class="slds-p-around_small" small-device-size="6" medium-device-size="6"
             large-device-size="3">
             <a href={dashboardLink}
@@ -29,13 +29,17 @@
             </div>
             <div style="display:grid">
                <div class="button-containerMob">
-                  <button class="button classPillsdefault">All</button>
-                  <button class="button classPills">Top up</button>
-                  <button class="button classPills">Loan</button>
+               <button class="button classPills {Onselection}" data-type="All" onclick={handleButtonClick}>All</button>
+               <button class="button classPills {Onselection}" data-type="Topup" onclick={handleButtonClick}>Top
+                  up</button>
+               <button class="button classPills {Onselection}" data-type="Loan"
+                  onclick={handleButtonClick}>Loan</button>
                </div>
                <div class="button-containerMob1">
-                  <button class="button classPills">Repayment</button>
-                  <button class="button classPills">Donation</button>
+               <button class="button classPills {Onselection}" data-type="Repayment"
+                  onclick={handleButtonClick}>Repayment</button>
+               <button class="button classPills {Onselection}" data-type="Donation"
+                  onclick={handleButtonClick}>Donation</button>
                </div>
             </div>
          </lightning-layout-item>
@@ -89,9 +93,9 @@
                   <h3 class="popupFilterTitle">Transaction Type</h3>
                   <div style="justify-content: space-between;">
                      <button class="catogory" data-type="All" onclick={handleFilterClick}>All</button>
-                     <button class="catogory" data-type="Contributions/repayment"
+                     <button class="catogory" data-type="Repayment"
                         onclick={handleFilterClick}>Contributions/repayment</button>
-                     <button class="catogory" data-type="Donations" onclick={handleFilterClick}>Donations</button>
+                     <button class="catogory" data-type="Donation" onclick={handleFilterClick}>Donations</button>
                      <button class="catogory" data-type="Loan" onclick={handleFilterClick}>Loan</button>
                   </div>
                </div>
@@ -103,8 +107,8 @@
                      <label class="labelDesign">From</label>
                      <label class="labelDesign">To</label>
                      <input class="ClassInputFields italic-placeholder" type="text" onchange={handleFromInputChange}
-                        placeholder="$"></input>
-                     <input class="ClassInputFields italic-placeholder" type="text" onchange={handleToInputChange}
+                        placeholder="$" value={fromAmount}></input>
+                     <input value={toAmount} class="ClassInputFields italic-placeholder" type="text" onchange={handleToInputChange}
                         placeholder="$"></input>
                   </div>
                </div>
@@ -115,9 +119,9 @@
                   <div class="container">
                      <label class="labelDesign">From</label>
                      <label class="labelDesign">To</label>
-                     <input class="ClassInputFields italic-placeholder" type="date" placeholder="DD-MM-YYYY"
+                     <input class="ClassInputFields italic-placeholder" value={fromDate} type="date" placeholder="DD-MM-YYYY"
                         onchange={handleFromDateChange}></input>
-                     <input class="ClassInputFields italic-placeholder" type="date" placeholder="DD-MM-YYYY"
+                     <input class="ClassInputFields italic-placeholder" value={toDate} type="date" placeholder="DD-MM-YYYY"
                         onchange={handleToDateChange}></input>
                   </div>
                </div>
@@ -183,7 +187,7 @@
          </div>
       </template>
    </div>
-   <div class="para2 slds-p-around_small">
+   <div class="para2 pad slds-p-top_small">
      <!-- <lightning-layout-item size="12" padding="around-small">
 
          <div class="slds-grid tableTitle">
@@ -209,17 +213,16 @@
 														padding: 15px;
 														font-size: 16px;
 														line-height: 19px;
-														color: white;width: 100px;text-align: center;"><p>Date</p></td>
+														color: white;width: fit-content;text-align: center;"><p>Date</p></td>
 							<td style="font-family: 'Helvetica';
 														padding: 15px;
 														font-size: 16px;
 														line-height: 19px;
-														color: white;width: 50px;text-align: center;">Type</td>
+														color: white;width: fit-content;text-align: center;">Type</td>
 								<td style="font-family: 'Helvetica';
-							  padding: 15px;
 							  font-size: 16px;
 							  line-height: 19px;
-							  color: white;width: 50px;text-align: center;">
+							  color: white;width: fit-content;text-align: center;">
 									<div style="display: flex;align-items: center;">
 										<div style="flex: 1;">Amount</div>
 										<!--<div style="margin-left: 20px;">
@@ -237,10 +240,9 @@
 									</div>
 								</td>
 								<td style="font-family: 'Helvetica';
-							  padding: 15px;
 							  font-size: 16px;
 							  line-height: 19px;
-							  color: white;width: 10%;text-align: center;">
+							  color: white;text-align: center;">
 
 								</td>
 						</tr>
@@ -294,7 +296,7 @@
 							 padding: 15px;
 							 font-size: 16px;
 							 line-height: 19px;
-							 color: #002A3A;width: 100px;text-align: center;"><lightning-formatted-date-time
+							 color: #002A3A;width: fit-content;text-align: center;"><lightning-formatted-date-time
 										value={transaction.Completed_Date__c} year="numeric" month="2-digit"
 										day="2-digit" time-zone="UTC">
 									</lightning-formatted-date-time></td>
@@ -302,12 +304,11 @@
 							  padding: 15px;
 							  font-size: 16px;
 							  line-height: 19px;
-							  color: #002A3A;width: 50px;text-align: center;">{transaction.Type__c}</td>
+							  color: #002A3A;width: fit-content;text-align: center;">{transaction.Type__c}</td>
 								<td style="font-family: 'Helvetica';
-							  padding: 15px;
 							  font-size: 16px;
 							  line-height: 19px;
-							  color: #002A3A;width: 50px;text-align: center;">
+							  color: #002A3A;width: fit-content;text-align: center;">
 									<div style="display: flex;align-items: center;">
 										<div style="flex: 1;">{transaction.Amount__c}</div>
 										<!--<div style="margin-left: 20px;">
@@ -325,10 +326,9 @@
 									</div>
 								</td>
 								<td style="font-family: 'Helvetica';
-							  padding: 15px;
 							  font-size: 16px;
 							  line-height: 19px;
-							  color: #002A3A;width: 10%;text-align: center;">
+							  color: #002A3A;text-align: center;">
 									<div style="display: flex;align-items: center;">
 										<div style="margin-left: 20px;">
 											<button disabled={transaction.disableDownloadButton}

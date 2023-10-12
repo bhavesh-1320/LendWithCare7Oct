@@ -1207,6 +1207,7 @@ h2 span {
 
 
 @media only screen and (max-width: 600px) {
+
   .PillsButton {
   display: flex;
   background: white;
@@ -1639,6 +1640,7 @@ h2 span {
 }
 
 @media only screen and (min-width: 600px) {
+
   .PillsButton {
   display: flex;
   background: white;
@@ -2073,6 +2075,7 @@ h2 span {
 }
 
 @media only screen and (min-width: 768px) {
+
   .PillsButton {
   display: flex;
   background: white;

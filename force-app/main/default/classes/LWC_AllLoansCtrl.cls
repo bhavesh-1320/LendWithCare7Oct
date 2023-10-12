@@ -484,19 +484,23 @@ public without sharing class LWC_AllLoansCtrl {
         }
         
         if (filterValues != null) {
-            if (filterValues.containsKey('fromAmount') && filterValues.containsKey('toAmount')) {
+            if (filterValues.containsKey('fromAmount') && filterValues.containsKey('toAmount') &&
+                filterValues.get('fromAmount')!='' && filterValues.get('toAmount')!=''
+            ) {
                 Decimal fromAmount = Decimal.valueOf(filterValues.get('fromAmount'));
                 Decimal toAmount = Decimal.valueOf(filterValues.get('toAmount'));
                 query += ' AND Amount__c >= ' + fromAmount + ' AND Amount__c <= ' + toAmount;
             }
             
-            // if (filterValues.containsKey('fromDate') && filterValues.containsKey('toDate')) {
-            //     Date fromDate = Date.valueOf(filterValues.get('fromDate'));
-            //     Date toDate = Date.valueOf(filterValues.get('toDate'));
-            //     DateTime fromDateTime = DateTime.newInstance(fromDate.year(), fromDate.month(), fromDate.day());
-            //     DateTime toDateTime = DateTime.newInstance(toDate.year(), toDate.month(), toDate.day(), 23, 59, 59);
-            //     query += ' AND Completed_Date__c >= ' + fromDateTime.format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'') + ' AND Completed_Date__c <= ' + toDateTime.format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'');
-            // }
+            if (filterValues.containsKey('fromDate') && filterValues.containsKey('toDate') && 
+                filterValues.get('fromDate')!='' && filterValues.get('toDate')!=''
+            ) {
+                Date fromDate = Date.valueOf(filterValues.get('fromDate'));
+                Date toDate = Date.valueOf(filterValues.get('toDate'));
+                DateTime fromDateTime = DateTime.newInstance(fromDate.year(), fromDate.month(), fromDate.day());
+                DateTime toDateTime = DateTime.newInstance(toDate.year(), toDate.month(), toDate.day(), 23, 59, 59);
+                query += ' AND Completed_Date__c >= ' + fromDateTime.format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'') + ' AND Completed_Date__c <= ' + toDateTime.format('yyyy-MM-dd\'T\'HH:mm:ss\'Z\'');
+            }
         }
         
         if ('MostRecent'.equals(sortValue)) {
@@ -510,7 +514,7 @@ public without sharing class LWC_AllLoansCtrl {
         }
         
         if (!showAll) {
-            query += ' LIMIT 7';
+            query += ' LIMIT 8';
         }
         
         return Database.query(query);
@@ -1243,6 +1247,18 @@ public without sharing class LWC_AllLoansCtrl {
             throw new AuraHandledException(e.getMessage());
         }
     }
+    
+    @AuraEnabled(cacheable=false)
+    public static void updateAutoRelend( Id contactId, Boolean enable ) {
+        List<Contact> conts = [SELECT Id,Auto_Relend__c FROM Contact WHERE Id = :contactId LIMIT 1];
+        if( conts.size()>0 ){
+            conts[0].Auto_Relend__c = enable;
+            Database.UPDATE( conts[0]);
+            //return 'Success';
+        }
+        // return 'Error';
+
+    }
     @AuraEnabled(cacheable=true)
     public static User getCurrentUser() {
         try{
@@ -1307,6 +1323,7 @@ public without sharing class LWC_AllLoansCtrl {
 			upsert rec; 
         return rec;
     }
+    
     @AuraEnabled
     public static String getAlert() {
         List<LWC_Alert__c> eAlerts = [Select Id, Message__c, StartDateTime__c, EndDateTime__c, Status__c From LWC_Alert__c Where Status__c='Active' AND StartDateTime__c <=: System.Now() AND EndDateTime__c >=: System.Now()];
@@ -1316,4 +1333,161 @@ public without sharing class LWC_AllLoansCtrl {
         return null;
     }
     
+    @AuraEnabled
+    public static String getCreditCardDetail(Id contactId, Decimal amount) {
+        DateTime todayDate = DateTime.now();
+        DateTime oneYearEgo = todayDate.addYears(-1);
+        Id lendOppRecordType = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName()
+                      .get('LendWithCare').getRecordTypeId();
+        List<Opportunity> opps = [SELECT Id, RecordTypeId, (SELECT Id, Refund_Reference_Number__c, Card_Number_Masked__c, npe01__Payment_Amount__c FROM npe01__OppPayment__r WHERE Refund_Reference_Number__c = '' AND npe01__Payment_Method__c = 'Credit Card' AND npe01__Paid__c = true AND CreatedDate >= :oneYearEgo ORDER By CreatedDate DESC) FROM Opportunity WHERE ContactId = :contactId AND RecordTypeId = :lendOppRecordType ORDER By CreatedDate DESC];
+        String cardNumber;
+        Decimal refundAmountCharge = 0;
+        for(Opportunity opp: opps) {
+            for(npe01__OppPayment__c payment: opp.npe01__OppPayment__r) {
+                if(refundAmountCharge >= amount) {
+                    break;
+                }
+                cardNumber = payment.Card_Number_Masked__c;
+                refundAmountCharge += payment.npe01__Payment_Amount__c;
+            }
+        }
+        
+        return cardNumber;
+    }
+    
+    @AuraEnabled
+    public static void refundAndDonate(Id contactId, Decimal refundAmount, Decimal donateAmount, String cardNumber) {
+        Decimal totalRefundAmount = refundAmount;
+        
+        DateTime todayDate = DateTime.now();
+        DateTime oneMonthEgo = todayDate.addDays(-30);
+        
+        List<Case> cases = [SELECT Id FROM Case WHERE ContactId = :contactId AND CreatedDate >= :oneMonthEgo];
+        
+        Id RefundRecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName()
+            .get('Refund').getRecordTypeId();
+        
+        Contact con = [SELECT Id, AccountId FROM Contact WHERE Id = :contactId];
+        
+        if (cases.size() >= 2) {
+            //Refund
+            //create a case with high risk
+            Case newCase = new Case(
+            	ContactId = contactId,
+                Status = 'Open',
+                Type = 'Refund',
+                RecordTypeId = 'RefundRecordTypeId',
+                CurrencyIsoCode = 'AUD',
+                Priority = 'High',
+                AccountId = con.AccountId
+            );
+            insert newCase;
+        } else {
+            if(totalRefundAmount > 100) {
+                //create case 
+                Case newCase = new Case(
+                    ContactId = contactId,
+                    Status = 'Open',
+                    Type = 'Refund',
+                    RecordTypeId = 'RefundRecordTypeId',
+                    CurrencyIsoCode = 'AUD',
+                    Priority = 'High',
+                    AccountId = con.AccountId
+                );
+                insert newCase;
+            } else if(totalRefundAmount > 0 && totalRefundAmount <= 100) {
+                DateTime oneYearEgo = todayDate.addYears(-1);
+                Id lendOppRecordType = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName()
+                    .get('LendWithCare').getRecordTypeId();
+                List<Opportunity> opps = [SELECT Id, RecordTypeId, (SELECT Id, Refund_Reference_Number__c, Card_Number_Masked__c, npe01__Payment_Amount__c, npe01__Check_Reference_Number__c FROM npe01__OppPayment__r WHERE Refund_Reference_Number__c = '' AND npe01__Payment_Method__c = 'Credit Card' AND npe01__Paid__c = true AND CreatedDate >= :oneYearEgo AND Card_Number_Masked__c = :cardNumber ORDER By CreatedDate DESC) FROM Opportunity WHERE ContactId = :contactId AND RecordTypeId = :lendOppRecordType ORDER By CreatedDate DESC];
+                
+                Map<String, Decimal> refundCharges = new Map<String, Decimal>();
+                Decimal refundAmountCharge = 0;
+                
+                for(Opportunity opp: opps) {
+                    for(npe01__OppPayment__c payment: opp.npe01__OppPayment__r) {
+                        if(refundAmountCharge >= refundAmount) {
+                            break;
+                        }
+                        refundCharges.put(payment.npe01__Check_Reference_Number__c, payment.npe01__Payment_Amount__c);
+                        refundAmountCharge += payment.npe01__Payment_Amount__c;
+                    }
+                }
+                
+                Map<String, Map<String, Object>> chargePaymentsToUpdate = new Map<String, Map<String, Object>>();
+                
+                for(String chargeId: refundCharges.keySet()) {
+                    Decimal amountToRefund = 0;
+                    
+                    if(refundAmount >= 0) {
+                        if(refundAmount > refundCharges.get(chargeId)) {
+                            amountToRefund = refundCharges.get(chargeId);
+                        } else {
+                            amountToRefund = refundAmount;
+                        }
+                        refundAmount = refundAmount - amountToRefund;
+                        
+                        System.debug('chargeId -> ' + chargeId);
+                        System.debug('charge amount -> ' + refundCharges.get(chargeId));
+                        System.debug('amountToRefund -> ' + amountToRefund);
+                        System.debug('refundAmount remaining -> ' + refundAmount);
+                        
+                        Map<String, String> requestParameters = new Map<String, String>();
+                        requestParameters.put('amount', String.valueOf(Integer.valueOf(amountToRefund*100)));
+                        requestParameters.put('charge', chargeId);
+                        
+                        HttpResponse refundResponse = StripeConnection.postRefund(createRequestBody(requestParameters));
+                        
+                        if(refundResponse.getStatusCode() == 200) {
+                            Map<String, Object> refundWrapper = (Map<String, Object>) JSON.deserializeUntyped(refundResponse.getBody());
+                            chargePaymentsToUpdate.put(chargeId, refundWrapper);
+                        }
+                    }
+                }
+                
+                for(String chargeId: chargePaymentsToUpdate.keySet()) {
+                    Map<String, Object> refundWrapper= chargePaymentsToUpdate.get(chargeId);
+                    npe01__OppPayment__c payment = [SELECT Id FROM npe01__OppPayment__c WHERE npe01__Check_Reference_Number__c = :chargeId];
+                    payment.Refund_Reference_Number__c = String.valueOf(refundWrapper.get('id'));
+                    if(String.valueOf(refundWrapper.get('status')) == 'succeeded') {
+                        payment.Refund_Status__c = 'Processed';  
+                    } 
+                    update payment;
+                }
+                
+                Transaction__c refundtrans = new Transaction__c(
+                    Lender__c = contactId,
+                    Amount__c = donateAmount,
+                    Type__c = 'Repayment',
+                    Completed_Date__c = system.today(),
+                    Status__c = 'Completed',
+                    Transaction_Date__c = System.now()
+                );
+                insert refundtrans;
+            } 
+        }
+        
+        if(donateAmount > 0) {
+            Transaction__c trans = new Transaction__c(
+                Lender__c = contactId,
+                Amount__c = donateAmount,
+                Type__c = 'Donation'
+            );
+            
+            donateFromDashboard(trans);
+        }  
+    }
+    
+    private static String createRequestBody(Map<String, String> requestParameters) {
+        String requestBody = '';
+        for(String key: requestParameters.keySet()) {
+            String value = requestParameters.get(key);
+            if(String.isEmpty(requestBody) && value.trim().length() > 0 && value != null){
+                requestBody += key + '=' + value;
+            }else{
+                requestBody += '&' + key + '=' + value;
+            }
+        }
+        return requestBody;
+    }
 }

@@ -18,7 +18,7 @@ public class CareHomePageCtrl {
         System.debug( 'MAP:'+contactFieldMap );
         if(eTemplates.size() > 0){
             String hValue = eTemplates[0].HtmlValue;
-            if( !contactFieldMap.isEmpty() ){
+            if( contactFieldMap!=null && !contactFieldMap.isEmpty() ){
                 for( String field : contactFieldMap.keySet() ){
                     if( hValue.containsIgnoreCase('{'+field+'}') ){
                         System.debug('FF:'+field+':'+(String)contactFieldMap.get(field));
@@ -32,7 +32,11 @@ public class CareHomePageCtrl {
                 List<Id> transactionIds = tIds.split(',');
                 List<Transaction__c> transactions = [SELECT Id, Opportunity__r.Name FROM Transaction__c WHERE Id IN :transactionIds];
                 if( transactions.size() > 0 && transactions[0].Opportunity__r!=null ){
-                    hValue = hValue.replaceAll( '\\{oppName\\}', transactions[0].Opportunity__r.Name );
+                    String n = transactions[0].Opportunity__r.Name;
+                    n = n.replaceAll('\\$','');
+                    hValue = hValue.replaceAll( '\\{oppName\\}', n );
+                } else{
+                    hValue = hValue.replaceAll( '\\{oppName\\}', '' );
                 }
             }
             hValue = hValue.replaceAll( '\\{EmbedTable\\}', table );

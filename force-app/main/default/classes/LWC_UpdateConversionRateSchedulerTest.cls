@@ -40,7 +40,7 @@ public class LWC_UpdateConversionRateSchedulerTest {
     }
     
     public testmethod static void testFXConversion(){
-        LWC_UpdateConversionRateScheduler ctrl = new LWC_UpdateConversionRateScheduler();
+        LWC_UpdateConversionRateScheduler ctrl = new LWC_UpdateConversionRateScheduler('Php');
         Test.startTest();
         //ctrl.execute(null);
         String sch = '0 0 23 * * ?'; 
