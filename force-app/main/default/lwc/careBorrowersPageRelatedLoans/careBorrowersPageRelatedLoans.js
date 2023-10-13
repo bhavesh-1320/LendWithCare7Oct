@@ -232,7 +232,7 @@ export default class CareBorrowersPageRelatedLoans extends LightningElement {
                         val.loanAmounts = lAmts; */
                         const itemIndex = previousLoans.findIndex(item => item.Id === val.Id);
                         var isButtonVisible = false;
-                        var selAmt = 0;
+                        var selAmt = 25;
                         if( itemIndex != -1 && itemIndex != undefined ){
                             isButtonVisible = true;
                             selAmt = previousLoans[itemIndex].selectedAmount;
@@ -244,7 +244,7 @@ export default class CareBorrowersPageRelatedLoans extends LightningElement {
                             val.Amount_Funded__c = val.Amount_Funded__c==undefined?0:Number(val.Amount_Funded__c);
                             var amtFF = val.Amount_Funded__c==undefined?0:Number(val.Amount_Funded__c);
                             val.Amount_Funded__c =  amtFF+ Number(previousLoans[itemIndex].Funded__c);
-                            selAmt = Number(previousLoans[itemIndex].Funded__c);
+                            selAmt = Number(previousLoans[itemIndex].Funded__c) || 25;
                             console.log('ss:',selAmt);
                             var per = (Number(val.Amount_Funded__c) / Number(val.Published_Amount_AUD__c)) * 100;
                             if( per!= undefined && per > 85 ){
@@ -548,6 +548,9 @@ closeErrorPopup(){
     var currentPageUrl2 = currentPageUrl.substring(0, currentPageUrl.indexOf('/s')+3);
     window.location.href = currentPageUrl2+'careallloanschedules?loanId='+btoa(this.loanId);
   }
+    scrolltoTop() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
 
   

@@ -250,7 +250,7 @@ public without sharing class LWC_AllLoansCtrl {
         List<List<SObject>> searchResults = [
             FIND :searchQuery
             IN ALL FIELDS RETURNING
-            Loan__c(Id, Name, Published_Date__c, Loan_Title__c, Borrower__r.Country__c,
+            Loan__c(Id, Name, Published_Date__c, Loan_Title__c, Borrower__r.Country__c,Borrower_Country__c,
                     Loan_Description__c, Loan_Term_Months__c, Loan_Schedule__c, Loan_Type__c,
                     Number_of_Lenders__c, Amount_Funded__c, Funded__c, CMS_Key__c, Published_Amount_AUD__c)
             //Loan_Other_Object__c(Id, Name, Custom_Field_1__c, Custom_Field_2__c)
@@ -520,14 +520,21 @@ public without sharing class LWC_AllLoansCtrl {
         return Database.query(query);
     }
     @AuraEnabled(cacheable=true)
-    public static List<Repayment_Schedule__c> getLoanSchedules( Id loanId ){
-        return [SELECT Id, Due_Date__c, Repayment_Date__c, Amount_Due__c FROM Repayment_Schedule__c WHERE Loan__c = :loanId];
+    public static Map<String, Object> getLoanSchedules( Id loanId ){
+        Map<String, Object> schMap=new Map<String, Object>();
+        schMap.put( 'RSch', (Object)[SELECT CurrencyIsoCode, Id, Due_Date__c, Repayment_Date__c, Amount_Due__c FROM Repayment_Schedule__c WHERE Loan__c = :loanId] );
+        Map<string,decimal> cTypeMap = new Map<string,Decimal>();
+        for( CurrencyType cType : [SELECT ISOCode, ConversionRate FROM CurrencyType WHERE IsActive=TRUE] ){
+            cTypeMap.put( cType.ISOCode, cType.ConversionRate );
+        }
+        schMap.put('CurrencyType', (Object)cTypeMap);
+        return schMap; 
     }
     @AuraEnabled(cacheable=true)
     public static Map<String, Object> getLoanDetails(String loanId) {
         if (String.isNotBlank(loanId)) {
             String strLoanSoql = 'SELECT Id,(SELECT ContentDocumentId, ContentDocument.Title FROM ContentDocumentLinks ), Borrower__r.City__c, Amount_Left_Before_Fully_Funded__c, Stage__c, Loan_Title__c, Borrower__r.Name, Amount_Funded__c, Borrower__r.Description, ';
-            strLoanSoql+='(SELECT Id, Due_Date__c, Repayment_Date__c, Amount_Due__c FROM Repayment_Schedules__r LIMIT 7), ';
+            strLoanSoql+='(SELECT Id, Due_Date__c, Repayment_Date__c, Amount_Due__c, CurrencyIsoCode FROM Repayment_Schedules__r), ';
             strLoanSoql+='(SELECT Id, Lender__r.Name, Lender__r.Profile_Picture__c FROM Transactions__r LIMIT 14), ';
             strLoanSoql+='Borrower__r.Postcode__c, Borrower__r.Country__c, Loan_Description__c,LWC_Loan_Description__c, Funded__c, Published_Amount_AUD__c, Loan_Type__c, Loan_Term_Months__c, Loan_Schedule__c FROM Loan__c WHERE Id = \'' + String.escapeSingleQuotes(loanId) + '\' LIMIT 1';
             List<Loan__c> loans = Database.query(strLoanSoql);
@@ -595,6 +602,10 @@ public without sharing class LWC_AllLoansCtrl {
                 }
                 
             }
+            Map<string,decimal> cTypeMap = new Map<string,Decimal>();
+            for( CurrencyType cType : [SELECT ISOCode, ConversionRate FROM CurrencyType WHERE IsActive=TRUE] ){
+                cTypeMap.put( cType.ISOCode, cType.ConversionRate );
+            }
             Object cmsContents;
             if(!test.isRunningTest()){
             	cmsContents = (Object)CareHomePageCtrl.getContent('Why LWC');    
@@ -602,7 +613,7 @@ public without sharing class LWC_AllLoansCtrl {
                 cmsContents = (Object)'Test';
             }
             
-            return new Map<String, Object>{'Loan'=>(object)loans, 'RelatedLoan'=>(Object)relatedLoans, 'LoanContentDis'=>(Object)cds, 'RelatedLoanContentDis'=>(Object)loanIdContentDisMap, 'loanAmts'=>(Object)loanAmts, 'CMSContent'=>cmsContents};
+            return new Map<String, Object>{'Loan'=>(object)loans,'CurrencyType'=>(Object)cTypeMap, 'RelatedLoan'=>(Object)relatedLoans, 'LoanContentDis'=>(Object)cds, 'RelatedLoanContentDis'=>(Object)loanIdContentDisMap, 'loanAmts'=>(Object)loanAmts, 'CMSContent'=>cmsContents};
         } 
         return new Map<String, Object>();
     }
@@ -690,7 +701,7 @@ public without sharing class LWC_AllLoansCtrl {
         }
         
         // Querying the Breakdown data.
-        Contact contactRecord = [SELECT Id, Name, Total_Loans__c, Champion__c,Auto_Relend__c, Lender_Balance__c, Total_People_Helped__c, Profile_Picture__c FROM Contact WHERE Id = :contactId LIMIT 1];
+        Contact contactRecord = [SELECT Id, Name, Total_Loans__c, Total_Amount_Lent__c, Total_Donation__c, Champion__c,Auto_Relend__c, Lender_Balance__c, Total_People_Helped__c, Profile_Picture__c FROM Contact WHERE Id = :contactId LIMIT 1];
         AggregateResult sumOfTransactionsAmount = [SELECT SUM(Amount__c) FROM Transaction__c WHERE Lender__c = :contactId];
         AggregateResult sumOfLoansJobsCreated = [SELECT SUM(Jobs_Created__c) FROM Loan__c WHERE Id IN :loanIds];
         
@@ -757,9 +768,9 @@ public without sharing class LWC_AllLoansCtrl {
         
         // Querying the Breakdown data.
         // Contact contactRecord = [SELECT Id, Name, Total_Loans__c, Champion__c,Auto_Relend__c, Lender_Balance__c, Total_People_Helped__c, Profile_Picture__c FROM Contact WHERE Id = :contactId LIMIT 1];
-        AggregateResult sumOfTransactionsAmount = [SELECT SUM(Loan__r.Amount_Funded__c) FROM Transaction__c WHERE Type__c = 'Loan'];
+        AggregateResult sumOfTransactionsAmount = [SELECT SUM(Loan__r.Amount_Funded__c) FROM Transaction__c WHERE Type__c = 'Loan' AND Status ];
         AggregateResult sumOfLoansJobsCreated = [SELECT SUM(Jobs_Created__c) FROM Loan__c ];
-        AggregateResult sumOfTotalLoans = [SELECT count(Id) FROM Loan__c ];
+        AggregateResult sumOfTotalLoans = [SELECT count(Id) FROM Loan__c WHERE  ];
         
         AggregateResult sumOfPeopleHelped = [SELECT sum(Borrower__r.Dependants__c), sum(Jobs_Created__c), sum(Number_of_Employees__c) FROM Loan__c];
         // Extracting values from AggregateResult
@@ -1370,8 +1381,6 @@ public without sharing class LWC_AllLoansCtrl {
         Contact con = [SELECT Id, AccountId FROM Contact WHERE Id = :contactId];
         
         if (cases.size() >= 2) {
-            //Refund
-            //create a case with high risk
             Case newCase = new Case(
             	ContactId = contactId,
                 Status = 'Open',

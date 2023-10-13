@@ -1435,6 +1435,7 @@ font-family: 'Sketchetik Fill Bold';
     border-radius: 4px;
     border-color: #002A3A;
     border-width: 2px;
+    border-style: solid;
 }
 
 .classPills{

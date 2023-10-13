@@ -13,7 +13,7 @@
             large-device-size="12">
             <h3 class="section-heading center-align-text">Your <span style="color:#FEBE10">Transactions</span></h3>
          </lightning-layout-item>
-         <lightning-layout-item size="12" padding="around-small" small-device-size="12" medium-device-size="12"
+         <!--<lightning-layout-item size="12" padding="around-small" small-device-size="12" medium-device-size="12"
             large-device-size="12" class="slds-align_absolute-center">
             <div class="button-container">
                <button class="button classPills {Onselection}" data-type="All" onclick={handleButtonClick}>All</button>
@@ -42,22 +42,22 @@
                   onclick={handleButtonClick}>Donation</button>
                </div>
             </div>
-         </lightning-layout-item>
+         </lightning-layout-item>-->
          <lightning-layout-item size="12" class="slds-p-horizontal_small" small-device-size="12" medium-device-size="12"
             large-device-size="12">
             <div class="button-line">
                <button class="button button-filter" onclick={openFilter}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                     class="bi bi-funnel" viewBox="0 0 16 16">
+                     class="bi bi-funnel" viewBox="0 0 16 16" style="margin-top:-3px">
                      <path
                         d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z" />
                   </svg>
-                  &nbsp; Filter
+                  <span>&nbsp;</span> Filter
                </button>
                <button class="button button-sort" onclick={openSort}>
                   <svg class="slds-icon slds-icon-text-default slds-icon_x-small" aria-hidden="true"
                      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-top:-3px">
                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
                      <path d="M3 9l4 -4l4 4m-4 -4v14" />
                      <path d="M21 15l-4 4l-4 -4m4 4v-14" />
@@ -93,10 +93,10 @@
                   <h3 class="popupFilterTitle">Transaction Type</h3>
                   <div style="justify-content: space-between;">
                      <button class="catogory" data-type="All" onclick={handleFilterClick}>All</button>
-                     <button class="catogory" data-type="Repayment"
-                        onclick={handleFilterClick}>Contributions/repayment</button>
-                     <button class="catogory" data-type="Donation" onclick={handleFilterClick}>Donations</button>
                      <button class="catogory" data-type="Loan" onclick={handleFilterClick}>Loan</button>
+                     <button class="catogory" data-type="Topup" onclick={handleFilterClick}>Top up</button>
+                     <button class="catogory" data-type="Repayment" onclick={handleFilterClick}>Repayment</button>
+                     <button class="catogory" data-type="Donation" onclick={handleFilterClick}>Donations</button>
                   </div>
                </div>
                <div class="box3">
@@ -153,27 +153,27 @@
                <div class="container">
                   <h3 class="popupHeading">Most Recent</h3>
                   <div class="radiobutton">
-                     <lightning-radio-group name="Most Recent" style="display: flex; justify-content: right;"
-                        options={MostRecentradioOptions} value={value} onchange={MostRecentChange}
+                     <lightning-radio-group name="rad" style="display: flex; justify-content: right;"
+                        options={MostRecentradioOptions} value={sortValue} onchange={MostRecentChange}
                         type="radio"></lightning-radio-group>
                   </div>
                </div>
                <div class="container">
                   <h3 class="popupHeading">Oldest</h3>
-                  <lightning-radio-group name="Oldest" style="display: flex;justify-content: right;"
-                     options={OldestradioOptions} value={value} onchange={OldestChange}
+                  <lightning-radio-group name="rad" style="display: flex;justify-content: right;"
+                     options={OldestradioOptions} value={sortValue} onchange={OldestChange}
                      type="radio"></lightning-radio-group>
                </div>
                <div class="container">
                   <h3 class="popupHeading">Highest - Lowest</h3>
-                  <lightning-radio-group name="Highest - Lowest" style="display: flex;justify-content: right;"
-                     options={HighestLowestradioOptions} value={value} onchange={HighestLowestChange}
+                  <lightning-radio-group name="rad" style="display: flex;justify-content: right;"
+                     options={HighestLowestradioOptions} value={sortValue} onchange={HighestLowestChange}
                      type="radio"></lightning-radio-group>
                </div>
                <div class="container">
                   <h3 class="popupHeading">Lowest - Highest</h3>
-                  <lightning-radio-group name="Lowest - Highest" style="display: flex;justify-content: right;"
-                     options={LowestHighestradioOptions} value={value} onchange={LowestHighestChange}
+                  <lightning-radio-group name="rad" style="display: flex;justify-content: right;"
+                     options={LowestHighestradioOptions} value={sortValue} onchange={LowestHighestChange}
                      type="radio"></lightning-radio-group>
                </div>
                <lightning-layout-item size="12" class="slds-align_absolute-center" padding="around-small"
@@ -188,23 +188,6 @@
       </template>
    </div>
    <div class="para2 pad slds-p-top_small">
-     <!-- <lightning-layout-item size="12" padding="around-small">
-
-         <div class="slds-grid tableTitle">
-            <div class="slds-col slds-align_absolute-center">
-               <h3 class="tableHeadings">Date</h3>
-            </div>
-            <div class="slds-col slds-align_absolute-center">
-               <div class="vertical-line"></div>
-               <h3 class="tableHeadings">Type</h3>
-
-            </div>
-            <div class="slds-col slds-align_absolute-center">
-               <div class="vertical-line"></div>
-               <h3 class="tableHeadings">Amount</h3>
-            </div>
-         </div>
-      </lightning-layout-item>-->
 
       <template if:true={showTable}>
          <table>
@@ -310,7 +293,7 @@
 							  line-height: 19px;
 							  color: #002A3A;width: fit-content;text-align: center;">
 									<div style="display: flex;align-items: center;">
-										<div style="flex: 1;">{transaction.Amount__c}</div>
+										<div style="flex: 1;">${transaction.Amount__c}</div>
 										<!--<div style="margin-left: 20px;">
 											<button disabled={transaction.disableDownloadButton}
 												class={transaction.downloadButtonClass} title="Download"

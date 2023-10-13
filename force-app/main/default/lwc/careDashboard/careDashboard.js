@@ -15,9 +15,11 @@ import updateCommunicationPreference from '@salesforce/apex/LWC_AllLoansCtrl.upd
 import updateCommunicationPreferences from '@salesforce/apex/LWC_AllLoansCtrl.updateCommunicationPreferences';
 import getCommunicationPreferences from '@salesforce/apex/LWC_AllLoansCtrl.getCommunicationPreferences';
 import getCurrentUser from '@salesforce/apex/LWC_AllLoansCtrl.getCurrentUser';
-import TermsandConditions from '@salesforce/resourceUrl/TermsandConditionsFile';
+import PrivacyPolicyCA from '@salesforce/resourceUrl/PrivacyPolicyCA';
+import TermsandConditionsCA from '@salesforce/resourceUrl/TermsandConditionsFile';
 import updateAutoRelend from '@salesforce/apex/LWC_AllLoansCtrl.updateAutoRelend';
 import downloadPDF from '@salesforce/apex/CareHomePageCtrl.getPdfFileAsBase64String';
+import LWCSectionMetaData from '@salesforce/apex/CareHomePageCtrl.LWCSectionMetaData';
 // import getContactFieldsRecordInfo from '@salesforce/apex/CareHomePageCtrl.getContactFieldsRecordInfo';
 
 // this gets you the logged in user
@@ -48,7 +50,8 @@ const columns = [
 export default class CareDashboard extends LightningElement {
 
     @track contactid; //gowsic contact 
-    TermsandConditionsFile = TermsandConditions;
+    PrivacyPolicyCAFile = PrivacyPolicyCA;
+    TermsandConditionsCAFile = TermsandConditionsCA;
     dasAvatarpic = DashboardPersonAvatars;
     avatarpic = greenfield;
     AvatarImg;
@@ -65,7 +68,7 @@ export default class CareDashboard extends LightningElement {
     transactionEmail;
     donationEmail;
     @track UserName;
-    @track AmountValues =0;
+    @track AmountValues = 0;
     @track PlaceholderAmountValues;
     @track TotalLoans;
     @track JobsCreated;
@@ -94,94 +97,152 @@ export default class CareDashboard extends LightningElement {
     @track LastName = '';
     @track donationAmount = 0;
     @track zeroBalanceofLender = false;
-    
-    trData={};
-    @track LenderTopup = false;
-    @track carecart=false;
 
-    CommunicationsPreferences=false;
+    trData = {};
+    @track LenderTopup = false;
+    @track carecart = false;
+
+    CommunicationsPreferences = false;
     LendwithcareEmailsChecked;
     AllCAREemailsChecked;
+    section1val1;
+    section1val2;
+    section2val1;
+    section2val2;
+    section3val1;
+    section3val2;
+    section4val1;
+    section4val2;
+   
 
-    @wire(getCommunicationPreferences, {conId: '$contactid'})
+    @wire(getCommunicationPreferences, { conId: '$contactid' })
     communicationData({ error, data }) {
 
-        if(data){
+        if (data) {
             console.log('data from org getCommunicationPreferences ', JSON.stringify(data))
             this.LendwithcareEmailsChecked = data.Email_Lendwithcare_Opt_Out__c;
         }
-        else if(error){
+        else if (error) {
             console.log('getCommunicationPreferences error ', error);
         }
     }
+    @wire(LWCSectionMetaData, { category: 'caredashboard' })
+    wiredCustomSectionMetaDataRecords({ data, error }) {
+        if (data && data.length > 0) {
+            console.log('@@@ enter into wire for Your Impact on caredashboard');
+            console.log('@@@length:', data.length);
+            console.log('@@@ data :', data);
+    
+            for (let i = 0; i < data.length; i++) {
+                if (data[i].MasterLabel == "Your Impact on caredashboard") {
+                    this.section1val1 = data[i].Value_1__c;
+                    this.section1val2 = data[i].Value_2__c;
 
-    openCommunicationsPreferences(){
-        this.CommunicationsPreferences=true;
+                    console.log('@@@ section1val1:', this.section1val1);
+                    console.log('@@@ section1val2:', this.section1val2);
+                }
+                else if (data[i].MasterLabel == "Your loans") {
+                    this.section2val1 = data[i].Value_1__c;
+                    this.section2val2 = data[i].Value_2__c;
+
+                    console.log('@@@ section2val1:', this.section2val1);
+                    console.log('@@@ section2val2:', this.section2val2);
+                }
+                else if (data[i].MasterLabel == "Your Lender Account Balance") {
+                    this.section3val1 = data[i].Value_1__c;
+                    this.section3val2 = data[i].Value_2__c;
+
+                    console.log('@@@ section3val1:', this.section3val1);
+                    console.log('@@@ section3val2:', this.section3val2);
+                }
+                else if (data[i].MasterLabel == "Lender Account settings") {
+                    this.section4val1 = data[i].Value_1__c;
+                    this.section4val2 = data[i].Value_2__c;
+
+                    console.log('@@@ section4val1:', this.section4val1);
+                    console.log('@@@ section4val2:', this.section4val2);
+                }
+                else if (data[i].MasterLabel == "Your Transactions"){
+                    this.section5val1 = data[i].Value_1__c;
+                    this.section5val2 = data[i].Value_2__c;
+
+                    console.log('@@@ section5val1:', this.section5val1);
+                    console.log('@@@ section5val2:', this.section5val2);
+                }
+            }
+            
+        } else if (error) {
+            // Handle error
+        }
     }
 
-    CloseCommunicationsPreferences(){
-        this.CommunicationsPreferences=false;
+    openCommunicationsPreferences() {
+        this.CommunicationsPreferences = true;
+    }
+
+    CloseCommunicationsPreferences() {
+        this.CommunicationsPreferences = false;
     }
 
     CommunicationsPreferencesData = {};
 
-    LendwithcareEmails(event){
+    LendwithcareEmails(event) {
         this.LendwithcareEmailsChecked = event.target.checked;
 
         this.CommunicationsPreferencesData['Id'] = this.contactid;
         this.CommunicationsPreferencesData['Email_Lendwithcare_Opt_Out__c'] = event.target.checked;
         console.log('before updating lot of fields ', this.CommunicationsPreferencesData);
-        updateCommunicationPreference({rec: this.CommunicationsPreferencesData})
-        .then(result => {
-            console.log('successfully update ', result)
-        })
-        .catch(error => {
-            console.log('error updating ', JSON.stringify(error))
-        })
+        updateCommunicationPreference({ rec: this.CommunicationsPreferencesData })
+            .then(result => {
+                console.log('successfully update ', result)
+            })
+            .catch(error => {
+                console.log('error updating ', JSON.stringify(error))
+            })
 
     }
 
     CommunicationsPreferencesDataAll = {};
-    AllCAREemails(event){
+    AllCAREemails(event) {
         this.AllCAREemailsChecked = event.target.checked;
 
         this.CommunicationsPreferencesData['Id'] = this.contactid;
         this.CommunicationsPreferencesData['Email_Lendwithcare_Opt_Out__c'] = event.target.checked;
         console.log('before updating lot of fields ', this.CommunicationsPreferencesData);
-        updateCommunicationPreferences({rec: this.CommunicationsPreferencesData})
-        .then(result => {
-            console.log('successfully update ')
-        })
-        .catch(error => {
-            console.log('error updating ', JSON.stringify(error))
-        })
-        
+        updateCommunicationPreferences({ rec: this.CommunicationsPreferencesData })
+            .then(result => {
+                console.log('successfully update ')
+            })
+            .catch(error => {
+                console.log('error updating ', JSON.stringify(error))
+            })
+
     }
 
-    topupLenderBalance(){
-        
+    topupLenderBalance() {
+
         this.carecart = true;
         this.LenderTopup = true;
 
         const childComponent = this.template.querySelector('c-care-nav-bar');
-            console.log('before if (childComponent) from dashboard')
-            if (childComponent) {
-                //childComponent.carecart = true;
-                childComponent.openCartPage();
-                
-                childComponent.LenderTopup = true;
-            }
+        console.log('before if (childComponent) from dashboard')
+        if (childComponent) {
+            //childComponent.carecart = true;
+            childComponent.openCartPage();
+
+            childComponent.LenderTopup = true;
+        }
         localStorage.setItem('isTopup', true);
     }
 
-    fromNavBar(event){
-    if(event.detail == true){
-        this.LenderTopup = false;
-        this.carecart = false;
-      }
-    
-    
-}
+    fromNavBar(event) {
+        if (event.detail == true) {
+            this.LenderTopup = false;
+            this.carecart = false;
+        }
+
+
+    }
 
 
     refreshData() {
@@ -226,73 +287,89 @@ export default class CareDashboard extends LightningElement {
             console.log(this.AvatarImg);
             this.UserName = data.contactRecord.Name;
             this.AmountValues = data.contactRecord.Lender_Balance__c;
-            var lAmt = this.AmountValues != null && this.AmountValues!=undefined ? this.AmountValues+'' : '0';
-            lAmt  = lAmt.split('.');
-            if( lAmt.length > 1 ){
-                this.lendAmt = {'Number':lAmt[0], 'Decimal':lAmt[1]};
-            } else if(lAmt.length > 0){
-                this.lendAmt = {'Number':lAmt[0], 'Decimal':'00'};
-            } else if( lAmt==undefined || lAmt.length<=0 ){
-                this.lendAmt = {'Number':'0', 'Decimal':'00'};
+            var lAmt = this.AmountValues != null && this.AmountValues != undefined ? this.AmountValues + '' : '0';
+            lAmt = lAmt.split('.');
+            if (lAmt.length > 1) {
+                this.lendAmt = { 'Number': lAmt[0], 'Decimal': lAmt[1] };
+            } else if (lAmt.length > 0) {
+                this.lendAmt = { 'Number': lAmt[0], 'Decimal': '00' };
+            } else if (lAmt == undefined || lAmt.length <= 0) {
+                this.lendAmt = { 'Number': '0', 'Decimal': '00' };
             }
             this.donationAmount = data.contactRecord.Lender_Balance__c;
-            this.PlaceholderAmountValues = '$'+this.AmountValues;
-            this.zeroBalanceofLender = data.contactRecord.Lender_Balance__c == 0 ? true : false;
-            this.TotalLoans = data.contactRecord.Total_Loans__c != null ? data.contactRecord.Total_Loans__c  : '0';
-            this.Champion = data.contactRecord.Champion__c;
+            this.PlaceholderAmountValues = '$' + this.AmountValues;
+            this.zeroBalanceofLender = data.contactRecord.Lender_Balance__c <= 0 ? true : false;
+            this.TotalLoans = data.contactRecord.Total_Loans__c != null ? data.contactRecord.Total_Loans__c : '0';
+            var changeChampionTemplate = localStorage.getItem('isCC');
+            console.log('this.changeChampionTemplate 304 ', changeChampionTemplate)
+            if (changeChampionTemplate != null && changeChampionTemplate != undefined && changeChampionTemplate !='false' && changeChampionTemplate!=false) {
+                this.Champion = true;
+                console.log('307');
+            }
+            //this.Champion = data.contactRecord.Champion__c;
             this.relendCheckbox = data.contactRecord.Auto_Relend__c;
             this.JobsCreated = data.sumOfJobsCreated != null ? data.sumOfJobsCreated : '0';
-            this.Totalamountlent = data.totalTransactionsAmount;
+            // this.Totalamountlent = data.totalTransactionsAmount;
+            this.Totalamountlent = data.contactRecord.Total_Amount_Lent__c != null ? data.contactRecord.Total_Amount_Lent__c : '0';
             this.Peoplehelped = data.contactRecord.Total_People_Helped__c != null ? data.contactRecord.Total_People_Helped__c : '0';
-            var rPaid = data.mapOfTypeAndAmount['Repayment'] != null && data.mapOfTypeAndAmount['Repayment']!=undefined ? data.mapOfTypeAndAmount['Repayment']+'' : '0';
-            rPaid  = rPaid.split('.');
-            if( rPaid.length > 1 ){
-                this.Repaidbyborrower = {'Number':rPaid[0], 'Decimal':rPaid[1]};
-            } else if(rPaid.length > 0){
-                this.Repaidbyborrower = {'Number':rPaid[0], 'Decimal':'00'};
-            } else if( rPaid==undefined || rPaid.length<=0 ){
-                this.Repaidbyborrower = {'Number':'0', 'Decimal':'00'};
+            var rPaid = data.mapOfTypeAndAmount['Repayment'] != null && data.mapOfTypeAndAmount['Repayment'] != undefined ? data.mapOfTypeAndAmount['Repayment'] + '' : '0';
+            rPaid = rPaid.split('.');
+            if (rPaid.length > 1) {
+                this.Repaidbyborrower = { 'Number': rPaid[0], 'Decimal': rPaid[1] };
+            } else if (rPaid.length > 0) {
+                this.Repaidbyborrower = { 'Number': rPaid[0], 'Decimal': '00' };
+            } else if (rPaid == undefined || rPaid.length <= 0) {
+                this.Repaidbyborrower = { 'Number': '0', 'Decimal': '00' };
             }
-            
-            var donate = data.mapOfTypeAndAmount['Donation'] != null ? data.mapOfTypeAndAmount['Donation']+'' : '0';
-            donate  = donate.split('.');
-            console.log('DD:',donate);
-            if( donate.length > 1 ){
-                this.Donated = {'Number':donate[0], 'Decimal':donate[1]};
-            } else if(donate.length > 0){
-                this.Donated = {'Number':donate[0], 'Decimal':'00'};
-            } else if( donate==undefined || donate.length<=0 ){
-                this.Donated = {'Number':'0', 'Decimal':'00'};
-            }
-            console.log('DOONNN:',this.Donated);
 
-            var aToAcc = data.mapOfTypeAndAmount['Topup'] != null ? data.mapOfTypeAndAmount['Topup']+'' : '0';
-            aToAcc  = aToAcc.split('.');
-            if( aToAcc.length > 1 ){
-                this.Addedtoyouraccount = {'Number':aToAcc[0], 'Decimal':aToAcc[1]};
-            } else if(aToAcc.length > 0){
-                this.Addedtoyouraccount = {'Number':aToAcc[0], 'Decimal':'00'};
-            } else if( aToAcc==undefined || aToAcc.length<=0 ){
-                this.Addedtoyouraccount = {'Number':'0', 'Decimal':'00'};
+            var donate = data.mapOfTypeAndAmount['Donation'] != null ? data.mapOfTypeAndAmount['Donation'] + '' : '0';
+            donate = donate.split('.');
+            console.log('DD:', donate);
+            if (donate.length > 1) {
+                this.Donated = { 'Number': donate[0], 'Decimal': donate[1] };
+            } else if (donate.length > 0) {
+                this.Donated = { 'Number': donate[0], 'Decimal': '00' };
+            } else if (donate == undefined || donate.length <= 0) {
+                this.Donated = { 'Number': '0', 'Decimal': '00' };
+            }
+            console.log('DOONNN:', this.Donated);
+
+            var aToAcc = data.mapOfTypeAndAmount['Topup'] != null ? data.mapOfTypeAndAmount['Topup'] + '' : '0';
+            aToAcc = aToAcc.split('.');
+            if (aToAcc.length > 1) {
+                this.Addedtoyouraccount = { 'Number': aToAcc[0], 'Decimal': aToAcc[1] };
+            } else if (aToAcc.length > 0) {
+                this.Addedtoyouraccount = { 'Number': aToAcc[0], 'Decimal': '00' };
+            } else if (aToAcc == undefined || aToAcc.length <= 0) {
+                this.Addedtoyouraccount = { 'Number': '0', 'Decimal': '00' };
             }
             // this.Donated = data.mapOfTypeAndAmount['Donation'] != null ? data.mapOfTypeAndAmount['Donation'] : '0';
             //this.Addedtoyouraccount = data.mapOfTypeAndAmount['Topup'] != null ? data.mapOfTypeAndAmount['Topup'] : '0';
-            var withdrawAcc = data.mapOfTypeAndAmount['Withdrawal'] != null ? data.mapOfTypeAndAmount['Withdrawal']+'' : '0';
-            withdrawAcc  = withdrawAcc.split('.');
-            if( withdrawAcc.length > 1 ){
-                this.Withdrawnfromyouraccount = {'Number':withdrawAcc[0], 'Decimal':withdrawAcc[1]};
-            } else if(withdrawAcc.length > 0){
-                this.Withdrawnfromyouraccount = {'Number':withdrawAcc[0], 'Decimal':'00'};
-            } else if( withdrawAcc==undefined || withdrawAcc.length<=0 ){
-                this.Withdrawnfromyouraccount = {'Number':'0', 'Decimal':'00'};
+            var withdrawAcc = data.mapOfTypeAndAmount['Withdrawal'] != null ? data.mapOfTypeAndAmount['Withdrawal'] + '' : '0';
+            withdrawAcc = withdrawAcc.split('.');
+            if (withdrawAcc.length > 1) {
+                this.Withdrawnfromyouraccount = { 'Number': withdrawAcc[0], 'Decimal': withdrawAcc[1] };
+            } else if (withdrawAcc.length > 0) {
+                this.Withdrawnfromyouraccount = { 'Number': withdrawAcc[0], 'Decimal': '00' };
+            } else if (withdrawAcc == undefined || withdrawAcc.length <= 0) {
+                this.Withdrawnfromyouraccount = { 'Number': '0', 'Decimal': '00' };
             }
             // this.Withdrawnfromyouraccount = data.mapOfTypeAndAmount['Withdrawal'] != null ? data.mapOfTypeAndAmount['Withdrawal'] : '0';
 
+            this.carouselItemsImpact = [{title:this.TotalLoans,description:'Number of loans'},{title:this.Totalamountlent,description:'Total amount lent'},
+                                        {title:this.JobsCreated,description:'Jobs created'},{title:this.Peoplehelped,description:'People helped'}
+                                        ];
+            this.carouselItemsImpactBreak = [{title:data.mapOfTypeAndAmount['Repayment'] != null && data.mapOfTypeAndAmount['Repayment'] != undefined ? data.mapOfTypeAndAmount['Repayment'] + '' : '0',description:'Repaid by borrower'},
+                                        {title:data.mapOfTypeAndAmount['Donation'] != null ? data.mapOfTypeAndAmount['Donation'] + '' : '0',description:'Donated'},
+                                        {title:data.mapOfTypeAndAmount['Topup'] != null ? data.mapOfTypeAndAmount['Topup'] + '' : '0',description:'Added to your account'},
+                                        {title:data.mapOfTypeAndAmount['Withdrawal'] != null ? data.mapOfTypeAndAmount['Withdrawal'] + '' : '0',description:'Withdrawn from your account'}
+                                        ];
         } else if (error) {
             console.error('Error loading data: contact info ', JSON.stringify(error));
         }
     }
     showTransaction = false;
+    viewMoreTransacions = false;
     @wire(getYourTransactionDetails, { type: '$type', contactId: '$contactid', showAll: '$showAll' })
     wiredTransactionData({ error, data }) {
         this.isLoading = false;
@@ -307,7 +384,9 @@ export default class CareDashboard extends LightningElement {
                 downloadButtonClass: transaction.Type__c === 'Donation' ? 'slds-show' : 'slds-hide',
             }));
             this.showTransaction = false;
-            if( this.transactions.length > 0 ){
+            if (this.transactions.length > 0) {
+                this.viewMoreTransacions = this.transactions.length>7;
+                this.transactions = this.transactions.slice(0,7);
                 this.showTransaction = true;
             }
         } else if (error) {
@@ -341,32 +420,32 @@ export default class CareDashboard extends LightningElement {
         const year = date.getFullYear();
         return `${day}-${month}-${year}`;
     }
-    currentUser(){
+    currentUser() {
         this.isLoading = true;
         getCurrentUser()
-        .then(result => {
-            console.log('current user -dashboard ', JSON.stringify(result))
-            this.contactid = result.Contact.Id;
-            console.log('this.contactid--> getCurrentUser() ', this.contactid);
+            .then(result => {
+                console.log('current user -dashboard ', JSON.stringify(result))
+                this.contactid = result.Contact.Id;
+                console.log('this.contactid--> getCurrentUser() ', this.contactid);
 
-            if (this.contactid == null || this.contactid==undefined || this.contactid=='') {
+                if (this.contactid == null || this.contactid == undefined || this.contactid == '') {
+                    const currentUrl = window.location.href;
+                    const newUrllogin = currentUrl.replace(/\/s\/[^/]+/, '/s/' + 'login/');
+                    window.location.assign(newUrllogin);
+                }
+                this.isLoading = false;
+                /* if( this.contactid!=undefined ){
+                    this.getContactFields();
+                } */
+            })
+            .catch(error => {
+                // this.isLoading = false;
                 const currentUrl = window.location.href;
                 const newUrllogin = currentUrl.replace(/\/s\/[^/]+/, '/s/' + 'login/');
                 window.location.assign(newUrllogin);
-            } 
-            this.isLoading = false;
-            /* if( this.contactid!=undefined ){
-                this.getContactFields();
-            } */
-        })
-        .catch(error => {
-            // this.isLoading = false;
-            const currentUrl = window.location.href;
-            const newUrllogin = currentUrl.replace(/\/s\/[^/]+/, '/s/' + 'login/');
-            window.location.assign(newUrllogin);
-            console.log('This error:',error);
-            console.log('error ', JSON.stringify(error))
-        })
+                console.log('This error:', error);
+                console.log('error ', JSON.stringify(error))
+            })
     }
     htmlDecode(input) {
         var doc = new DOMParser().parseFromString(input, 'text/html');
@@ -395,11 +474,11 @@ export default class CareDashboard extends LightningElement {
             console.log('Error:',err)
         } );
     } */
-    handleAutoReLend(event){
+    handleAutoReLend(event) {
         console.log(event.target.checked);
-        updateAutoRelend({contactId:this.contactid, enable:event.target.checked}).then(res=>{
+        updateAutoRelend({ contactId: this.contactid, enable: event.target.checked }).then(res => {
             this.relendCheckbox = event.target.checked;
-        }).catch(err=>{
+        }).catch(err => {
             console.log(err);
         });
     }
@@ -425,9 +504,9 @@ export default class CareDashboard extends LightningElement {
     //     }
     // }
 
-    confirmChanges(){
-        console.log('ENTER IN CONFIRM CHANGES'+this.contactid+' '+JSON.stringify(this.FirstName)+' '+JSON.stringify(this.LastName) );
-        putContactInfo({ contactId: this.contactid, FirstName:this.FirstName, LastName:this.LastName}) //LWC_AllLoansCtrl.putContactInfo('003AD00000Bs9xdYAB','Anirudh','Test');
+    confirmChanges() {
+        console.log('ENTER IN CONFIRM CHANGES' + this.contactid + ' ' + JSON.stringify(this.FirstName) + ' ' + JSON.stringify(this.LastName));
+        putContactInfo({ contactId: this.contactid, FirstName: this.FirstName, LastName: this.LastName }) //LWC_AllLoansCtrl.putContactInfo('003AD00000Bs9xdYAB','Anirudh','Test');
             .then(updatedContact => {
                 console.log('ENTER IN CALLING APEX');
                 // Success handling, if needed
@@ -449,20 +528,20 @@ export default class CareDashboard extends LightningElement {
     ClosePersonalDetails() {
         this.PersonalDetails = false;
     }
-   openWithdrawPopup() {
+    openWithdrawPopup() {
         this.withdrawPopup = true;
     }
     openDonatePopup() {
         this.donatePopup = true;
     }
-    CloseDonatePopup(){
+    CloseDonatePopup() {
         this.donatePopup = false;
     }
-    gotoThankYou(){
+    gotoThankYou() {
         this.thankyouPopup = true;
         this.donatePopup = false;
     }
-    CloseThankyouPopup(){
+    CloseThankyouPopup() {
         this.thankyouPopup = false;
         window.location.reload();
     }
@@ -525,7 +604,7 @@ export default class CareDashboard extends LightningElement {
         return `background-image: url('${this.AvatarImg}');background-size: cover; background-repeat: no-repeat;`;
     }
 
-    @track carouselItemsImpact = [
+    @track carouselItemsImpact /* = [
         {
 
             title: '17',
@@ -560,7 +639,7 @@ export default class CareDashboard extends LightningElement {
             title: '$340',
             description: 'Total amount lent.'
         }
-    ];
+    ]; */
 
     @track currentSlideIndexImpact = 0;
     @track visibleSlidesImapct = 4;
@@ -626,7 +705,7 @@ export default class CareDashboard extends LightningElement {
     }
 
 
-    @track carouselItemsImpactBreak = [
+    @track carouselItemsImpactBreak /* = [
         {
 
             title: '17',
@@ -661,7 +740,7 @@ export default class CareDashboard extends LightningElement {
             title: '$340',
             description: 'Total amount lent.'
         }
-    ];
+    ]; */
 
     @track currentSlideIndexImpactBreak = 0;
     @track visibleSlidesImpactBreak = 4;
@@ -699,59 +778,59 @@ export default class CareDashboard extends LightningElement {
         event.preventDefault(); // Prevent pasting non-numeric content into the input field
     }
     canDonate = false;
-    handleDonationchange(event){
+    handleDonationchange(event) {
         this.canDonate = true;
         console.log('this.donationAmount - ', event.target.value)
-        if(event.target.value > 0){
+        if (event.target.value > 0) {
             console.log('its number only ')
             this.donationAmount = parseFloat(event.target.value);
             this.canDonate = false;
         }
     }
-    
+
     handleDonate(event) {
         // Ensure donationAmount is defined and parsed properly from the input
-       const donationAmount = parseFloat(this.donationAmount);
+        const donationAmount = parseFloat(this.donationAmount);
         console.log('parseFloat(this.AmountValues) ', parseFloat(donationAmount));
         console.log('parseFloat(this.AmountValues) ', parseFloat(this.AmountValues));
-    
+
         if (donationAmount == null && donationAmount <= 0) {
             alert('Donation amount must be greater than 0');
-            document.getElementById('donationInput').addEventListener('focus', function() {
+            document.getElementById('donationInput').addEventListener('focus', function () {
                 this.value = ''; // Clear the input field when it gains focus
             });
-            
+
             // console.log('Invalid donation amount');
         } else if (donationAmount > parseFloat(this.AmountValues)) {
             alert('Donation amount must be less than or equal to ' + this.AmountValues);
-            
+
         } else {
             // Perform donation processing logic here
             //console.log('Donation successful of amount ' + donationAmount);
             this.trData['Lender__c'] = this.contactid;
             this.trData['Amount__c'] = donationAmount;
-            this.trData['Type__c']= 'Donation';
-            
+            this.trData['Type__c'] = 'Donation';
 
-            donateFromDashboard({rec:this.trData})
-            .then(result => {
-                console.log('result successfull from donation record ', JSON.stringify(result))
-                this.gotoThankYou();
 
-            })
-            .catch(error => {
-                console.log('error from donation record ', JSON.stringify(error))
-            })
-            
+            donateFromDashboard({ rec: this.trData })
+                .then(result => {
+                    console.log('result successfull from donation record ', JSON.stringify(result))
+                    this.gotoThankYou();
+
+                })
+                .catch(error => {
+                    console.log('error from donation record ', JSON.stringify(error))
+                })
+
             // Create transaction Record and update the value of lendersamount with the values.
         }
     }
-    
+
     handlezerobalanceDonatebutton() {
         this.donatePopup = false;
     }
 
-    gotoViewAllLoansPage(){
+    gotoViewAllLoansPage() {
         window.location.assign('careviewallloans')
     }
     //PDF
@@ -763,53 +842,53 @@ export default class CareDashboard extends LightningElement {
         }
         this.jsPdfInitialized = true;
     } */
-    handleDownload(event){
-        try{
+    handleDownload(event) {
+        try {
             this.isLoading = true;
             var tIds = '';
-            for( var transaction of this.transactions ){
-                tIds += transaction.Id +',';
+            for (var transaction of this.transactions) {
+                tIds += transaction.Id + ',';
             }
             var temp = event.target.dataset.template;
             var temp2 = event.currentTarget.dataset.template;
             var tId = event.currentTarget.dataset.transactionId;
-            console.log('Temp:',temp, temp2, tId, this.contactid);
-            if( tIds.length>0 ) tIds = tIds.substring(0,tIds.length-1);
-            if( temp==undefined && temp2!=undefined ){
+            console.log('Temp:', temp, temp2, tId, this.contactid);
+            if (tIds.length > 0) tIds = tIds.substring(0, tIds.length - 1);
+            if (temp == undefined && temp2 != undefined) {
                 temp = temp2;
                 tIds = tId;
             }
 
-            downloadPDF({'transactionIds':tIds, 'ContactId':this.contactid, 'template':temp}).then(response => {
+            downloadPDF({ 'transactionIds': tIds, 'ContactId': this.contactid, 'template': temp }).then(response => {
                 const binaryString = atob(response); // Decode the Base64 string to binary
-                    const byteArray = new Uint8Array(binaryString.length);
-                    for (let i = 0; i < binaryString.length; i++) {
-                        byteArray[i] = binaryString.charCodeAt(i);
-                    }
-                    console.log('bStr:',binaryString);
-                    // Create a Blob from the Uint8Array
-                    const blob = new Blob([byteArray], { type: 'application/pdf' });
-                    this.isLoading = false;
-                    // Create a temporary anchor element to trigger the download
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = temp+'.pdf';
-                    document.body.appendChild(a);
-                    a.click();
+                const byteArray = new Uint8Array(binaryString.length);
+                for (let i = 0; i < binaryString.length; i++) {
+                    byteArray[i] = binaryString.charCodeAt(i);
+                }
+                console.log('bStr:', binaryString);
+                // Create a Blob from the Uint8Array
+                const blob = new Blob([byteArray], { type: 'application/pdf' });
+                this.isLoading = false;
+                // Create a temporary anchor element to trigger the download
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = temp + '.pdf';
+                document.body.appendChild(a);
+                a.click();
 
-                    // Cleanup
-                    window.URL.revokeObjectURL(url);
-                    document.body.removeChild(a);
+                // Cleanup
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
 
             }).catch(error => {
                 this.isLoading = false;
-                console.log('Error: ' +error.toString());
-                console.log('Error: ' +JSON.parse(JSON.stringify(error)));
-                console.log('Error: ' +JSON.stringify(error));
+                console.log('Error: ' + error.toString());
+                console.log('Error: ' + JSON.parse(JSON.stringify(error)));
+                console.log('Error: ' + JSON.stringify(error));
             });
-        }catch(err){
+        } catch (err) {
             console.log(err);
         }
-    }   
+    }
 }
