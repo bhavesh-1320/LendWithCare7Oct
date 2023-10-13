@@ -20,6 +20,8 @@ import TermsandConditionsCA from '@salesforce/resourceUrl/TermsandConditionsFile
 import updateAutoRelend from '@salesforce/apex/LWC_AllLoansCtrl.updateAutoRelend';
 import downloadPDF from '@salesforce/apex/CareHomePageCtrl.getPdfFileAsBase64String';
 import LWCSectionMetaData from '@salesforce/apex/CareHomePageCtrl.LWCSectionMetaData';
+import profilePicAvatar from '@salesforce/resourceUrl/profilePicAvatar';
+
 // import getContactFieldsRecordInfo from '@salesforce/apex/CareHomePageCtrl.getContactFieldsRecordInfo';
 
 // this gets you the logged in user
@@ -53,6 +55,7 @@ export default class CareDashboard extends LightningElement {
     PrivacyPolicyCAFile = PrivacyPolicyCA;
     TermsandConditionsCAFile = TermsandConditionsCA;
     dasAvatarpic = DashboardPersonAvatars;
+    profilePicAvatar = profilePicAvatar;
     avatarpic = greenfield;
     AvatarImg;
     Champion = false;
@@ -64,7 +67,8 @@ export default class CareDashboard extends LightningElement {
     thankyouPopup = false;
     withdrawPopup = false;
     showalltransactionspopup = false;
-
+    screenWidth;
+    screenHeight;
     transactionEmail;
     donationEmail;
     @track UserName;
@@ -283,7 +287,7 @@ export default class CareDashboard extends LightningElement {
     wiredContactData({ error, data }) {
         if (data) {
             console.log('result contact --> ', JSON.stringify(data))
-            this.AvatarImg = data.contactRecord.Profile_Picture__c;
+            this.AvatarImg = data.contactRecord.Profile_Picture__c !=undefined && data.contactRecord.Profile_Picture__c !=''?data.contactRecord.Profile_Picture__c: this.profilePicAvatar ;
             console.log(this.AvatarImg);
             this.UserName = data.contactRecord.Name;
             this.AmountValues = data.contactRecord.Lender_Balance__c;
@@ -310,7 +314,7 @@ export default class CareDashboard extends LightningElement {
             this.relendCheckbox = data.contactRecord.Auto_Relend__c;
             this.JobsCreated = data.sumOfJobsCreated != null ? data.sumOfJobsCreated : '0';
             // this.Totalamountlent = data.totalTransactionsAmount;
-            this.Totalamountlent = data.contactRecord.Total_Amount_Lent__c != null ? data.contactRecord.Total_Amount_Lent__c : '0';
+            this.Totalamountlent = data.contactRecord.Total_Amount_Lent__c != null ? data.contactRecord.Total_Amount_Lent__c.toFixed(2) : '0';
             this.Peoplehelped = data.contactRecord.Total_People_Helped__c != null ? data.contactRecord.Total_People_Helped__c : '0';
             var rPaid = data.mapOfTypeAndAmount['Repayment'] != null && data.mapOfTypeAndAmount['Repayment'] != undefined ? data.mapOfTypeAndAmount['Repayment'] + '' : '0';
             rPaid = rPaid.split('.');
@@ -476,9 +480,14 @@ export default class CareDashboard extends LightningElement {
     } */
     handleAutoReLend(event) {
         console.log(event.target.checked);
+        var chk = event.target.checked;
+        this.isLoading = true;
         updateAutoRelend({ contactId: this.contactid, enable: event.target.checked }).then(res => {
-            this.relendCheckbox = event.target.checked;
+            this.relendCheckbox = chk;
+            console.log('Success:',this.relendCheckbox);
+            this.isLoading = false;
         }).catch(err => {
+            this.isLoading = false;
             console.log(err);
         });
     }
@@ -645,8 +654,20 @@ export default class CareDashboard extends LightningElement {
     @track visibleSlidesImapct = 4;
 
     get sliderStylesImpact() {
-        const translateXValue = this.currentSlideIndexImpact * (100 / this.visibleSlidesImapct);
-        return `transform: translateX(-${translateXValue}%);`;
+        this.getScreenSize();
+        if(this.screenWidth <= 460){
+            const translateXValue = this.currentSlideIndexImpact * (60 / this.visibleSlidesImapct);
+            return `transform: translateX(-${translateXValue}%);`;
+        }else {
+            const translateXValue = this.currentSlideIndexImpact * (34 / this.visibleSlidesImapct);
+            return `transform: translateX(-${translateXValue}%);`;
+        }
+
+    }
+
+    getScreenSize() {
+        this.screenWidth = window.innerWidth;
+        this.screenHeight = window.innerHeight;
     }
 
     get visibleCarouselItems() {
@@ -660,7 +681,7 @@ export default class CareDashboard extends LightningElement {
     }
 
     nextSlideImpact() {
-        if (this.currentSlideIndexImpact < this.carouselItemsImpact.length - this.visibleSlidesImapct) {
+        if (this.currentSlideIndexImpact < 8 - this.visibleSlidesImapct) {
             this.currentSlideIndexImpact++;
         }
     }
@@ -705,42 +726,7 @@ export default class CareDashboard extends LightningElement {
     }
 
 
-    @track carouselItemsImpactBreak /* = [
-        {
-
-            title: '17',
-            description: 'Number of loans.'
-
-        },
-        {
-            title: '$340',
-            description: 'Total amount lent.'
-        },
-        {
-            title: '17',
-            description: 'Number of loans.'
-        },
-        {
-            title: '$340',
-            description: 'Total amount lent.'
-        },
-        {
-            title: '17',
-            description: 'Number of loans.'
-        },
-        {
-            title: '$340',
-            description: 'Total amount lent.'
-        },
-        {
-            title: '17',
-            description: 'Number of loans.'
-        },
-        {
-            title: '$340',
-            description: 'Total amount lent.'
-        }
-    ]; */
+    @track carouselItemsImpactBreak;
 
     @track currentSlideIndexImpactBreak = 0;
     @track visibleSlidesImpactBreak = 4;
@@ -750,8 +736,15 @@ export default class CareDashboard extends LightningElement {
     }
 
     get sliderStylesImpactBreak() {
-        const translateXValue = this.currentSlideIndexImpactBreak * (100 / this.visibleSlidesImpactBreak);
+        this.getScreenSize();
+        if(this.screenWidth <= 460){
+        const translateXValue = this.currentSlideIndexImpactBreak * (60 / this.visibleSlidesImpactBreak);
         return `transform: translateX(-${translateXValue}%);`;
+        }else{
+        const translateXValue = this.currentSlideIndexImpactBreak * (34 / this.visibleSlidesImpactBreak);
+        return `transform: translateX(-${translateXValue}%);`;          
+        }
+        
     }
 
     get visibleCarouselItemsImpactBreak() {
@@ -765,7 +758,7 @@ export default class CareDashboard extends LightningElement {
     }
 
     nextSlideImpactBreak() {
-        if (this.currentSlideIndexImpactBreak < this.carouselItems.length - this.visibleSlidesImpactBreak) {
+        if (this.currentSlideIndexImpactBreak < 8 - this.visibleSlidesImpactBreak) {
             this.currentSlideIndexImpactBreak++;
         }
     }
@@ -793,17 +786,17 @@ export default class CareDashboard extends LightningElement {
         const donationAmount = parseFloat(this.donationAmount);
         console.log('parseFloat(this.AmountValues) ', parseFloat(donationAmount));
         console.log('parseFloat(this.AmountValues) ', parseFloat(this.AmountValues));
-
+        this.isLoading = true;
         if (donationAmount == null && donationAmount <= 0) {
             alert('Donation amount must be greater than 0');
             document.getElementById('donationInput').addEventListener('focus', function () {
                 this.value = ''; // Clear the input field when it gains focus
             });
-
+            this.isLoading = false;
             // console.log('Invalid donation amount');
         } else if (donationAmount > parseFloat(this.AmountValues)) {
             alert('Donation amount must be less than or equal to ' + this.AmountValues);
-
+            this.isLoading = false;
         } else {
             // Perform donation processing logic here
             //console.log('Donation successful of amount ' + donationAmount);
@@ -816,9 +809,10 @@ export default class CareDashboard extends LightningElement {
                 .then(result => {
                     console.log('result successfull from donation record ', JSON.stringify(result))
                     this.gotoThankYou();
-
+                    this.isLoading = false;
                 })
                 .catch(error => {
+                    this.isLoading = false;
                     console.log('error from donation record ', JSON.stringify(error))
                 })
 

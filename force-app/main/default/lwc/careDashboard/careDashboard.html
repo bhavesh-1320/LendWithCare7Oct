@@ -142,19 +142,19 @@
 				</div>
 				<div style="display:flex;justify-content:center">
 					<div class="dots">
-						<button class="NaviButton" style="background:none;margin-top:-18px"
-															onclick={previousSlideImpact}>&#10094;</button>
+						<a class="NaviButton" style="background:none;"
+															onclick={previousSlideImpact}>&#10094;</a>
 						<template for:each={carouselItemsImpact} for:item="item" for:index="index">
 							<span key={item.id} class="dotClass" onclick={handleDotClickImpact}
 																data-index={index}></span>
 						</template>
-						<button class="NaviButton" style="background:none;margin-top:-18px"
-															onclick={nextSlideImpact}>&#10095;	</button>
+						<a class="NaviButton" style="background:none;"
+															onclick={nextSlideImpact}>&#10095;	</a>
 					</div>
 				</div>
 				<template if:false={Champion}>
 					<div class="" style="margin:30px 0px 0px 0px;width:-webkit-fill-available;">
-						<button style="display: flex;width: -webkit-fill-available;padding: 15px 20px 15px 15px;border: none;font-family: 'Helvetica Neue Bold Pro';font-size: 16px;line-height: 16px;flex-direction:row;justify-content:center;"><span style="font-size:35px;margin:2px 8px 0px 0px;">&#x2606;</span> Become a Change Champion</button>
+						<button class="becomeacahngechampion"><span style="font-size:35px;margin:2px 8px 0px 0px;">&#x2606;</span> Become a Change Champion</button>
 					</div>
 				</template>
 			</div>
@@ -188,13 +188,10 @@
 		</lightning-layout-item>
 	</lightning-layout>
 	<div class="OnlyShowInDesktopAccount">
-
-	
-
+		<h3 class="section-headings text-left pad" style="line-height:60px">{section3val1}<br><span
+					style="color:#E4761E">{section3val2}</span></h3>
 		<div class="grid-containerLayoutImpact pad">
 			<div>
-				<h3 class="section-headings text-left">{section3val1}<span
-									style="color:#E4761E">&nbsp;{section3val2}</span></h3>
 				<div class="MoneyAvailable">
 					<div class="TextStyle">
 						<template if:true={lendAmt}>
@@ -210,7 +207,6 @@
 				</div>
 			</div>
 			<div>
-				<h3 class="section-headings text-left" style="height:40px"></h3>
 				<h3
 					style="font-size:30px;font-weight:800;color:#002A3A;line-height:38px;font-family: 'Sketchetik Fill Bold';">
 					Breakdown
@@ -424,7 +420,7 @@
 								Top up account</a>
 						</div>
 						<div style="margin:10px 10px 10px 0px" class="slds-align_absolute-center">
-							<div style="min-height:120px;margin-right:-21px;"><lightning-input type="checkbox" variant="standard" name="name"></lightning-input></div>
+							<div style="min-height:120px;margin-right:-21px;"><lightning-input checked={relendCheckbox} onchange={handleAutoReLend} type="checkbox" variant="standard" name="name"></lightning-input></div>
 						<div><p
 								style="font-size:18px;line-height:18px;color:#002A3A;margin-left:12px;font-family: 'Helvetica Neue Regular';min-height:120px;">
 								I would like my payments to be set to auto-relend. To view more information about
@@ -436,13 +432,12 @@
 			</lightning-layout-item>
 			<lightning-layout-item size="12" class="slds-p-top_large" small-device-size="12" medium-device-size="6"
 				large-device-size="6">
+				<div class="headingcar ">
+					<h3 style="font-size:30px;font-weight:800;color:#002A3A;line-height:38px;font-family: 'Sketchetik Fill Bold';">
+						Breakdown</h3>
+				</div>
 				<div class="carouselImpact">
-					<div class="headingcar ">
-						<h3
-							style="font-size:30px;font-weight:800;color:#002A3A;line-height:38px;font-family: 'Sketchetik Fill Bold';">
-							Breakdown</h3>
-					</div>
-					<div class="sliderImpact" style={sliderStylesImpact}>
+					<div class="sliderImpact" style={sliderStylesImpactBreak}>
 						<template for:each={carouselItemsImpactBreak} for:item="item" for:index="index">
 							<div key={item.id} class="slides">
 								<div class="slide-content">
@@ -455,17 +450,17 @@
 							</div>
 						</template>
 					</div>
-					<div style="display:flex;justify-content:center">
-						<div class="dots">
-							<button class="NaviButton" style="background:none;margin-top:-18px"
-								onclick={previousSlideImpact}>&#10094;</button>
-							<template for:each={carouselItemsImpactBreak} for:item="item" for:index="index">
-								<span key={item.id} class="dotClass" onclick={handleDotClickImpact}
-									data-index={index}></span>
-							</template>
-							<button class="NaviButton" style="background:none;margin-top:-18px"
-								onclick={nextSlideImpact}>&#10095;</button>
-						</div>
+				</div>
+				<div style="display:flex;justify-content:center">
+					<div class="dots">
+						<a class="NaviButton" style="background:none;"
+												onclick={previousSlideImpactBreak}>&#10094;</a>
+						<template for:each={carouselItemsImpactBreak} for:item="item" for:index="index">
+							<span key={item.id} class="dotClass" onclick={handleDotClickImpactBreak}
+													data-index={index}></span>
+						</template>
+						<a class="NaviButton" style="background:none;"
+												onclick={nextSlideImpactBreak}>&#10095;</a>
 					</div>
 				</div>
 			</lightning-layout-item>
@@ -598,7 +593,134 @@
 			</lightning-layout-item>
 		</lightning-layout>
 	</div>
-	<div class="yourtransaction OnlyShowInDesktopAccount pad">
+	<div class="AccShowinDesktop pad">
+		<lightning-layout multiple-rows class="displaygridsys">
+			<lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+				<!-- padding="horizontal-small" -->
+				<div style="margin:10px 10px 30px 0px;">
+					<h3 class="section-headingsAccSett">Account<span style="color:#E4761E">&nbsp;Settings</span></h3>
+				</div>
+			</lightning-layout-item>
+			<template if:true={CommunicationsPreferences}>
+				<div class="search-overlay">
+					<div class="search">
+						<div style="display: flex; align-items: center;padding-top:10px">
+							<div>
+								<a class="closes-button" style="padding-left:20px" onclick={CloseCommunicationsPreferences}>
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black"
+										viewBox="0 0 16 16">
+										<path fill-rule="evenodd"
+											d="M5.646 8l4.95-4.95a.5.5 0 0 0-.708-.708L4.04 7.646a.5.5 0 0 0 0 .708L9.888 13.95a.5.5 0 0 0 .708-.708L5.646 8z" />
+									</svg>
+								</a>
+							</div>
+							<div style="flex: 1; text-align: center;padding-right:20px">
+								<h3
+									style="font-weight: 800; margin: 0;font-size:20px;line-height:20px;font-family:'Sketchetik Fill Bold';color:#002A3A;">
+									Communications Preferences</h3>
+							</div>
+						</div>
+						<hr style="margin: 10px 0px 0px 0px">
+						<div class="search-header" style="padding: 0px 20px 0px 20px">
+							<div class="grid-containerToggle">
+								<div class="field1"  style="float:left;">
+									<label class="classFieldLabel">Lendwithcare emails</label>
+									
+								</div>
+								<div style="padding: 13px;display: flex;justify-content: right;">
+									<lightning-input type="toggle" onchange={LendwithcareEmails} checked={LendwithcareEmailsChecked}>
+    								</lightning-input> <!-- label="Toggle value" -->
+									</div>
+							</div>
+							<div class="grid-containerToggle">
+								<div class="field1" style="float:left;">
+									<label class="classFieldLabel">All CARE emails</label>
+									
+								</div>
+								<div style="padding: 13px;display: flex;justify-content: right;">
+									<lightning-input type="toggle"  onchange={AllCAREemails} checked={AllCAREemailsChecked}>
+    								</lightning-input> <!-- label="Toggle value" -->
+									</div>
+								
+							</div>
+							
+						</div>
+					</div>
+				</div>
+			</template>
+			<lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+				<!-- padding="horizontal-small" -->
+				<div class="withdrawComPre">
+					<a onclick={openCommunicationsPreferences} style="color:#002A3A;font-weight:800"><span style="font-size:20px;float:left;">&#8594;</span>&nbsp;
+						Communications preferences</a>
+				</div>
+			</lightning-layout-item>
+			<lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+				<!-- padding="horizontal-small" -->
+				<!-- <div class="withdraw">
+				<a href="#" style="color:#002A3A;font-weight:800"><span style="font-size:20px">&#8594;</span>&nbsp;
+				Update password</a>
+			 </div> -->
+			</lightning-layout-item>
+			<template if:true={PersonalDetails}>
+				<div class="search-overlay">
+					<div class="search">
+						<div style="display: flex; align-items: center;padding-top:10px">
+							<div>
+								<a class="closes-button" style="padding-left:20px" onclick={ClosePersonalDetails}>
+									<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black"
+										viewBox="0 0 16 16">
+										<path fill-rule="evenodd"
+											d="M5.646 8l4.95-4.95a.5.5 0 0 0-.708-.708L4.04 7.646a.5.5 0 0 0 0 .708L9.888 13.95a.5.5 0 0 0 .708-.708L5.646 8z" />
+									</svg>
+								</a>
+							</div>
+							<div style="flex: 1; text-align: center;padding-right:20px">
+								<h3
+									style="font-weight: 800; margin: 0;font-size:20px;line-height:20px;font-family:'Sketchetik Fill Bold';color:#002A3A;">
+									Update personal details</h3>
+							</div>
+						</div>
+						<hr style="margin: 10px 0px 0px 0px">
+						<div class="search-header" style="padding: 0px 20px 0px 20px">
+							<div class="form-container">
+								<div class="field">
+									<label class="classFieldLabel">First name</label>
+									<input class="ClassInputFields italic-placeholder" type="text"
+										onchange={handleFirstName} placeholder="&nbsp; eg: jane"></input>
+								</div>
+								<div class="field">
+									<label class="classFieldLabel">Last name</label>
+									<input class="ClassInputFields italic-placeholder" type="text"
+										onchange={handleLastName} placeholder="&nbsp; eg: smith"></input>
+								</div>
+								<!-- <div class="field">
+							<label class="classFieldLabel">Change password</label>
+							<input class="ClassInputFields italic-placeholder" type="text" onchange={handleInputChange} placeholder="&nbsp; eg: janesmith@gmail.com" ></input>
+						 </div>
+						 <div class="field">
+							<label class="classFieldLabel">Confirm new password</label>
+							<input class="ClassInputFields" type="text" onchange={handleInputChange} ></input>
+						 </div> -->
+							</div>
+							<button class="UpdateButtonMakAnotherloanPersonal"
+								style="width: -webkit-fill-available;"
+								onclick={confirmChanges}>Confirm changes</button>
+						</div>
+					</div>
+				</div>
+			</template>
+			<lightning-layout-item size="12" small-device-size="12" medium-device-size="6" large-device-size="4">
+				<!-- padding="horizontal-small" -->
+				<div class="withdrawComPre">
+					<a onclick={updatePersonalDetails} style="color:#002A3A;font-weight:800"><span
+							style="font-size:20px;float:left;">&#8594;</span>&nbsp;
+						Update personal information</a>
+				</div>
+			</lightning-layout-item>
+		</lightning-layout>
+	</div>
+	<div class="yourtransaction OnlyShowInDesktopAccountTransaction pad">
 		<!-- Row 1 -->
 		<div class="slds-grid slds-wrap">
 			<div class="slds-col slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12">
@@ -803,7 +925,7 @@
 			</div>
 		</div>-->
 	</div>
-	<div class="yourtransaction Onlyshowinmobile pad">
+	<div class="yourtransaction OnlyshowinmobileTransaction pad">
 		<!-- Row 1 -->
 		<div class="slds-grid slds-wrap">
 			<div class="slds-col slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12">
@@ -1010,7 +1132,7 @@
 			</div>
 		</template>
 	</div>
-	<div class="yourtransaction OnlyshowinmobileTransaction pad">
+	<div class="yourtransaction OnlyshowinTabTransaction pad">
 		<!-- Row 1 -->
 		<div class="slds-grid slds-wrap">
 			<div class="slds-col slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12">

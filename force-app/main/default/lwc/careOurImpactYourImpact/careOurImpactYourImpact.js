@@ -51,6 +51,10 @@ export default class CareOurImpactYourImpact extends LightningElement {
     img6 = img6; */
     val1;
     //val2;
+    TotalLoans;
+    Totalamountlent;
+    JobsCreated;
+    Peoplehelped;
 
     @wire(getImpactInfo)
     wiredContactData({ error, data }) {
@@ -61,7 +65,7 @@ export default class CareOurImpactYourImpact extends LightningElement {
                     description: 'Number of loans.'
                 },
                 {
-                    title: '$'+data.totalAmountLent,
+                    title: data.totalAmountLent!=undefined?'$'+Number(data.totalAmountLent).toFixed(2):'$0',
                     description: 'Total amount lent.'
                 },
                 {
@@ -73,6 +77,11 @@ export default class CareOurImpactYourImpact extends LightningElement {
                     description: 'People helped'
                 },
         ];
+        console.log('this.carouselItemsImpact ', this.carouselItemsImpact[0].title);
+        this.TotalLoans = this.carouselItemsImpact[0].title;
+        this.Totalamountlent = this.carouselItemsImpact[1].title;
+        this.JobsCreated = this.carouselItemsImpact[2].title;
+        this.Peoplehelped = this.carouselItemsImpact[3].title;
         } else if (error) {
             console.error('Error loading data:', error);
         }
@@ -185,7 +194,7 @@ export default class CareOurImpactYourImpact extends LightningElement {
         this.isDropdownOpenAbout = !this.isDropdownOpenAbout;
     }
     connectedCallback() {
-        /* Promise.all([
+        Promise.all([
             loadStyle(this, LendWithCareJSCss + '/bootstrap.min.css'),
             loadStyle(this, LendWithCareJSCss + '/css2.css'),
             loadStyle(this, LendWithCareJSCss + '/slick.css'),
@@ -204,7 +213,7 @@ export default class CareOurImpactYourImpact extends LightningElement {
             })
             .catch(error => {
                 console.log("failed to load the scripts:", error);
-            }); */
+            });
         this.getScreenSize();
         window.addEventListener('resize', this.getScreenSize.bind(this));
         

@@ -6,13 +6,13 @@
 @media only screen and (max-width: 600px){
 .donut{
 	display: block;
-	width: 250px;
+	width: 250px !important;
 }
 }
 @media only screen and (min-width: 600px){
 .donut{
 	display: block;
-	width: 290px !important;
+	width: 535px !important;
 }
 }
 @media only screen and (min-width: 768px){
@@ -24,18 +24,18 @@
 @media only screen and (min-width: 992px){
 .donut{
 	display: block;
-	width: 450px !important;
+	width: 360px !important;
 }
 }
 @media only screen and (min-width: 1200px){
 .donut{
 	display: block;
-	width: 410px !important;
+	width: 480px !important;
 }
 }
 @media only screen and (min-width: 1480px){
 .donut{
 	display: block;
-	width: 450px !important;
+	width: 625px !important;
 }
 }

@@ -311,18 +311,40 @@ p {
   margin-top: 1%;
 }
 
-button {
+becomeacahngechampion {
   background: #FEBE10;
   border-radius: 4px;
-  padding: 12px 0px;
-  font-family: 'Helvetica';
-  width: 380px;
+  padding:  15px 20px 15px 15px;
+  font-family: 'Helvetica Neue Bold Pro';
+  width: -webkit-fill-available;
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 16px;
   text-align: center;
   color: #163B54;
+  border: none;
+  display: flex;
+  flex-direction:row;
+  justify-content:center;
+}
+
+becomeacahngechampion:hover {
+  background: #472175;
+  border-radius: 4px;
+  padding:  15px 20px 15px 15px;
+  font-family: 'Helvetica Neue Bold Pro';
+  width: -webkit-fill-available;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #163B54;
+  border: none;
+  display: flex;
+  flex-direction:row;
+  justify-content:center;
 }
 
 button1 {
@@ -364,10 +386,6 @@ button1 {
   vertical-align: middle;
 }
 
-button:hover {
-  background: #422371;
-  color: white;
-}
 
 .section-discription {
   font-family: 'Helvetica';
@@ -1207,11 +1225,17 @@ h2 span {
 }
 
 @media only screen and (max-width: 360px){
+  .OnlyShowInDesktopAccountTransaction{
+    display: none;
+  }
+  .OnlyshowinTabTransaction{
+    display: none;
+  }
 .OnlyshowinmobileTransaction{
   display: block;
 }
 .Onlyshowinmobile{
-  display: none;
+  display: block;
 }
 .OnlyShowInDesktopAccount{
   display: none;
@@ -1290,444 +1314,9 @@ h2 span {
   width: 100%;
   margin-top: 70px;
   margin-bottom: 70px;
-  display: block;
-}
-  .grid-container1 {
-  justify-content: left;
-  display: grid;
-  grid-template-columns: 120px auto;
-  gap: 20px;
-  padding: 10px;
-}
-  .CheckboxACCMargin{
-    margin-top: -55px;
-  }
-  .withdraw {
-    background: #F3F0ED;
-    padding: 10px;
-    margin: 10px;
-    text-align: center;
-    font-family: 'Helvetica Neue Bold Pro';
-    font-size: 16px;
-    line-height: 16px;
-    height: 61px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border-radius: 4px;
-  }
-
-    .withdrawComPre {
-    background: #F3F0ED;
-    padding: 10px;
-    margin: 10px 10px 10px 0px;
-    text-align: center;
-    font-family: 'Helvetica Neue Bold Pro';
-    font-size: 16px;
-    line-height: 16px;
-    width: 100%;
-    height: 61px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border-radius: 4px;
-  }
-
-  .Donate {
-    background: #F3F0ED;
-    padding: 10px;
-    margin: 10px;
-    text-align: center;
-    font-family: 'Helvetica Neue Bold Pro';
-    font-size: 16px;
-    line-height: 16px;
-    height: 61px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border-radius: 4px;
-  }
-
-  .TopUpAcc {
-    background: #F3F0ED;
-    padding: 10px;
-    margin: 10px;
-    text-align: center;
-    font-family: 'Helvetica Neue Bold Pro';
-    font-size: 16px;
-    line-height: 16px;
-    height: 61px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-  }
-
-  .section-headingsAccSett {
-    font-style: normal;
-    font-weight: 800;
-    font-size: 30px;
-    line-height: 37px;
-    font-family: 'Sketchetik Fill Bold';
-    color: #002A3A;
-  }
-
-  .carTitleImpact {
-    font-size: 46px;
-    line-height: 53px;
-    font-family: 'Sketchetik Fill Bold';
-    font-weight: 600;
-    margin-bottom: 10px;
-    color: #E4761E;
-  }
-
-  .carParaImpact {
-    font-size: 12px;
-    line-height: 15px;
-    font-family: 'Helvetica Neue Bold Pro';
-    color: #002A3A;
-
-  }
-
-  .carPArPoints {
-    font-size: 24px;
-    line-height: 34px;
-    font-family: 'Sketchetik Fill Bold';
-    color: #E4761E;
-  }
-
-  .custom-box1 {
-    font-size: 10px;
-    line-height: 12px;
-    font-family: 'Helvetica Neue Bold Pro';
-    color: #472175;
-
-  }
-
-  .custom-box2 {
-    font-size: 10px;
-    line-height: 12px;
-    font-family: 'Helvetica Neue Bold Pro';
-    color: #5C8F39;
-  }
-
-  .custom-box3 {
-    font-size: 10px;
-    line-height: 12px;
-    font-family: 'Helvetica Neue Bold Pro';
-    color: #E4761E;
-  }
-
-  .custom-box4 {
-    font-size: 10px;
-    line-height: 12px;
-    font-family: 'Helvetica Neue Bold Pro';
-    color: #AC381E;
-  }
-
-  .CarContentImpact {
-    background-color: #F3F0ED;
-    padding: 15px;
-    margin: 0px 10px 0px 0px;
-    width: auto;
-    min-width: auto;
-    min-height: auto;
-    border-radius: 8px;
-  }
-
-  .UpdateButtonMakAnotherloan {
-    background: #FEBE10;
-    padding: 18px 20px 17px 20px;
-    border-radius: 4px;
-    border-style: none;
-    width: -webkit-fill-available;
-    height: 48px;
-    margin-bottom: 40px;
-    color: #002A3A;
-    font-size: 16px;
-    line-height: 16px;
-    font-family: 'Helvetica Neue Bold Pro';
-    display: flex;
-    justify-content: center;
-  }
-
-  .UpdateButtonMakAnotherloan:hover {
-    background: #472175;
-    padding: 18px 20px 17px 20px;
-    border-radius: 4px;
-    width: -webkit-fill-available;
-    height: 48px;
-    margin-bottom: 40px;
-    border-color: white;
-    border-width: 1px;
-    color: white;
-    font-size: 16px;
-    line-height: 16px;
-    font-family: 'Helvetica Neue Bold Pro';
-    display: flex;
-    justify-content: center;
-    border-style: none;
-  }
-
-  .pad {
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-
-  .item1 {
-    order: 2;
-  }
-
-  .item2 {
-    order: 1;
-  }
-
-  .image1 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    width: 115px;
-    height: 120px
-  }
-
-  .image2 {
-    position: absolute;
-    top: 5px;
-    left: 2px;
-    background: red;
-    height: 100px;
-    width: 100px;
-    border-radius: 100%;
-  }
-
-  .Usernames {
-    display: flex;
-    justify-content: right;
-  }
-
-  .UpdateDivs {
-    display: block;
-    max-width: 500px;
-  }
-
-  .yourimpact {
-    display: block;
-    width: 100%;
-  }
-
-  .chartback {
-    display: grid;
-    background: #F3F0ED;
-    border-radius: 5px;
-    margin-top: 35px;
-    margin-bottom: 35px;
-    width: 100%;
-  }
-
-  .carouselImpact {
-    position: relative;
-    overflow: auto;
-  }
-
-  .sliderImpact {
-    display: flex;
-    transition: transform 0.5s;
-    width: 300%;
-    margin-bottom: 40px;
-    margin-top: 25px;
-  }
-
-  .carouselImpactBreak {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .sliderImpactBreak {
-    display: flex;
-    transition: transform 0.5s;
-    width: 300%;
-    margin-bottom: 40px;
-  }
-
-  .carouselCustom {
-    position: relative;
-    overflow: hidden;
-  }
-
-  .sliderCustom {
-    display: flex;
-    transition: transform 0.5s;
-    width: 300%;
-  }
-
-  .MobSizes {
-    margin-left: 0px;
-  }
-
-  .H3headsMob {
-    font-size: 16px;
-    line-height: 22px;
-    font-family: 'Helvetica Neue Bold Pro';
-    color: white;
-    margin-top: 20px;
-  }
-
-  .H3headsMob1 {
-    font-size: 30px;
-    line-height: 36px;
-    font-family: 'Sketchetik Fill Bold';
-    color: white;
-  }
-
-  .MobValues {
-    margin-top: 20px;
-    width: 35%;
-  }
-
-  .Mobupdatesvalues {
-    margin-top: 100px;
-    display: none;
-  }
-
-  .displaygridsys {
-    display: block;
-    width: 100%;
-  }
-
-  .styletransactionmodule {
-    background-color: white;
-    border-radius: 30px;
-    width: -webkit-fill-available;
-    padding: 0px;
-  }
-
-  .displayupdates {
-    display: block;
-    padding: 40px;
-    margin-top: -150px;
-  }
-
-  .BannerButtons {
-    display: grid;
-    margin-bottom: 150px;
-    margin-top: 0px;
-  }
-
-  .OnlyShowInDesktop {
-    display: none;
-  }
-
-  .OnlyShowInDesktopAccount {
-    display: none;
-  }
-
-  .Onlyshowinmobile {
-    display: block;
-  }
-
-  .PillsButtonEnd {
-    display: flex;
-    background: white;
-    justify-content: center;
-    border: none;
-    font-size: 16px;
-    line-height: 16px;
-    font-family: 'Helvetica Neue Bold Pro';
-    width: -webkit-fill-available;
-    padding: 17px 0px 10px 0px;
-  }
-
-  .PillsButtonEnd:hover {
-    display: flex;
-    background: #472175;
-    color: white;
-    justify-content: center;
-    border: none;
-    font-size: 16px;
-    line-height: 16px;
-    font-family: 'Helvetica Neue Bold Pro';
-    width: -webkit-fill-available;
-    padding: 17px 0px 10px 0px;
-  }
-}
-
-@media only screen and (min-width: 361px) and (max-width: 600px) {
-  .OnlyshowinmobileTransaction{
   display: none;
 }
-  .OnlyshowinmobileTransaction{
-    display: none;
-  }
-
-  .PillsButton {
-  display: flex;
-  background: white;
-  justify-content: center;
-  border-radius: 30px;
-  border: none;
-  font-size: 16px;
-  line-height: 20px;
-  font-family: 'Helvetica Neue Bold Pro';
-  padding: 5px 15px 5px 15px;
-  width: -webkit-fill-available;
-}
-
-.PillsButton.selected {
-  display: flex;
-  background: #472175;
-  justify-content: center;
-  color: white;
-  border-radius: 30px;
-  border: none;
-  font-size: 16px;
-  line-height: 20px;
-  font-family: 'Helvetica Neue Bold Pro';
-  padding: 5px 15px 5px 15px;
-  width: -webkit-fill-available;
-}
-
-.PillsButton:hover {
-  display: flex;
-  background: #472175;
-  justify-content: center;
-  color: white;
-  border-radius: 30px;
-  border: none;
-  font-size: 16px;
-  line-height: 20px;
-  font-family: 'Helvetica Neue Bold Pro';
-  padding: 5px 15px 5px 15px;
-  width: -webkit-fill-available;
-}
-  .StyleBreakdown{
-  font-size:20px;
-  line-height:25px;
-  font-family:'Sketchetik Fill Bold';
-  font-weight:800;
-  color:#002A3A;
-}
-  .ChartTypeLoans{
-  float:left;
-  margin:20px 20px 20px 35px;
-  font-family: 'Helvetica Neue Bold Pro';
-  font-size:16px;
-  line-height:20px;
-}
-  .section-headings {
-  font-style: normal;
-  font-weight: 800;
-  font-size: 30px;
-  line-height: 37px;
-  font-family: 'Sketchetik Fill Bold';
-  color: #002A3A;
-  margin:30px 30px 30px 0px;
-}
-  .grid-containerLayoutImpact {
-  display: grid;
-  grid-template-columns: 100%;
-  gap:0px 0px;
-}
-  .Acc {
+  .AccShowinDesktop {
   width: 100%;
   margin-top: 70px;
   margin-bottom: 70px;
@@ -1871,7 +1460,7 @@ h2 span {
     margin: 0px 10px 0px 0px;
     width: auto;
     min-width: auto;
-    min-height: auto;
+    min-height: 121px;
     border-radius: 8px;
   }
 
@@ -1974,20 +1563,18 @@ h2 span {
     display: flex;
     transition: transform 0.5s;
     width: 300%;
-    margin-bottom: 40px;
     margin-top: 25px;
   }
 
   .carouselImpactBreak {
     position: relative;
-    overflow: hidden;
+    overflow: auto;
   }
 
   .sliderImpactBreak {
     display: flex;
     transition: transform 0.5s;
     width: 300%;
-    margin-bottom: 40px;
   }
 
   .carouselCustom {
@@ -2058,13 +1645,456 @@ h2 span {
     display: none;
   }
 
-  .OnlyShowInDesktopAccount {
+
+
+  .PillsButtonEnd {
+    display: flex;
+    background: white;
+    justify-content: center;
+    border: none;
+    font-size: 16px;
+    line-height: 16px;
+    font-family: 'Helvetica Neue Bold Pro';
+    width: -webkit-fill-available;
+    padding: 17px 0px 10px 0px;
+  }
+
+  .PillsButtonEnd:hover {
+    display: flex;
+    background: #472175;
+    color: white;
+    justify-content: center;
+    border: none;
+    font-size: 16px;
+    line-height: 16px;
+    font-family: 'Helvetica Neue Bold Pro';
+    width: -webkit-fill-available;
+    padding: 17px 0px 10px 0px;
+  }
+}
+
+@media only screen and (min-width: 361px) and (max-width: 600px) {
+  .OnlyShowInDesktopAccount{
     display: none;
   }
+  .OnlyShowInDesktopAccountTransaction{
+    display: none;
+  }
+  .OnlyshowinTabTransaction{
+    display: none;
+  }
+.OnlyshowinmobileTransaction{
+  display: block;
+}
 
   .Onlyshowinmobile {
     display: block;
   }
+  .PillsButton {
+  display: flex;
+  background: white;
+  justify-content: center;
+  border-radius: 30px;
+  border: none;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+
+.PillsButton.selected {
+  display: flex;
+  background: #472175;
+  justify-content: center;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+
+.PillsButton:hover {
+  display: flex;
+  background: #472175;
+  justify-content: center;
+  color: white;
+  border-radius: 30px;
+  border: none;
+  font-size: 16px;
+  line-height: 20px;
+  font-family: 'Helvetica Neue Bold Pro';
+  padding: 5px 15px 5px 15px;
+  width: -webkit-fill-available;
+}
+  .StyleBreakdown{
+  font-size:20px;
+  line-height:25px;
+  font-family:'Sketchetik Fill Bold';
+  font-weight:800;
+  color:#002A3A;
+}
+  .ChartTypeLoans{
+  float:left;
+  margin:20px 20px 20px 35px;
+  font-family: 'Helvetica Neue Bold Pro';
+  font-size:16px;
+  line-height:20px;
+}
+  .section-headings {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 30px;
+  line-height: 37px;
+  font-family: 'Sketchetik Fill Bold';
+  color: #002A3A;
+  margin:30px 30px 30px 0px;
+}
+  .grid-containerLayoutImpact {
+  display: grid;
+  grid-template-columns: 100%;
+  gap:0px 0px;
+}
+  .Acc {
+  width: 100%;
+  margin-top: 70px;
+  margin-bottom: 70px;
+  display: none;
+}
+  .AccShowinDesktop {
+  width: 100%;
+  margin-top: 70px;
+  margin-bottom: 70px;
+  display: block;
+}
+  .grid-container1 {
+  justify-content: left;
+  display: grid;
+  grid-template-columns: 120px auto;
+  gap: 20px;
+  padding: 10px;
+}
+  .CheckboxACCMargin{
+    margin-top: -55px;
+  }
+  .withdraw {
+    background: #F3F0ED;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    font-family: 'Helvetica Neue Bold Pro';
+    font-size: 16px;
+    line-height: 16px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
+  }
+
+    .withdrawComPre {
+    background: #F3F0ED;
+    padding: 10px;
+    margin: 10px 10px 10px 0px;
+    text-align: center;
+    font-family: 'Helvetica Neue Bold Pro';
+    font-size: 16px;
+    line-height: 16px;
+    width: 100%;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
+  }
+
+  .Donate {
+    background: #F3F0ED;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    font-family: 'Helvetica Neue Bold Pro';
+    font-size: 16px;
+    line-height: 16px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 4px;
+  }
+
+  .TopUpAcc {
+    background: #F3F0ED;
+    padding: 10px;
+    margin: 10px;
+    text-align: center;
+    font-family: 'Helvetica Neue Bold Pro';
+    font-size: 16px;
+    line-height: 16px;
+    height: 61px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .section-headingsAccSett {
+    font-style: normal;
+    font-weight: 800;
+    font-size: 30px;
+    line-height: 37px;
+    font-family: 'Sketchetik Fill Bold';
+    color: #002A3A;
+  }
+
+  .carTitleImpact {
+    font-size: 46px;
+    line-height: 53px;
+    font-family: 'Sketchetik Fill Bold';
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #E4761E;
+  }
+
+  .carParaImpact {
+    font-size: 12px;
+    line-height: 15px;
+    font-family: 'Helvetica Neue Bold Pro';
+    color: #002A3A;
+
+  }
+
+  .carPArPoints {
+    font-size: 24px;
+    line-height: 34px;
+    font-family: 'Sketchetik Fill Bold';
+    color: #E4761E;
+  }
+
+  .custom-box1 {
+    font-size: 10px;
+    line-height: 12px;
+    font-family: 'Helvetica Neue Bold Pro';
+    color: #472175;
+
+  }
+
+  .custom-box2 {
+    font-size: 10px;
+    line-height: 12px;
+    font-family: 'Helvetica Neue Bold Pro';
+    color: #5C8F39;
+  }
+
+  .custom-box3 {
+    font-size: 10px;
+    line-height: 12px;
+    font-family: 'Helvetica Neue Bold Pro';
+    color: #E4761E;
+  }
+
+  .custom-box4 {
+    font-size: 10px;
+    line-height: 12px;
+    font-family: 'Helvetica Neue Bold Pro';
+    color: #AC381E;
+  }
+
+  .CarContentImpact {
+    background-color: #F3F0ED;
+    padding: 15px;
+    margin: 0px 10px 0px 0px;
+    width: auto;
+    min-width: auto;
+    min-height: 121px;
+    border-radius: 8px;
+  }
+
+  .UpdateButtonMakAnotherloan {
+    background: #FEBE10;
+    padding: 18px 20px 17px 20px;
+    border-radius: 4px;
+    border-style: none;
+    width: -webkit-fill-available;
+    height: 48px;
+    margin-bottom: 40px;
+    color: #002A3A;
+    font-size: 16px;
+    line-height: 16px;
+    font-family: 'Helvetica Neue Bold Pro';
+    display: flex;
+    justify-content: center;
+  }
+
+  .UpdateButtonMakAnotherloan:hover {
+    background: #472175;
+    padding: 18px 20px 17px 20px;
+    border-radius: 4px;
+    width: -webkit-fill-available;
+    height: 48px;
+    margin-bottom: 40px;
+    border-color: white;
+    border-width: 1px;
+    color: white;
+    font-size: 16px;
+    line-height: 16px;
+    font-family: 'Helvetica Neue Bold Pro';
+    display: flex;
+    justify-content: center;
+    border-style: none;
+  }
+
+  .pad {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .item1 {
+    order: 2;
+  }
+
+  .item2 {
+    order: 1;
+  }
+
+  .image1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 115px;
+    height: 120px
+  }
+
+  .image2 {
+    position: absolute;
+    top: 5px;
+    left: 2px;
+    background: red;
+    height: 100px;
+    width: 100px;
+    border-radius: 100%;
+  }
+
+  .Usernames {
+    display: flex;
+    justify-content: right;
+  }
+
+  .UpdateDivs {
+    display: block;
+    max-width: 500px;
+  }
+
+  .yourimpact {
+    display: block;
+    width: 100%;
+  }
+
+  .chartback {
+    display: grid;
+    background: #F3F0ED;
+    border-radius: 5px;
+    margin-top: 35px;
+    margin-bottom: 35px;
+    width: 100%;
+  }
+
+  .carouselImpact {
+    position: relative;
+    overflow: auto;
+  }
+
+  .sliderImpact {
+    display: flex;
+    transition: transform 0.5s;
+    width: 300%;
+    margin-top: 25px;
+  }
+
+  .carouselImpactBreak {
+    position: relative;
+    overflow: auto;
+  }
+
+  .sliderImpactBreak {
+    display: flex;
+    transition: transform 0.5s;
+    width: 300%;
+  }
+
+  .carouselCustom {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sliderCustom {
+    display: flex;
+    transition: transform 0.5s;
+    width: 300%;
+  }
+
+  .MobSizes {
+    margin-left: 0px;
+  }
+
+  .H3headsMob {
+    font-size: 16px;
+    line-height: 22px;
+    font-family: 'Helvetica Neue Bold Pro';
+    color: white;
+    margin-top: 20px;
+  }
+
+  .H3headsMob1 {
+    font-size: 30px;
+    line-height: 36px;
+    font-family: 'Sketchetik Fill Bold';
+    color: white;
+  }
+
+  .MobValues {
+    margin-top: 20px;
+    width: 35%;
+  }
+
+  .Mobupdatesvalues {
+    margin-top: 100px;
+    display: none;
+  }
+
+  .displaygridsys {
+    display: block;
+    width: 100%;
+  }
+
+  .styletransactionmodule {
+    background-color: white;
+    border-radius: 30px;
+    width: -webkit-fill-available;
+    padding: 0px;
+  }
+
+  .displayupdates {
+    display: block;
+    padding: 40px;
+    margin-top: -150px;
+  }
+
+  .BannerButtons {
+    display: grid;
+    margin-bottom: 150px;
+    margin-top: 0px;
+  }
+
+  .OnlyShowInDesktop {
+    display: none;
+  }
+
+
+
 
   .PillsButtonEnd {
     display: flex;
@@ -2093,12 +2123,15 @@ h2 span {
 }
 
 @media only screen and (min-width: 601px) {
-  .OnlyshowinmobileTransaction{
-  display: none;
-}
-.OnlyshowinmobileTransaction{
+  .OnlyShowInDesktopAccountTransaction{
     display: none;
   }
+  .OnlyshowinTabTransaction{
+    display: none;
+  }
+.OnlyshowinmobileTransaction{
+  display: block;
+}
   .PillsButton {
   display: flex;
   background: white;
@@ -2168,6 +2201,13 @@ h2 span {
   gap: 0px 0px;
 }
     .Acc {
+  width: 100%;
+  margin-top: 70px;
+  margin-bottom: 70px;
+  display: none;
+}
+
+    .AccShowinDesktop {
   width: 100%;
   margin-top: 70px;
   margin-bottom: 70px;
@@ -2310,7 +2350,7 @@ h2 span {
     margin: 0px 10px 0px 0px;
     width: auto;
     min-width: auto;
-    min-height: auto;
+    min-height: 121px;
     border-radius: 8px;
   }
 
@@ -2394,20 +2434,18 @@ h2 span {
     display: flex;
     transition: transform 0.5s;
     width: 300%;
-    margin-bottom: 40px;
     margin-top: 25px;
   }
 
   .carouselImpactBreak {
     position: relative;
-    overflow: hidden;
+    overflow: auto;
   }
 
   .sliderImpactBreak {
     display: flex;
     transition: transform 0.5s;
     width: 300%;
-    margin-bottom: 40px;
   }
 
   .carouselCustom {
@@ -2535,12 +2573,15 @@ h2 span {
 }
 
 @media only screen and (min-width: 768px) {
-    .OnlyshowinmobileTransaction{
-  display: none;
-}
-  .OnlyshowinmobileTransaction{
+  .OnlyShowInDesktopAccountTransaction{
+    display: block;
+  }
+  .OnlyshowinTabTransaction{
     display: none;
   }
+.OnlyshowinmobileTransaction{
+  display: none;
+}
     .untill992BecomeaCC{
   display:inline-flex;
   width:auto;
@@ -2630,6 +2671,9 @@ h2 span {
   margin-top: 70px;
   margin-bottom: 70px;
   display: block;
+}
+.AccShowinDesktop{
+  display: none;
 }
   .grid-container1 {
   justify-content: left;
@@ -2787,7 +2831,7 @@ h2 span {
     padding: 15px;
     width: -webkit-fill-available;
     min-width: auto;
-    min-height: auto;
+    min-height: 121px;
     border-radius: 8px;
   }
 
@@ -2872,20 +2916,18 @@ h2 span {
     display: flex;
     transition: transform 0.5s;
     width: 100%;
-    margin-bottom: 40px;
     margin-top: 25px;
   }
 
   .carouselImpactBreak {
     position: relative;
-    overflow: hidden;
+    overflow: auto;
   }
 
   .sliderImpactBreak {
     display: flex;
     transition: transform 0.5s;
     width: 100%;
-    margin-bottom: 40px;
   }
 
   .carouselCustom {
@@ -3015,12 +3057,18 @@ h2 span {
 }*/
 
 @media only screen and (min-width: 992px) and (max-width: 1146px){
-    .OnlyshowinmobileTransaction{
+  .AccShowinDesktop{
   display: none;
 }
-    .OnlyshowinmobileTransaction{
+  .OnlyShowInDesktopAccountTransaction{
+    display: block;
+  }
+  .OnlyshowinTabTransaction{
     display: none;
   }
+.OnlyshowinmobileTransaction{
+  display: none;
+}
   .untill992BecomeaCC{
   display:inline-flex;
   width:auto;
@@ -3267,7 +3315,7 @@ h2 span {
     padding: 15px;
     width: 100%;
     min-width: auto;
-    min-height: auto;
+    min-height: 121px;
     border-radius: 8px;
   }
 
@@ -3370,20 +3418,18 @@ h2 span {
     display: flex;
     transition: transform 0.5s;
     width: 100%;
-    margin-bottom: 40px;
     margin-top: 25px;
   }
 
   .carouselImpactBreak {
     position: relative;
-    overflow: hidden;
+    overflow: auto;
   }
 
   .sliderImpactBreak {
     display: flex;
     transition: transform 0.5s;
     width: 100%;
-    margin-bottom: 40px;
   }
 
   .carouselCustom {
@@ -3489,12 +3535,18 @@ h2 span {
 }
 
 @media only screen and (min-width: 1147px) {
-    .OnlyshowinmobileTransaction{
+  .AccShowinDesktop{
   display: none;
 }
-    .OnlyshowinmobileTransaction{
+  .OnlyShowInDesktopAccountTransaction{
+    display: block;
+  }
+  .OnlyshowinTabTransaction{
     display: none;
   }
+.OnlyshowinmobileTransaction{
+  display: none;
+}
       .untill992BecomeaCC{
   display:inline-flex;
   width:auto;
@@ -3741,7 +3793,7 @@ h2 span {
     padding: 15px;
     width: 100%;
     min-width: auto;
-    min-height: auto;
+    min-height: 121px;
     border-radius: 8px;
   }
 
@@ -3846,20 +3898,18 @@ h2 span {
     display: flex;
     transition: transform 0.5s;
     width: 100%;
-    margin-bottom: 40px;
     margin-top: 25px;
   }
 
   .carouselImpactBreak {
     position: relative;
-    overflow: hidden;
+    overflow: auto;
   }
 
   .sliderImpactBreak {
     display: flex;
     transition: transform 0.5s;
     width: 100%;
-    margin-bottom: 40px;
   }
 
   .carouselCustom {
@@ -3965,12 +4015,18 @@ h2 span {
 }
 
 @media only screen and (min-width: 1480px) {
-    .OnlyshowinmobileTransaction{
+  .AccShowinDesktop{
   display: none;
 }
-    .OnlyshowinmobileTransaction{
+  .OnlyShowInDesktopAccountTransaction{
+    display: block;
+  }
+  .OnlyshowinTabTransaction{
     display: none;
   }
+.OnlyshowinmobileTransaction{
+  display: none;
+}
         .untill992BecomeaCC{
   display:inline-flex;
   width:auto;
@@ -4230,7 +4286,7 @@ h2 span {
     padding: 15px;
     width: 100%;
     min-width: auto;
-    min-height: auto;
+    min-height: 121px;
     border-radius: 8px;
   }
 
@@ -4274,7 +4330,6 @@ h2 span {
 .sliderImpactBreak {
   display: flex;
   transition: transform 0.5s;
-  margin-bottom: 40px;
 }
 
 .slide {
@@ -4550,14 +4605,22 @@ h2 span {
 }
 
 .dots .NaviButton {
-  width: 22px;
   height: 10px;
   border-radius: 50%;
   border: none;
-  background-color: #bbb;
-  margin: 0 30px;
+  color: #000000;
+  margin: -4px 30px;
   cursor: pointer;
 }
+.dots .NaviButton:hover {
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  color: #000000;
+  margin: -4px 30px;
+  cursor: pointer;
+}
+
 
 .dots button {
   width: 22px;

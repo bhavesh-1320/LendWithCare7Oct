@@ -74,14 +74,7 @@
   font-size: 30px;
 }
 
-.section-headings {
-  font-style: normal;
-  font-weight: 800;
-  font-size: 26px;
-  line-height: 32px;
-  color: #002A3A;
-  font-family: 'Sketchetik Fill Bold';
-}
+
 
 .header{
     display: flex;
@@ -1048,6 +1041,31 @@ h2 span {
 
 
 @media only screen and (max-width: 600px) {
+  .section-headings {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 32px;
+  color: #002A3A;
+  font-family: 'Sketchetik Fill Bold';
+}
+    .StyleBreakdown{
+  font-size:20px;
+  line-height:25px;
+  font-family:'Sketchetik Fill Bold';
+  font-weight:800;
+  color:#002A3A;
+}
+  .OnlyShowInDesktop{
+    display: none;
+  }
+    .ChartTypeLoans{
+  float:left;
+  margin:20px 20px 20px 35px;
+  font-family: 'Helvetica Neue Bold Pro';
+  font-size:16px;
+  line-height:20px;
+}
 .grid-containerLayout {
   display: grid;
   grid-template-columns: 100%;
@@ -1071,17 +1089,15 @@ h2 span {
     display: flex;
     transition: transform 0.5s;
     width: 300%;
-    margin-bottom: 40px;
 }
   .sliderImpact {
     display: flex;
     transition: transform 0.5s;
     width: 300%;
-    margin-bottom: 40px;
 }
   .carouselImpact {
     position: relative;
-    overflow: hidden;
+    overflow: auto;
     width: 100%;
 }
   .chartback{
@@ -1089,7 +1105,6 @@ h2 span {
   background:#F3F0ED;
   border-radius:8px;
   margin-top:35px;
-  padding-bottom:35px;
   width:100%;
 }
   .yourimpact{
@@ -1144,10 +1159,38 @@ display: none;
 }
 }
 @media only screen and (min-width: 600px) {
+  .section-headings {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 32px;
+  color: #002A3A;
+  font-family: 'Sketchetik Fill Bold';
+}
+  .Onlyshowinmobile{
+    display: block;
+  }
+      .StyleBreakdown{
+  font-size:20px;
+  line-height:25px;
+  font-family:'Sketchetik Fill Bold';
+  font-weight:800;
+  color:#002A3A;
+}
+    .OnlyShowInDesktop{
+    display: none;
+  }
+    .ChartTypeLoans{
+  float:left;
+  margin:20px 20px 20px 35px;
+  font-family: 'Helvetica Neue Bold Pro';
+  font-size:16px;
+  line-height:20px;
+}
 .grid-containerLayout {
   display: grid;
-  grid-template-columns: 50% 50%;
-  gap: 0px 50px;
+  grid-template-columns: 100%;
+  gap: 50px 0px;
 }
   .headerPad{
     padding-right: 20px;
@@ -1173,11 +1216,10 @@ display: none;
     display: flex;
     transition: transform 0.5s;
     width: 300%;
-    margin-bottom: 40px;
 }
   .carouselImpact {
     position: relative;
-    overflow: hidden;
+    overflow: auto;
     width: 100%;
 }
   .chartback{
@@ -1185,7 +1227,6 @@ display: none;
   background:#F3F0ED;
   border-radius:8px;
   margin-top:35px;
-  padding-bottom:35px;
   width:100%;
 }
   .yourimpact{
@@ -1226,10 +1267,38 @@ display: none;
 }
 }
 @media only screen and (min-width: 768px) {
+  .section-headings {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 32px;
+  color: #002A3A;
+  font-family: 'Sketchetik Fill Bold';
+}
+    .Onlyshowinmobile{
+    display: block;
+  }
+      .StyleBreakdown{
+  font-size:30px;
+  line-height:38px;
+  font-family:'Sketchetik Fill Bold';
+  font-weight:800;
+  color:#002A3A;
+}
+    .OnlyShowInDesktop{
+    display: none;
+  }
+   .ChartTypeLoans{
+  float:left;
+  margin:20px 20px 20px 45px;
+  font-family: 'Helvetica Neue Bold Pro';
+  font-size:20px;
+  line-height:27px;
+}
   .grid-containerLayout {
   display: grid;
-  grid-template-columns: 50% 50%;
-  gap: 0px 50px;
+  grid-template-columns: 100%;
+  gap: 50px 0px;
 }
   .headerPad{
     padding-right: 20px;
@@ -1255,19 +1324,16 @@ display: none;
     display: flex;
     transition: transform 0.5s;
     width: 100%;
-    margin-bottom: 40px;
 }
   .carouselImpact {
     position: relative;
-    overflow: hidden;
-    margin: 150px 60px 60px 0px;
+    overflow: auto;
 }
   .chartback{
   display:grid;
   background:#F3F0ED;
   border-radius:8px;
   margin-top:35px;
-  padding-bottom:35px;
   width:100%;
 }
   .yourimpact{
@@ -1304,6 +1370,34 @@ font-size: 16px;
 }
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
+  .section-headings {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 24px;
+  color: #002A3A;
+  font-family: 'Sketchetik Fill Bold';
+}
+    .Onlyshowinmobile{
+    display: none;
+  }
+        .StyleBreakdown{
+  font-size:30px;
+  line-height:38px;
+  font-family:'Sketchetik Fill Bold';
+  font-weight:800;
+  color:#002A3A;
+}
+    .OnlyShowInDesktop{
+    display: flex;
+  }
+    .ChartTypeLoans{
+  float:left;
+  margin:20px 20px 20px 45px;
+  font-family: 'Helvetica Neue Bold Pro';
+  font-size:20px;
+  line-height:27px;
+}
   .grid-containerLayout {
   display: grid;
   grid-template-columns: 50% 50%;
@@ -1333,19 +1427,16 @@ font-size: 16px;
     display: flex;
     transition: transform 0.5s;
     width: 100%;
-    margin-bottom: 40px;
 }
   .carouselImpact {
     position: relative;
-    overflow: hidden;
-    margin: 150px 60px 60px 0px;
+    overflow: auto;
 }
   .chartback{
   display:grid;
   background:#F3F0ED;
   border-radius:8px;
   margin-top:35px;
-  padding-bottom:35px;
   width:100%;
 }
   .yourimpact{
@@ -1383,6 +1474,34 @@ font-size: 16px;
 }
 }
 @media only screen and (min-width: 1200px) {
+    .section-headings {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 24px;
+  color: #002A3A;
+  font-family: 'Sketchetik Fill Bold';
+}
+    .Onlyshowinmobile{
+    display: none;
+  }
+        .StyleBreakdown{
+  font-size:30px;
+  line-height:38px;
+  font-family:'Sketchetik Fill Bold';
+  font-weight:800;
+  color:#002A3A;
+}
+      .OnlyShowInDesktop{
+    display: flex;
+  }
+    .ChartTypeLoans{
+  float:left;
+  margin:20px 20px 20px 45px;
+  font-family: 'Helvetica Neue Bold Pro';
+  font-size:20px;
+  line-height:27px;
+}
   .grid-containerLayout {
   display: grid;
   grid-template-columns: 50% 50%;
@@ -1412,19 +1531,16 @@ font-size: 16px;
     display: flex;
     transition: transform 0.5s;
     width: 100%;
-    margin-bottom: 40px;
 }
   .carouselImpact {
     position: relative;
-    overflow: hidden;
-	margin: 150px 60px 60px 0px;
+    overflow: auto;
 }
   .chartback{
   display:grid;
   background:#F3F0ED;
   border-radius:8px;
   margin-top:35px;
-  padding-bottom:35px;
   width:100%;
 }
   .yourimpact{
@@ -1462,6 +1578,34 @@ font-size: 16px;
 }
 }
 @media only screen and (min-width: 1500px) {
+    .section-headings {
+  font-style: normal;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 24px;
+  color: #002A3A;
+  font-family: 'Sketchetik Fill Bold';
+}
+    .Onlyshowinmobile{
+    display: none;
+  }
+        .StyleBreakdown{
+  font-size:30px;
+  line-height:38px;
+  font-family:'Sketchetik Fill Bold';
+  font-weight:800;
+  color:#002A3A;
+}
+      .OnlyShowInDesktop{
+    display: flex;
+  }
+    .ChartTypeLoans{
+  float:left;
+  margin:20px 20px 20px 45px;
+  font-family: 'Helvetica Neue Bold Pro';
+  font-size:20px;
+  line-height:27px;
+}
   .grid-containerLayout {
   display: grid;
   grid-template-columns: 50% 50%;
@@ -1491,19 +1635,16 @@ font-size: 16px;
     display: flex;
     transition: transform 0.5s;
     width: 100%;
-    margin-bottom: 40px;
 }
   .carouselImpact {
     position: relative;
-    overflow: hidden;
-	margin: 150px 60px 60px 0px;
+    overflow: auto;
 }
   .chartback{
   display:grid;
   background:#F3F0ED;
   border-radius:8px;
   margin-top:35px;
-  padding-bottom:35px;
   width:100%;
 }
   .yourimpact{
@@ -1541,10 +1682,17 @@ font-size: 16px;
 }
 }
 
+.grid-containerDashB {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 20px 20px;
+  margin: 20px 0px 20px 0px;
+}
+
 .carParaImpact{
   font-family: 'Helvetica Neue Bold Pro';
-  font-size: 12px;
-  line-height: 15px;
+  font-size: 16px;
+  line-height: 16px;
   color: #002A3A;
   
 }
@@ -1561,10 +1709,17 @@ font-size: 16px;
     font-weight: 800;
     margin-bottom: 10px;
     color: #E4761E;
+    font-family: 'Sketchetik Fill Bold';
 }
-.CarContentImpact{
-  margin: 15px;
-}
+  .CarContentImpact {
+    background-color: #F3F0ED;
+    padding: 15px;
+    margin: 0px 10px 0px 0px;
+    width: auto;
+    min-width: auto;
+    min-height: 141px;
+    border-radius: 8px;
+  }
 .CarContentImpactBreak{
   margin: 15px;
 }
@@ -1587,7 +1742,6 @@ font-size: 16px;
 .sliderImpact {
     display: flex;
     transition: transform 0.5s;
-    margin-bottom: 40px;
 }
 
 .sliderImpactBreak {
@@ -1645,9 +1799,7 @@ font-size: 16px;
     margin: 5px;
     border-radius: 5px;
 }
-.CarContentImpact{
-  margin: 15px;
-}
+
 .CarContentImpactBreak{
   margin: 15px;
 }
@@ -1656,11 +1808,12 @@ font-size: 16px;
     font-weight: 600;
     margin-bottom: 10px;
     color: #E4761E;
+    font-family: 'Sketchetik Fill Bold';
 }
 .carParaImpact{
   font-family: 'Helvetica Neue Bold Pro';
-    font-size: 12px;
-  line-height: 15px;
+  font-size: 16px;
+  line-height: 16px;
   color: #002A3A;
   
 }
@@ -1733,4 +1886,11 @@ font-size: 16px;
     background-color: #bbb;
     margin: 0 30px;
     cursor: pointer;
+}
+.carouselImpact::-webkit-scrollbar {
+    width: 0.1rem;
+    background-color: transparent;
+}
+.carouselImpact::-webkit-scrollbar-thumb {
+    background-color: transparent;
 }

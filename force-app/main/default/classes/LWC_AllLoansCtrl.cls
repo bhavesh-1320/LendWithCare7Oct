@@ -513,9 +513,9 @@ public without sharing class LWC_AllLoansCtrl {
             query += ' ORDER BY Amount__c ASC';
         }
         
-        if (!showAll) {
+       /*  if (!showAll) {
             query += ' LIMIT 8';
-        }
+        } */
         
         return Database.query(query);
     }
@@ -722,7 +722,7 @@ public without sharing class LWC_AllLoansCtrl {
     }
     
     @AuraEnabled(Cacheable=true)
-    public static Map<String, Integer> getImpactInfo() {
+    public static Map<String, Decimal> getImpactInfo() {
         Set<Id> loanIds = new Set<Id>();
         Map<String, Decimal> mapOfTypeAndAmount = new Map<String, Decimal>();
 
@@ -768,23 +768,23 @@ public without sharing class LWC_AllLoansCtrl {
         
         // Querying the Breakdown data.
         // Contact contactRecord = [SELECT Id, Name, Total_Loans__c, Champion__c,Auto_Relend__c, Lender_Balance__c, Total_People_Helped__c, Profile_Picture__c FROM Contact WHERE Id = :contactId LIMIT 1];
-        AggregateResult sumOfTransactionsAmount = [SELECT SUM(Loan__r.Amount_Funded__c) FROM Transaction__c WHERE Type__c = 'Loan' AND Status ];
-        AggregateResult sumOfLoansJobsCreated = [SELECT SUM(Jobs_Created__c) FROM Loan__c ];
-        AggregateResult sumOfTotalLoans = [SELECT count(Id) FROM Loan__c WHERE  ];
+        AggregateResult sumOfTransactionsAmount = [SELECT SUM(Loan__r.Published_Amount_AUD__c) FROM Transaction__c WHERE Type__c = 'Loan' AND Status__c ='Completed' ];
+        AggregateResult sumOfLoansJobsCreated = [SELECT SUM(Jobs_Created__c) FROM Loan__c WHERE Loan_Proposal_Status__c  = 'Published'  ];
+        AggregateResult sumOfTotalLoans = [SELECT count(Id) FROM Loan__c WHERE Loan_Proposal_Status__c  = 'Published'  ];
         
-        AggregateResult sumOfPeopleHelped = [SELECT sum(Borrower__r.Dependants__c), sum(Jobs_Created__c), sum(Number_of_Employees__c) FROM Loan__c];
+        AggregateResult sumOfPeopleHelped = [SELECT sum(Borrower__r.Dependants__c), sum(Jobs_Created__c), sum(Number_of_Employees__c) FROM Loan__c WHERE Loan_Proposal_Status__c  = 'Published' ];
         // Extracting values from AggregateResult
-        Integer totalTransactionsAmount = sumOfTransactionsAmount != null && sumOfTransactionsAmount.get('expr0')!=null ? ((Decimal)sumOfTransactionsAmount.get('expr0')).intValue() : 0;
-        Integer sumOfJobsCreated = sumOfLoansJobsCreated != null && sumOfLoansJobsCreated.get('expr0')!=null ? ((Decimal)sumOfLoansJobsCreated.get('expr0')).intValue() : 0;
-        Integer totalLoans = sumOfTotalLoans != null  && sumOfTotalLoans.get('expr0')!=null? ((Integer)sumOfTotalLoans.get('expr0')) : 0;
-        Integer peopleHelped = 0;
+        Decimal totalTransactionsAmount = sumOfTransactionsAmount != null && sumOfTransactionsAmount.get('expr0')!=null ? ((Decimal)sumOfTransactionsAmount.get('expr0')) : 0;
+        Decimal sumOfJobsCreated = sumOfLoansJobsCreated != null && sumOfLoansJobsCreated.get('expr0')!=null ? ((Decimal)sumOfLoansJobsCreated.get('expr0')) : 0;
+        Decimal totalLoans = sumOfTotalLoans != null  && sumOfTotalLoans.get('expr0')!=null? ((Decimal)sumOfTotalLoans.get('expr0')) : 0;
+        Decimal peopleHelped = 0;
         if( sumOfPeopleHelped!= null ){
-            peopleHelped+= sumOfPeopleHelped.get('expr0')!=null? ((Decimal)sumOfPeopleHelped.get('expr0')).intValue() : 0;
-            peopleHelped+= sumOfPeopleHelped.get('expr1')!=null? ((Decimal)sumOfPeopleHelped.get('expr1')).intValue() : 0;
-            peopleHelped+= sumOfPeopleHelped.get('expr2')!=null? ((Decimal)sumOfPeopleHelped.get('expr2')).intValue() : 0;
+            peopleHelped+= sumOfPeopleHelped.get('expr0')!=null? ((Decimal)sumOfPeopleHelped.get('expr0')) : 0;
+            peopleHelped+= sumOfPeopleHelped.get('expr1')!=null? ((Decimal)sumOfPeopleHelped.get('expr1')) : 0;
+            peopleHelped+= sumOfPeopleHelped.get('expr2')!=null? ((Decimal)sumOfPeopleHelped.get('expr2')) : 0;
         }
         // ContactData contactData = new ContactData(contactRecord, totalTransactionsAmount, sumOfJobsCreated,mapOfTypeAndAmount);
-        return new Map<String, Integer>{'NumberOfLoans'=>totalLoans, 'totalAmountLent'=>totalTransactionsAmount, 'JobsCreated'=>sumOfJobsCreated, 'PeopleHelped'=>peopleHelped};
+        return new Map<String, Decimal>{'NumberOfLoans'=>totalLoans, 'totalAmountLent'=>totalTransactionsAmount, 'JobsCreated'=>sumOfJobsCreated, 'PeopleHelped'=>peopleHelped};
     }
 
     @AuraEnabled(cacheable=true)
