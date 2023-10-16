@@ -706,7 +706,9 @@ export default class CareAboutUs extends LightningElement {
             this.isFullyFunded = this.flRecord[0].fullyFunded;
             this.fundingOptions = this.flRecord[0].fundingOptions;//this.getFundingOptions((parseFloat(this.flRecord[0].Published_Amount_AUD__c).toFixed(2) - this.flRecord[0].Funded__c.toFixed(2)))
             //console.log('after assigning from this.flRecord[0] ' , JSON.stringify(this.flRecord[0]))
-
+            if( this.FLId ){
+                this.featuredLoanImg();
+            }
         } else if (error) {
             console.log('Error occured ' + JSON.stringify(error));
         }
@@ -1116,6 +1118,24 @@ export default class CareAboutUs extends LightningElement {
         }
 
     }
+    flImg;
+    featuredLoanImg(){
+        if(this.FLId){
+            console.log('FL ID:',this.FLId);
+            getContentDistribution({ 'loanIds': [this.FLId] }).then(res => {
+                //console.log('LLLIIII:',res);
+                if (res != undefined) {
+                    var cd = res != undefined ? res[this.FLId] : undefined;
+                    if (cd != undefined) {
+                        this.flImg = cd[0].ContentDownloadUrl;
+                    }
+                }
+                console.log( 'FL Img:',res );
+            }).catch(err => {
+                console.log(err);
+            })
+        }
+    }
     connectedCallback() {
         LWCConfigSettingMetadata()
             .then(result => {
@@ -1124,27 +1144,6 @@ export default class CareAboutUs extends LightningElement {
                 console.log('this.amountsFromSettings from conn ', JSON.stringify(this.amountsFromSettings))
                 this.PAGE_SIZE = 9;
             })
-        /* if(this.FLId){
-            getContentDistribution({ 'loanIds': [this.FLId] }).then(res => {
-                //console.log('LLLIIII:',res);
-                /* if (res != undefined) {
-                    var loans = [];
-                    for (var val of this.objdata) {
-                        loans.push(val);
-                    }
-                    for (var val of loans) {
-                        var cd = res != undefined ? res[val.Id] : undefined;
-                        if (cd != undefined) {
-                            val.imageUrl = cd[0].ContentDownloadUrl;
-                        }
-                    }
-                    this.objdata = loans;
-                } */
-                console.log( 'FL Img:',res );
-            }).catch(err => {
-                console.log(err);
-            }) */
-        }
         this.getScreenSize();
 
         // Retrieve the array from local storage

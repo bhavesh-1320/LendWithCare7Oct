@@ -52,7 +52,7 @@
         <div style="display:inline-flex">
         <div class="slds-float_left">
                 <a href={navComponentLinks.HomePage}>
-                <img src={LenwithCareLogo} alt="logo" style="width:70px;margin:5px;"></a>
+                <img src={LenwithCareLogo} alt="logo" style="width:70px;margin-top:3px"></a>
         </div>
         <a  class="close-button" onclick={closeMenu}>
           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
@@ -63,12 +63,12 @@
         <div class="search-header">
       
         <input type="text" placeholder="  Enter a keyword to search" oninput={handleInputChange} 
-        style="background:white;width:100%;height:40px;border-radius:5px;border-block:none;color:#002A3A"/>
+        style="background:white;width:100%;height:40px;border-radius:4px !important;border-style:solid;color:#002A3A;border-color:white"/>
       
     </div>
        <ul class="menu-items">
           <li>
-            <a href={navComponentLinks.ViewAllLoans} style="color:white">Lend now &nbsp;
+            <a href={navComponentLinks.ViewAllLoans} style="color:white">Lend now
               
             </a>
             
@@ -77,7 +77,7 @@
           <li><a href={navComponentLinks.OurImpact} style="color:white">Impact</a></li>
           <li><a href={navComponentLinks.AboutUs} style="color:white">About Lendwithcare</a></li>
           <li><a href={navComponentLinks.CareHelpcentre} style="color:white">Help Centre</a></li>
-          <li><a href={navComponentLinks.CareDashboard} style="color:white">Your Dashboard</a></li>
+          <li><a  onclick={openLoginOrDashboard} style="color:white">Your Dashboard</a></li>
           </ul>
       </div>
     </div>
@@ -130,7 +130,7 @@
           >
           
           <img src={UseAvatar}>
-          <p style="color:white;font-size:12px;" class="slds-align_absolute-center">{lenderBalanceAmount} </p>
+          <p style="color:white;font-size:12px;" class="slds-align_absolute-center">{lenderBalanceAmountCart} </p>
         </a>
 
         <template if:true={loginPage}>
@@ -192,238 +192,259 @@
     
   <template if:true={secondPage}>
     <div class="search-header">
-            <div class="content-title" style="display:grid;padding:20px">
+            <div class="content-title" style="display:grid;padding:10px">
               <h3 class="CartHeading">Your Cart</h3>
-              <p class="CartParagraph">Items will be reserved for {timeDisplayFormat} mins</p>
+              <p class="CartParagraph" if:true={timerLoading}>Items will be reserved for {timeDisplayFormat} mins</p>
 
             </div>
-          <template for:each={loanidfromparent} for:item="item" key={item.Id} for:index="index">
-          <div key={item.Id}>
-          <div class="cart-items">
+		<template for:each={loanidfromparent} for:item="item" key={item.Id} for:index="index">
+			<div key={item.Id}>
+				<div class="cart-items">
+		
+		
+					<div class="closeButton">
+		
+						<p style="float:right;padding:1px;margin:10px;font-size:18px;"><a onclick={removeCurrentLoan}
+								data-id={index}>&#10006;</a></p><!-- data-id={item.Id}-->
+					</div>
+		
+		
+					<div class="cart-title" style="display:flex;padding:20px">
+						<img src={AvatarImg} alt="profile">
+						<div style="margin-left:15px;margin-right:15px">
+							<h3 class="LoanHeading">{item.Loan_Title__c}</h3>
+							<p class="LoanParagraph">{item.Loan_Type__c} | {item.Country__c}</p>
+						</div>
+		
+					</div>
+		
+		
+					<h3 class="LendingH3">You are lending</h3>
+					<div
+						class="slds-col slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-align_absolute-center">
+						<div class="custom-combobox" style="padding: 10px;width: 100%">
+							<select name="progress" class="custom-select customCombo Carouselvaluebottom slds-align_absolute-center"
+		                  onchange={handleChangeSelect}
+		                  disabled={disabledButton}
+		                  data-item-id={item.Id} data-recordid={item.Id} data-id={index}
+		
+		                  data-index={index}><!-- value={item.selectedAmount} -->
+		                    <option value=0 >Select Amount</option>
+		                    <!--<option value="25" >$25</option>
+		                    <option value="30">$30</option>
+		                    <option value="35">$35</option>
+		                    <option value="40">$40</option>
+		                    <option value="45">$45</option>
+		                    <option value="50">$50</option>
+		                    <option value="75">$75</option>
+		                    <option value="100">$100</option>
+		                    <option value="125">$125</option>
+		                    <option value="150">$150</option>
+		                    <option value="175">$175</option>
+		                    <option value="200">$200</option>
+		                    <option value="225">$225</option>-->
+		                    <template for:each={item.fundingOptions} for:item="option">
+								                      <option key={option.value} value={option.value} selected={option.selected}>{option.label}</option>
+								                  </template>
+		                  </select>
+						</div>
+					</div>
+		
+		
+					<div class="progress-bar">
+						<div class="BottomDiv">
+							<div style="display:block;width:100%;">
+								<div class="progressBar">
+									<div class="progressBarInner1" data-value={item.progressBar}></div>
+								</div>
+								<div
+									style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%;padding-right:10px;padding-left:10px;">
+									<p
+										style="color:white;font-size:12px;line-height:12px;font-family:'Helvetica Neue Bold';margin-top: 5px;font-weight: 800;">
+										$ {item.Funded} Lent</p>
+									<p
+										style="color:white;display:flex;justify-content:right;font-size:12px;line-height:12px;font-family:'Helvetica Neue Bold';margin-top: 5px;font-weight: 800;">
+										$ {item.Published_Amount_AUD__c} Goal</p>
+								</div>
+							</div>
+						</div>
+		
+		
+		
+					</div>
+		
+		
+				</div>
+			</div>
+		</template>
+		<template if:true={errorTransaction}>
+			<section role="dialog" tabindex="-1" aria-modal="true" aria-label="Meaningful description of the modal content"
+				class="slds-modal slds-fade-in-open">
+				<div class="slds-modal__container">
+					<button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick={closeErrorPopup}>
+		
+		close
+		</button>
+					<div class="slds-modal__content slds-p-around_medium slds-modal__content_headless" id="modal-content-id-1">
+						<p>{errorMessageOnTransaction}</p>
+					</div>
+		
+				</div>
+			</section>
+			<div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+		</template>
+		<template if:true={changeChampionTemplate}>
+			<div class="ClassVolDonation">
+				<div class="grid-containerVolDonation">
+					<div>
+						<h3 class="volHeading" style="font-size:16px">Change Champion Monthly Donation</h3>
+					</div>
+					<div><a onclick={closechangeChampionTemplate} class="slds-float_right">&#10006;</a></div>
+				</div>
+        
+				<p class="CartParagraph" style="color:#002A3A;margin-top:10px;font-family: 'Helvetica Neue Bold';">  <!-- style="color:white;margin-top:10px" -->
+          <template for:each={nboxTitle} for:item="nt">
 
-
-              <div class="closeButton">
-
-                <p style="float:right;padding:1px;margin:10px;font-size:18px;"><a onclick={removeCurrentLoan} data-id={index}>&#10006;</a></p><!-- data-id={item.Id}-->
-              </div>
-
-
-            <div class="cart-title" style="display:flex;padding:20px">
-              <img src={AvatarImg} alt="profile">
-              <div style="margin-left:15px;margin-right:15px">
-                <h3 class="LoanHeading">{item.Loan_Title__c}</h3>
-                <p class="LoanParagraph">{item.Loan_Type__c} | {item.Country__c}</p>
-              </div>
-
-            </div>
-
-
-            <h3 class="LendingH3">You are lending</h3>
-            <div class="slds-col slds-small-size_12-of-12 slds-medium-size_12-of-12 slds-large-size_12-of-12 slds-align_absolute-center" >
-             <div class="custom-combobox" style="padding: 10px;width: 100%">
-                  <select name="progress" class="custom-select customCombo Carouselvaluebottom slds-align_absolute-center" 
-                  onchange={handleChangeSelect}  
-                  disabled={disabledButton}
-                  data-item-id={item.Id} data-recordid={item.Id} data-id={index}
-                  
-                  data-index={index}><!-- value={item.selectedAmount} -->
-                    <option value=0 >Select Amount</option>
-                    <option value="25" >$25</option>
-                    <option value="30">$30</option>
-                    <option value="35">$35</option>
-                    <option value="40">$40</option>
-                    <option value="45">$45</option>
-                    <option value="50">$50</option>
-                    <option value="75">$75</option>
-                    <option value="100">$100</option>
-                    <option value="125">$125</option>
-                    <option value="150">$150</option>
-                    <option value="175">$175</option>
-                    <option value="200">$200</option>
-                    <option value="225">$225</option>
-                  </select>
-                </div>
-          </div>
-
-              
-  <div class="progress-bar">
-    <div class="BottomDiv">
-      <div style="display:block;width:100%;">
-        <div class="progressBar">
-          <div class="progressBarInner1" data-value={item.progress}></div>
+			<template if:true={nt.changeColor}>
+				<span key={nt.body} style="color:#E4761E">{nt.body}</span>
+			</template>
+			<template if:false={nt.changeColor}>
+				<span key={nt.body}>{nt.body}</span>
+			</template>
+	<!-- <span style="color:#E4761E">{nt.yellow}</span> {nt.black}<br>{nt.black}
+	<span style="color:#E4761E">{nt.yellow}</span> {nt.black}</p> -->
+		</template>
+        </p>
+		
+				<div class="slds-align_absolute-center"
+					style="margin:10px 0px 10px 0px;background-color:white;display:inline-flex;border-radius:20px;width:100%;">
+					<button class="voldonaButtons" onclick={CC35}>{firstAmount}</button>
+					<button class="voldonaButtons" onclick={CC45}>{secondAmount}</button>
+					<button class="voldonaButtons" onclick={CC65}>{thirdAmount}</button>
+					<button class="voldonaButtons" onclick={CCother}>Other</button>
+				</div>
+				<template if:true={otherRDAmount}>
+					<lightning-input value={otherRDAmounts} type="number" variant="standard" name="name"
+						onchange={otherRDAmountChange} placeholder="$"></lightning-input>
+				</template>
+				<template if:true={errorOnRDAmount}>
+					<p class="VolPara"><span style="color:red">amount should be more than $ 10</span></p>
+				</template>
+				<p class="CartParagraph" style="color:white;margin-top:5px">A <span style="color:#FEBE10">$1</span> you donate
+					will generate <span style="color:#FEBE10">$540</span> in loans.</p>
+		
+			</div>
+		</template>
+		
+		<template if:true={voluntaryDonation}>
+			<div class="ClassVolDonation">
+        <div class="grid-containerVolDonation">
+          <div><h3 class="volHeading">Voluntary Donation</h3></div>
+          <div><a onclick={closeVoluntaryDonation} class="slds-float_right">&#10006;</a></div>
         </div>
-        <div
-          style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%;padding-right:10px;padding-left:10px;">
-          <p
-            style="color:white;font-size:12px;line-height:12px;font-family:'Helvetica Neue Bold';margin-top: 5px;font-weight: 800;">
-            $ {item.selectedAmount} Lent</p>
-          <p
-            style="color:white;display:flex;justify-content:right;font-size:12px;line-height:12px;font-family:'Helvetica Neue Bold';margin-top: 5px;font-weight: 800;">
-            $ {item.Published_Amount_AUD__c} Goal</p>
-        </div>
-      </div>
-    </div>
+				<lightning-combobox name="progress" value={defaultDonationPercentageValue} options={combobox2Options}
+					onchange={VoluntaryDonationChange}>
+				</lightning-combobox>
+				<template if:true={otherPercentage}>
+					<p class="VolPara">Other % value</p>
+					<lightning-input type="number" variant="standard" name="name" onchange={otherPercentageChange}
+						placeholder="%" value={otherPercentageValue}></lightning-input>
+				</template>
+				<template if:true={errorMessage}>
+					<p class="VolPara"><span style="color:red">amount should be whole number and more than 25</span></p>
+				</template>
+				<p class="VolPara">Your donation to support our poverty-fighting work around the world,
+					<span><a href="#" style="color:white"><u>Learn more about donations.</u></a></span></p>
+		
+			</div>
+		</template>
+		
+		<template if:true={LenderTopup}>
+			<div class="ClassVolDonation">
+				<div style="display:flex;">
+					<div style="display:flex;width:100%">
+						<h3 class="volHeading">Top up</h3>
+						<div style="width:83%">
+							<a onclick={closeLenderTopup} class="slds-float_right">&#10006;</a>
+							<!-- onclick={closeVoluntaryDonation}-->
+						</div>
+					</div>
+				</div>
+				<h3 class="volHeading">How much would you like to top up your account?</h3>
+		
+		
+				<lightning-input type="text" variant="standard" name="name" value={topUpAmount1}
+					onchange={lenderTopupAmountChanges} placeholder="$" step="0.01"></lightning-input>
+		
+				<template if:true={errorMessageTopup}>
+					<p class="VolPara"><span style="color:red">amount should be more than $2</span></p>
+				</template>
+				<template if:true={errorMessageTopupNull}>
+					<p class="VolPara"><span style="color:red">Please Login to continue</span></p>
+				</template>
+				<template if:true={errorMessageTopupkKYCPending}>
+					<p class="VolPara">
+						<span style="color:red">Topping up your lender balance will go over the maximum limit of $4999. 
+Please reduce the top-up amount or <a onclick={gotoContactUsPage} style="color:white;text-decoration: underline;"> <u> contact us</u></a> to increase the limit.</span>
+					</p>
+				</template>
+		
+		
+			</div>
+		</template>
+		<template if:true={supportOneMoreProject}>
+			<div class="">
+				<div class="cart-items">
+					<div class="cart-title" style="display:flex;padding:20px">
+						<img src={AvatarImg} alt="profile" style="height: 55px;">
+						<div style="margin-left:15px;margin-right:15px">
+							<h3 class="LoanHeadingnewStyle">Support one more project</h3>
+							<p class="LoanParagraphnewStyle">{BorrowerFirstName} is missing just $ {missingAmount} ! Be the
+								person to complete their loan today.</p>
+						</div>
+		
+					</div>
+					<lightning-layout multiple-rows>
+						<lightning-layout-item size="12" class="slds-align_absolute-center" padding="around-small"
+							small-device-size="6" medium-device-size="6" large-device-size="6">
+							<button class="custombuttomwithdraw" onclick={addLeastAmountToTotal}>Add to cart</button>
+						</lightning-layout-item>
+						<lightning-layout-item size="12" class="slds-align_absolute-center" padding="around-small"
+							small-device-size="6" medium-device-size="6" large-device-size="6">
+							<button class="LearnMoreButton" >Learn more</button>
+						</lightning-layout-item>
+		
+					</lightning-layout>
+					<div class="progress-bar">
+						<div class="BottomDiv">
+							<div style="display:block;width:100%;">
+								<div class="progressBar">
+									<div class="progressBarInner1" data-value={progress}></div>
+								</div>
+								<div
+									style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%;padding-right:10px;padding-left:10px;">
+									<p
+										style="color:white;font-family:'Helvetica Neue Bold';font-size:12px;line-height:12px;margin-top: 5px;font-weight: 800;">
+										$ {FundedAmount} Lent</p>
+									<p
+										style="color:white;display:flex;justify-content:right;font-family:'Helvetica Neue Bold';font-size:12px;line-height:12px;margin-top: 5px;font-weight: 800;">
+										$ {GoalAmount} Goal</p>
+								</div>
+							</div>
+						</div>
+		
+		
+		
+		
+		
+					</div>
+				</div>
+		
+			</div>
+		</template>
 
-
-
-  </div>
-
-
-</div>
-</div>
-    </template>
-    <template if:true={errorTransaction}>
-<section role="dialog" tabindex="-1" aria-modal="true" aria-label="Meaningful description of the modal content"
-  class="slds-modal slds-fade-in-open">
-  <div class="slds-modal__container">
-    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick={closeErrorPopup}>
-
-close
-</button>
-    <div class="slds-modal__content slds-p-around_medium slds-modal__content_headless" id="modal-content-id-1">
-      <p>{errorMessageOnTransaction}</p>
-    </div>
-
-  </div>
-</section>
-<div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
-</template>
-    <template if:true={changeChampionTemplate}>
-            <div class="ClassVolDonation">
-              <div style="display:flex;">
-      <div style="display:flex;width:100%">
-        <h3 class="volHeading" style="font-size:16px">Change Champion Monthly Donation</h3>
-        <div style="width:100%">
-        <a onclick={closechangeChampionTemplate} class="slds-float_right">&#10006;</a>
-        </div>
-      </div>
-      </div>
-        
-        
-        <p class="CartParagraph" style="color:white;margin-top:10px">Every <span style="color:#FEBE10">$1</span> that you donate<br>can generate <span style="color:#FEBE10">$5</span> in loans.</p>
-        
-        <div class="slds-align_absolute-center" style="margin:10px;background-color:white;display:inline-flex;border-radius:20px">
-          <button class="voldonaButtons" onclick={CC35}>{firstAmount}</button>
-          <button class="voldonaButtons" onclick={CC45}>{secondAmount}</button>
-          <button class="voldonaButtons" onclick={CC65}>{thirdAmount}</button>
-          <button class="voldonaButtons" onclick={CCother}>Other</button>
-        </div>
-        <template if:true={otherRDAmount}>
-        <lightning-input value={otherRDAmounts} type="number" variant="standard" name="name" onchange={otherRDAmountChange}
-        placeholder="$"></lightning-input>
-        </template>
-        <template if:true={errorOnRDAmount}>
-          <p class="VolPara"><span style="color:red">amount should be more than $ 10</span></p>
-        </template>
-       <p class="CartParagraph" style="color:white;margin-top:5px">A <span style="color:#FEBE10">$1</span> you donate will generate <span style="color:#FEBE10">$540</span> in loans.</p>
-
-    </div>
-    </template>
-
-<template if:true={voluntaryDonation}>
-    <div class="ClassVolDonation">
-      <div style="display:flex;">
-      <div style="display:flex;width:100%">
-        <h3 class="volHeading">Voluntary Donation</h3>
-        <div style="width:100%">
-        <a onclick={closeVoluntaryDonation} class="slds-float_right">&#10006;</a><!-- onclick={closeVoluntaryDonation}-->
-        </div>
-      </div>
-      </div>
-        <lightning-combobox
-              name="progress"
-              
-              value={defaultDonationPercentageValue}
-              
-              options={combobox2Options}
-              onchange={VoluntaryDonationChange} >
-        </lightning-combobox>
-        <template if:true={otherPercentage}>
-          <p class="VolPara">Other % value</p>
-        <lightning-input type="number" variant="standard" name="name" onchange={otherPercentageChange}
-        placeholder="%" value={otherPercentageValue}></lightning-input>
-        </template>
-        <template if:true={errorMessage}>
-        <p class="VolPara"><span style="color:red">amount should be whole number and more than 25</span></p>
-        </template>
-        <p class="VolPara">Your donation to support our poverty-fighting work around the world, <span><a href="#" style="color:white"><u>Learn more about donations.</u></a></span></p>
-
-    </div>
-</template>
-<template if:true={LenderTopup}>
-    <div class="ClassVolDonation">
-      <div style="display:flex;">
-      <div style="display:flex;width:100%">
-        <h3 class="volHeading">Top up</h3>
-        <div style="width:100%">
-        <a onclick={closeLenderTopup} class="slds-float_right">&#10006;</a><!-- onclick={closeVoluntaryDonation}-->
-        </div>
-      </div>
-      </div>
-      <h3 class="volHeading">How much would you like to top up your account?</h3>
-        
-        
-        <lightning-input type="number" variant="standard" name="name" value={topUpAmount} onchange={lenderTopupAmountChanges}
-        placeholder="$" step="0.01"></lightning-input>
-        
-        <template if:true={errorMessageTopup}>
-        <p class="VolPara"><span style="color:red">amount should be more than $2</span></p>
-        </template>
-        <template if:true={errorMessageTopupNull}>
-        <p class="VolPara"><span style="color:red">Please Login to continue</span></p>
-        </template>
-        <template if:true={errorMessageTopupkKYCPending}>
-        <p class="VolPara"><span style="color:red">You are adding more than allowed amount (Limit 4999)</span></p>
-        </template>
-        
-
-    </div>
-</template>
-    <template if:true={supportOneMoreProject}>
-    <div class="">
-      <div class="cart-items">
-      <div class="cart-title" style="display:flex;padding:20px">
-          <img src={AvatarImg} alt="profile" style="height: 55px;">
-            <div style="margin-left:15px;margin-right:15px">
-                <h3 class="LoanHeadingnewStyle">Support one more project</h3>
-                <p class="LoanParagraphnewStyle">{BorrowerFirstName} is missing just $ {missingAmount} ! Be the person to complete their loan today.</p>
-            </div>
-            
-       </div>
-          <lightning-layout multiple-rows>
-            <lightning-layout-item size="12" class="slds-align_absolute-center" padding="around-small" small-device-size="6" 
-            medium-device-size="6" large-device-size="6" >
-              <button class="custombuttomwithdraw" onclick={addLeastAmountToTotal}>Add to cart</button>
-            </lightning-layout-item>
-            <lightning-layout-item size="12" class="slds-align_absolute-center" padding="around-small" small-device-size="6" 
-            medium-device-size="6" large-device-size="6">
-              <button class="LearnMoreButton" >Learn more</button>
-            </lightning-layout-item>
-            
-          </lightning-layout>
-          <div class="progress-bar">
-              <div class="BottomDiv">
-                <div style="display:block;width:100%;">
-                  <div class="progressBar">
-                    <div class="progressBarInner1" data-value={progress}></div>
-                  </div>
-      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%;padding-right:10px;padding-left:10px;">
-        <p style="color:white;font-family:'Helvetica Neue Bold';font-size:12px;line-height:12px;margin-top: 5px;font-weight: 800;">$ {FundedAmount} Lent</p>
-        <p style="color:white;display:flex;justify-content:right;font-family:'Helvetica Neue Bold';font-size:12px;line-height:12px;margin-top: 5px;font-weight: 800;">$ {GoalAmount} Goal</p>
-      </div>
-              </div>
-          </div>
-
-          
-
-              
-
-      </div>
-  </div>
-
-    </div>
-    </template>
     <lightning-layout multiple-rows>
+      <div class="displayTotal">
             <lightning-layout-item size="12" padding="around-small" small-device-size="6" 
             medium-device-size="6" large-device-size="6" >
               <div class="slds-float_left"><h3  style="font-size:24px;color:#002A3A;font-weight:800;font-family:'Helvetica Neue Bold';line-height:32px;">Total</h3></div>
@@ -432,12 +453,40 @@ close
             medium-device-size="6" large-device-size="6">
               <div class="slds-float_right"><h3 style="font-size:24px;color:#002A3A;font-weight:800;font-family:'Helvetica Neue Bold';line-height:32px;">$ {testTotal}</h3></div><!-- {totalCartAmount} {totalCartAmount} -->
             </lightning-layout-item>
+      </div>
           <template if:true={amountZero}>
             <lightning-layout-item size="12" padding="around-small" small-device-size="12" 
             medium-device-size="12" large-device-size="12">
             <p class="VolPara"><span style="color:red">Add something to cart to continue</span></p>
             </lightning-layout-item>
           </template>
+			<template if:true={OpenCCRedirectMessage}>
+				<div class="search-overlayPopup">
+					<div class="searchPopup">
+						<div style="display:flow-root">
+			
+							<a class="closes-button slds-float-right" onclick={CloseCCRedirectMessage}>
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x"
+									viewBox="0 0 16 16">
+									<path fill-rule="evenodd"
+										d="M15.854 14.854a.5.5 0 0 1 0 .708l-1.207 1.207a.5.5 0 0 1-.708 0L8 9.207l-6.939 6.94a.5.5 0 0 1-.708 0L.146 15.562a.5.5 0 0 1 0-.708L7.793 8 .146 1.146a.5.5 0 0 1 0-.708L1.354.232a.5.5 0 0 1 .708 0L8 6.793l6.939-6.94a.5.5 0 0 1 .708 0l1.207 1.207a.5.5 0 0 1 0 .708L8.207 8l6.94 6.939z" />
+								</svg>
+							</a>
+						</div>
+						<div class="search-header " style="padding:5px;">
+							<p class="slds-align_absolute-center" style="font-family:'Helvetica Neue Bold Pro';">Would you like to
+								become a change champion</p>
+							<div class="promptButtons" style="padding:5px;">
+								<button class="custombuttomwithdraw" style="margin-left: 15%;margin-right: 15%;" onclick={ok}>Yes</button>
+								<button class="custombuttomwithdraw" onclick={cancel}>No</button>
+							</div>
+						</div>
+			
+			
+					</div>
+			
+				</div>
+			</template>
             <lightning-layout-item size="12" padding="around-small" small-device-size="12" 
             medium-device-size="12" large-device-size="12">
               <button class="custombuttomwithdraw" style="width: -webkit-fill-available;" disabled={canContinue} onclick={gotoSecondPage}>Continue</button>
@@ -447,239 +496,11 @@ close
 
 
   </div>
-  <template if:true={OpenCCRedirectMessage}>
-    <div class="search-overlayPopup">
-  <div class="searchPopup">
-    <div style="display:flow-root">
-      
-      <a class="closes-button slds-float-right" onclick={CloseCCRedirectMessage}>
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16">
-          <path fill-rule="evenodd" d="M15.854 14.854a.5.5 0 0 1 0 .708l-1.207 1.207a.5.5 0 0 1-.708 0L8 9.207l-6.939 6.94a.5.5 0 0 1-.708 0L.146 15.562a.5.5 0 0 1 0-.708L7.793 8 .146 1.146a.5.5 0 0 1 0-.708L1.354.232a.5.5 0 0 1 .708 0L8 6.793l6.939-6.94a.5.5 0 0 1 .708 0l1.207 1.207a.5.5 0 0 1 0 .708L8.207 8l6.94 6.939z"/>
-        </svg>
-      </a>
-    </div>
-    <div class="search-header" style="padding:5px;">
-      <p>Would you like to become a change champion</p>
-      <div class="promptButtons" style="padding:5px;">
-        <button class="custombuttomwithdraw" style="margin-left: 15%;margin-right: 15%;" onclick={ok}>Ok</button>
-        <button class="custombuttomwithdraw" onclick={cancel}>Cancel</button>
-      </div>
-    </div>
-    
-   
-  </div>
+
+  </template>
+
+
   
-</div>
-  </template>
-  </template>
-
-
-  <template if:true={CartChangeChampion}>
-    <div class="search-header">
-            <div class="content-title" style="display:grid;padding:20px">
-              <h3 class="CartHeading">Your Cart</h3>
-
-            </div>
-  
-    <div class="ClassVolDonation">
-        <h3 class="volHeading" style="font-size:16px">Change Champion Monthly Donation</h3>
-        <p class="CartParagraph" style="color:white;margin-top:10px">Every <span style="color:#FEBE10">$1</span> that you donate<br>can generate <span style="color:#FEBE10">$5</span> in loans.</p>
-        
-        <div class="slds-align_absolute-center" style="margin:10px;background-color:white;display:inline-flex;border-radius:20px">
-          <button class="voldonaButtons" >$35</button>
-          <button class="voldonaButtons" >$45</button>
-          <button class="voldonaButtons" >$65</button>
-          <button class="voldonaButtons" >Other</button>
-        </div>
-       <p class="CartParagraph" style="color:white;margin-top:5px">A <span style="color:#FEBE10">$1</span> you donate will generate <span style="color:#FEBE10">$540</span> in loans.</p>
-
-    </div>
-
-    <div class="">
-      <div class="cart-items">
-      <div class="cart-title" style="display:flex;padding:20px">
-          <img src={AvatarImg} alt="profile" style="height: 55px;">
-            <div style="margin-left:15px;margin-right:15px">
-                <h3 class="LoanHeading">Support one more project</h3>
-                <p class="LoanParagraph">Phitsamon is missing just $25! Be the person to complete their loan today.</p>
-            </div>
-            
-       </div>
-          <lightning-layout multiple-rows>
-            <lightning-layout-item size="12" class="slds-align_absolute-center" padding="around-small" small-device-size="6" 
-            medium-device-size="6" large-device-size="6" >
-              <button class="custombuttomwithdraw" >Add to cart</button>
-            </lightning-layout-item>
-            <lightning-layout-item size="12" class="slds-align_absolute-center" padding="around-small" small-device-size="6" 
-            medium-device-size="6" large-device-size="6">
-              <button class="LearnMoreButton" >Learn more</button>
-            </lightning-layout-item>
-            
-          </lightning-layout>
-          <div class="progress-bar">
-              <div class="BottomDiv">
-                <div style="display:block;width:100%;margin-top:10px">
-                  <div class="progressBar">
-                    <div class="progressBarInner"></div>
-                  </div>
-      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%;padding-right:10px;padding-left:10px;">
-        <p style="color:white;">$225 Lent</p>
-        <p style="color:white;display:flex;justify-content:right;">$250 Goal</p>
-      </div>
-              </div>
-          </div>
-           
-
-          
-
-              
-
-      </div>
-      
-  </div>
-    <p class="CartParagraph" style="margin:10px">Items will be reserved for 45 mins</p>
-    </div>
-    <lightning-layout multiple-rows>
-            <lightning-layout-item size="12" padding="around-small" small-device-size="6" 
-            medium-device-size="6" large-device-size="6" >
-              <div class="slds-float_left" style="font-size:24px;color:#002A3A;font-weight:800"><h3>Total</h3></div>
-            </lightning-layout-item>
-            <lightning-layout-item size="12" padding="around-small" small-device-size="6" 
-            medium-device-size="6" large-device-size="6">
-              <div class="slds-float_right" style="font-size:24px;color:#002A3A;font-weight:800"><h3>$35.00</h3></div>
-            </lightning-layout-item>
-            <lightning-layout-item size="12" padding="around-small" small-device-size="12" 
-            medium-device-size="12" large-device-size="12">
-              <button class="custombuttomwithdraw" style="width: -webkit-fill-available;" onclick={gotoSecondPage}>Continue</button>
-            </lightning-layout-item>
-            
-          </lightning-layout>
-
-
-  </div>
-  </template>
-
-  <template if:true={CartLendChangeChampion}>
-    <div class="search-header">
-            <div class="content-title" style="display:grid;padding:20px">
-              <h3 class="CartHeading">Your Cart</h3>
-
-            </div>
-  <div class="cart-items">
-    <div class="closeButton">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" style="float:right;padding:1px;margin:10px;">
-                   <path fill-rule="evenodd" d="M15.854 14.854a.5.5 0 0 1 0 .708l-1.207 1.207a.5.5 0 0 1-.708 0L8 9.207l-6.939 6.94a.5.5 0 0 1-.708 0L.146 15.562a.5.5 0 0 1 0-.708L7.793 8 .146 1.146a.5.5 0 0 1 0-.708L1.354.232a.5.5 0 0 1 .708 0L8 6.793l6.939-6.94a.5.5 0 0 1 .708 0l1.207 1.207a.5.5 0 0 1 0 .708L8.207 8l6.94 6.939z"/>
-                </svg>
-    </div>
-      <div class="cart-title" style="display:flex;padding:20px">
-          <img src={AvatarImg} alt="profile">
-            <div style="margin-left:15px;margin-right:15px">
-                <h3 class="LoanHeading">Textile & Sewing Business</h3>
-                <p class="LoanParagraph">Building Resilience | Vietnam</p>
-            </div>
-            
-       </div>
-          <h3 class="LendingH3">You are lending</h3>
-          <lightning-combobox
-              name="progress"
-              style="margin: 0px 20px 20px 20px;"
-              value={value}
-              options={comboboxOptions}
-              onchange={handleChange} ></lightning-combobox>
-          <div class="progress-bar">
-              <div class="BottomDiv">
-                <div style="display:block;width:100%;">
-                  <div class="progressBar">
-                    <div class="progressBarInner"></div>
-                  </div>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%;padding-right:10px;padding-left:10px;">
-          <p style="color:white;">$75 Lent</p>
-          <p style="color:white;display:flex;justify-content:right;">$250 Goal</p>
-        </div>
-              </div>
-          </div>
-
-              
-
-      </div>
-  </div>
-    <div class="ClassVolDonation">
-        <h3 class="volHeading" style="font-size:16px">Change Champion Monthly Donation</h3>
-        <p class="CartParagraph" style="color:white;margin-top:10px">Every <span style="color:#FEBE10">$1</span> that you donate<br>can generate <span style="color:#FEBE10">$5</span> in loans.</p>
-        
-        <div class="slds-align_absolute-center" style="margin:10px;background-color:white;display:inline-flex;border-radius:20px">
-          <button class="voldonaButtons" >$35</button>
-          <button class="voldonaButtons" >$45</button>
-          <button class="voldonaButtons" >$65</button>
-          <button class="voldonaButtons" >Other</button>
-        </div>
-       <p class="CartParagraph" style="color:white;margin-top:5px">A <span style="color:#FEBE10">$1</span> you donate will generate <span style="color:#FEBE10">$540</span> in loans.</p>
-
-    </div>
-
-    <div class="">
-      <div class="cart-items">
-      <div class="cart-title" style="display:flex;padding:20px">
-          <img src={AvatarImg} alt="profile" style="height: 55px;">
-            <div style="margin-left:15px;margin-right:15px">
-                <h3 class="LoanHeading">Support one more project</h3>
-                <p class="LoanParagraph">Phitsamon is missing just $25! Be the person to complete their loan today.</p>
-            </div>
-            
-       </div>
-          <lightning-layout multiple-rows>
-            <lightning-layout-item size="12" class="slds-align_absolute-center" padding="around-small" small-device-size="6" 
-            medium-device-size="6" large-device-size="6" >
-              <button class="custombuttomwithdraw" >Add to cart</button>
-            </lightning-layout-item>
-            <lightning-layout-item size="12" class="slds-align_absolute-center" padding="around-small" small-device-size="6" 
-            medium-device-size="6" large-device-size="6">
-              <button class="LearnMoreButton" >Learn more</button>
-            </lightning-layout-item>
-            
-          </lightning-layout>
-          <div class="progress-bar">
-              <div class="BottomDiv">
-                <div style="display:block;width:100%;margin-top:10px">
-                  <div class="progressBar">
-                    <div class="progressBarInner"></div>
-                  </div>
-      <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%;padding-right:10px;padding-left:10px;">
-        <p style="color:white;">$225 Lent</p>
-        <p style="color:white;display:flex;justify-content:right;">$250 Goal</p>
-      </div>
-              </div>
-          </div>
-           
-
-          
-
-              
-
-      </div>
-      
-  </div>
-    <p class="CartParagraph" style="margin:10px">Items will be reserved for 45 mins</p>
-    </div>
-    <lightning-layout multiple-rows>
-            <lightning-layout-item size="12" padding="around-small" small-device-size="6" 
-            medium-device-size="6" large-device-size="6" >
-              <div class="slds-float_left" style="font-size:24px;color:#002A3A;font-weight:800"><h3>Total</h3></div>
-            </lightning-layout-item>
-            <lightning-layout-item size="12" padding="around-small" small-device-size="6" 
-            medium-device-size="6" large-device-size="6">
-              <div class="slds-float_right" style="font-size:24px;color:#002A3A;font-weight:800"><h3>$ {totalCartAmount</h3></div>
-            </lightning-layout-item>
-            <lightning-layout-item size="12" padding="around-small" small-device-size="12" 
-            medium-device-size="12" large-device-size="12">
-              <button class="custombuttomwithdraw" style="width: -webkit-fill-available;" onclick={gotoSecondPage}>Continue</button>
-            </lightning-layout-item>
-            
-          </lightning-layout>
-
-
-  </div>
-  </template>
 
   <lightning-spinner if:true={isLoading}></lightning-spinner>
 
@@ -779,29 +600,16 @@ close
   <template if:true={thirdPage}>
     <div class="search-header">
     
-    <lightning-layout multiple-rows style="margin:10px">
+    <lightning-layout multiple-rows >
       <lightning-layout-item size="12" padding="around-small" small-device-size="12" 
       medium-device-size="12" large-device-size="12" >
-        <h3 class="CartHeadingnew" style="margin-top:-18px">Select a payment method</h3>
+        <h3 class="CartHeadingnew" style="margin-top:-18px;padding-left: 5px;">Select a payment method</h3>
       </lightning-layout-item>
       <lightning-layout multiple-rows style="margin:10px">
-        <lightning-layout-item if:true={haveLoaninCart} size="12" padding="vertical-small" small-device-size="12" 
+       <!-- <lightning-layout-item if:true={haveLoaninCart} size="12" padding="vertical-small" small-device-size="12" 
       medium-device-size="12" large-device-size="12" >
         
         <p style="color:#002A3A;margin-left:10px;font-size:16px;line-height:16px;font-family:'Helvetica Neue Regular';">Loans & Donation Amount ${loanAndRdAmount}</p>
-      </lightning-layout-item>
-      <lightning-layout-item if:true={haveLenderBalance} size="12" padding="around-small" small-device-size="12" 
-      medium-device-size="12" large-device-size="12" >
-        <div style="display:flex;">
-          <lightning-input type="checkbox" onchange={onUseLenderbalance} value={lenderBalanceSelected}> </lightning-input>
-          <p style="color:#002A3A;font-size:16px;line-height:16px;font-family:'Helvetica Neue Regular';">Use Lender Balance ${lenderBalanceAmount}</p>
-        </div> <!-- margin-bottom:30px; -->
-      </lightning-layout-item>
-      
-      <lightning-layout-item if:true={isRemainingBalance} size="12" padding="vertical-small" small-device-size="12" 
-      medium-device-size="12" large-device-size="12" >
-        
-        <p style="color:#002A3A;margin-left:10px;font-size:16px;line-height:16px;font-family:'Helvetica Neue Regular';">Amount remaining to pay ${remainingBalanceAmount} </p>
       </lightning-layout-item>
       <lightning-layout-item if:true={LenderTopup} size="12" padding="vertical-small" small-device-size="12" 
       medium-device-size="12" large-device-size="12" >
@@ -812,15 +620,78 @@ close
       medium-device-size="12" large-device-size="12" >
         
         <p style="color:#002A3A;margin-left:10px;font-size:16px;line-height:16px;font-family:'Helvetica Neue Regular';">Change Champion Amount ${rdAmount}</p>
+      </lightning-layout-item>-->
+			<lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="12">
+			<div class="grid-containerusePaymentTB">
+				<div>
+					<template if:true={haveLoaninCart}><p class="choosepaymentMethodvalues">Loans & Donation Amount</p></template>
+				</div>
+				<div>
+					<template if:true={haveLoaninCart}><p class="choosepaymentMethodvalues">${loanAndRdAmount}</p></template>
+				</div>
+				<div>
+					<template if:true={LenderTopup}><p class="choosepaymentMethodvalues">Topup Amount</p></template>
+				</div>
+				<div>
+					<template if:true={LenderTopup}><p class="choosepaymentMethodvalues">${topUpAmount}</p></template>
+				</div>
+				<div>
+					<template if:true={changeChampionTemplate}><p class="choosepaymentMethodvalues">Change Champion Amount</p></template>
+				</div>
+        <div>
+          <template if:true={changeChampionTemplate}><p class="choosepaymentMethodvalues">${rdAmount}</p></template>
+        </div>
+			</div>
+			</lightning-layout-item>
+
+      <lightning-layout-item if:true={haveLenderBalance} size="12" small-device-size="12" 
+      medium-device-size="12" large-device-size="12" class="slds-p-top_x-large slds-p-bottom_x-large slds-p-left_small slds-p-right_small">
+        <div style="display:flex;">
+          <lightning-input type="checkbox" onchange={onUseLenderbalance} value={lenderBalanceSelected}> </lightning-input>
+          <p style="color:#002A3A;font-size:16px;line-height:16px;font-family:'Helvetica Neue Regular';padding-top:2px;">Use Lender Balance ${lenderBalanceAmount}</p>
+        </div> <!-- margin-bottom:30px; -->
       </lightning-layout-item>
+
+				<lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="12">
+					<div class="grid-containerusePaymentTB">
+						<div>
+							<template if:true={isRemainingBalance}>
+								<p class="choosepaymentMethodvalues">Amount remaining to pay</p>
+							</template>
+						</div>
+						<div>
+							<template if:true={isRemainingBalance}>
+								<p class="choosepaymentMethodvalues">${remainingBalanceAmount}</p>
+							</template>
+						</div>
+						<div>
+							<template if:true={isprocessingAmount}>
+								<p class="choosepaymentMethodvalues">Processing Amount</p>
+							</template>
+						</div>
+						<div>
+							<template if:true={isprocessingAmount}>
+								<p class="choosepaymentMethodvalues">${processingAmount}</p>
+							</template>
+						</div>
+					</div>
+				</lightning-layout-item>
+      
+      <!--<lightning-layout-item if:true={isRemainingBalance} size="12" padding="vertical-small" small-device-size="12" 
+      medium-device-size="12" large-device-size="12" >
+        
+        <p style="color:#002A3A;margin-left:10px;font-size:16px;line-height:16px;font-family:'Helvetica Neue Regular';">Amount remaining to pay ${remainingBalanceAmount} </p>
+      </lightning-layout-item>
+      
       <lightning-layout-item if:true={isprocessingAmount} size="12" padding="vertical-small" small-device-size="12" 
       medium-device-size="12" large-device-size="12" >
         
         <p style="color:#002A3A;margin-left:10px;font-size:16px;line-height:16px;font-family:'Helvetica Neue Regular';">Processing Amount ${processingAmount}</p>
-      </lightning-layout-item>
+      </lightning-layout-item>-->
       </lightning-layout>
+
       
-      <lightning-layout-item if:true={showCreditCard} size="12" padding="around-small" small-device-size="6" 
+      <!--<lightning-layout-item if:true={showCreditCard} size="12" padding="around-small" small-device-size="6" 
       medium-device-size="6" large-device-size="6">
         <button class="PillsCardButtons" onclick={ifCardPayment} disabled={disabledButton}>Card</button>
       </lightning-layout-item>
@@ -828,11 +699,26 @@ close
       <lightning-layout-item if:true={showPaypal} size="12" padding="around-small" small-device-size="6" 
       medium-device-size="6" large-device-size="6">
         <button class="PillsCardButtons" onclick={ifPaypalPayment} disabled={disabledButton}><i>PayPal</i></button>
-      </lightning-layout-item>
+      </lightning-layout-item>-->
+
+      <div class="grid-containerChoosePayment">
+        <div>
+          <template if:true={showCreditCard}> <button class="PillsCardButtons" onclick={ifCardPayment} disabled={disabledButton}>Card</button> </template>
+        </div>
+        <div>
+          <template if:true={showPaypal}> <button class="PillsCardButtons" onclick={ifPaypalPayment} disabled={disabledButton}><i>PayPal</i></button> </template>
+        </div>
+        <div>
+          <template if:true={showApplePay}> <button class="PillsCardButtons1" disabled={disabledButton}><img src={Apple} alt="Apple Logo" width="16px" style="margin-top:-2px" />&nbsp;&nbsp; Apple Pay</button> </template>
+        </div>
+        <div>
+          <template if:true={showGooglePay}> <button class="PillsCardButtons1" disabled={disabledButton} onclick={handleGooglePayClick}><img src={Google} alt="Google Logo" width="16px" style="margin-top:-2px" />&nbsp;&nbsp; Google Pay</button> </template>
+        </div>
+      </div>
       
     </lightning-layout>
     <lightning-layout multiple-rows style="margin:-25px 10px 10px 10px">
-      <lightning-layout-item if:true={showApplePay} size="12" padding="around-small" small-device-size="6" 
+     <!-- <lightning-layout-item if:true={showApplePay} size="12" padding="around-small" small-device-size="6" 
       medium-device-size="6" large-device-size="6">
         <button class="PillsCardButtons1" disabled={disabledButton}><img src={Apple} alt="Apple Logo" width="16px" style="margin-top:-2px" />&nbsp;&nbsp; Apple Pay</button>
       </lightning-layout-item>
@@ -841,10 +727,10 @@ close
         <button class="PillsCardButtons1" disabled={disabledButton} onclick={handleGooglePayClick}><img src={Google} alt="Google Logo" width="16px" style="margin-top:-2px" />&nbsp;&nbsp; Google Pay</button>
       </lightning-layout-item>
       <lightning-layout-item if:true={LenderbalanceChecked} size="12" padding="around-small" small-device-size="12" 
-      medium-device-size="12" large-device-size="12" >
-      <button class="custombuttomwithdrawCA" style="width: -webkit-fill-available;font-size:16px;font-weight:800" onclick={gotoFourthPage}>Continue</button><!-- usingLenderBalanceForCartAmount -->
-      </lightning-layout-item>
-
+      medium-device-size="12" large-device-size="12" >-->
+      <!-- usingLenderBalanceForCartAmount 
+      </lightning-layout-item>-->
+      <button class="custombuttomwithdrawPaynow" if:true={LenderbalanceChecked} style="width: -webkit-fill-available;font-size:16px;font-weight:800;margin-top:30px;" onclick={gotoFourthPage}>Continue</button>
     
       
     </lightning-layout>
@@ -946,21 +832,21 @@ close
       <span class="slds-assistive-text">error</span>
       <h2>{paymentError}</h2>
     </div>
-    <div class="search-header" style="padding:20px">
-    <h3 class="CartHeadingnew" style="padding-top:20px">Review and complete</h3>
+    <div class="search-header" ><!-- style="padding:0px 20px" -->
+    <h3 class="CartHeadingnew" style="padding-left:10px;">Review and complete</h3>
     <h3 style="font-weight:800;color:#002A3A;padding:10px;font-size:16px;font-family:'Helvetica Neue Bold';line-height:24px;">Cart</h3>
-      <div style="margin:10px;background-color:#F3F0ED;border-radius:2px;">
+      <div style="margin:10px;background-color:#F3F0ED;border-radius:8px;">
         <div style="padding:10px">
-        <p style="font-weight:800;font-size:16px;font-family:'Helvetica Neue Bold';line-height:16px;">{totalNoOfCartItems} Items</p>
+        <p style="font-weight:800;font-size:16px;font-family:'Helvetica Neue Bold';line-height:16px;padding-left:5px;">{totalNoOfCartItems} Items</p>
         <div style="display:block;">
         <template for:each={loanidfromparent} for:item="item" for:index="index">  <!-- cartItems -->
           <div  key={item.Id}>  <!-- class="slds-p-left_small" -->
           <div class="grid-container">
             <div class="slds-float_left">
-              <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;margin-top:10px;" >{item.Loan_Title__c}</p>
+              <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;" >{item.Loan_Title__c}</p>
             </div>
             <div class="slds-float_right" style="display: flex;justify-content: right;">
-             <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;margin-top:10px;" >$ {item.selectedAmount}</p>
+             <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;" >$ {item.selectedAmount}</p>
             </div>
           </div>
               <!-- <br> -->
@@ -970,10 +856,10 @@ close
         <template if:true={voluntaryDonation}>
           <div class="grid-container">
           <div class="slds-float_left">
-              <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;margin-top:10px;" >Voluntary Donation</p>
+              <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;" >Voluntary Donation</p>
             </div>
             <div class="slds-float_right" style="display: flex;justify-content: right;">
-             <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;margin-top:10px;" >$ {totalLoansAndDonation}</p>
+             <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;" >$ {totalLoansAndDonation}</p>
             </div>
           </div>
              
@@ -981,10 +867,10 @@ close
         <template if:true={changeChampionTemplate}>
           <div class="grid-container">
           <div class="slds-float_left">
-              <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;margin-top:10px;" >Changechampion Amount</p>
+              <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;" >Changechampion Amount</p>
             </div>
             <div class="slds-float_right" style="display: flex;justify-content: right;">
-             <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;margin-top:10px;" >$ {AddedChangeChampionAmount}</p>
+             <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;" >$ {AddedChangeChampionAmount}</p>
             </div>
           </div>
              
@@ -992,10 +878,10 @@ close
         <template if:true={LenderTopup}>
           <div class="grid-container">
           <div class="slds-float_left">
-              <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;margin-top:10px;" >Topup</p>
+              <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;" >Topup</p>
             </div>
             <div class="slds-float_right" style="display: flex;justify-content: right;">
-             <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;margin-top:10px;" >$ {AddedLenderTopup}</p>
+             <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;" >$ {AddedLenderTopup}</p>
             </div>
           </div>
              
@@ -1014,30 +900,30 @@ close
         
       </div>
 
-      <h3 style="font-weight:800;color:#002A3A;margin:10px;font-size:16px;font-family:'Helvetica Neue Bold';line-height:24px;">Your Information</h3>
+      <h3 style="font-weight:800;color:#002A3A;margin:10px;font-size:16px;font-family:'Helvetica Neue Bold';line-height:24px;padding-top: 15px;">Your Information</h3>
 
       <div class="yourInformation">
         <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;">{lenderName}</p>
         <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;margin-top:5px;">{lenderEmail}</p>
       </div>
 
-      <h3 style="font-weight:800;color:#002A3A;margin:10px;font-size:16px;font-family:'Helvetica Neue Bold';line-height:24px;">Payment detail</h3>
+      <h3 style="font-weight:800;color:#002A3A;margin:10px;font-size:16px;font-family:'Helvetica Neue Bold';line-height:24px;padding-top: 15px;">Payment detail</h3>
 
       <div class="paymentDetails">
         <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;">Pay by {payByMethod}</p>
         <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;margin-top:5px;">{paymentDetails}</p>
       </div>
       <template if:true={cardPayment}>
-        <button class="custombuttomwithdrawCA" style="width: -webkit-fill-available;font-size:16px;font-weight:800;font-family:'Helvetica Neue Regular';line-height:16px;" onclick={gotoThankYouPayNow} disabled={payButtonDisabled}>Pay now</button>
+        <button class="custombuttomwithdrawPaynow" style="width: -webkit-fill-available;font-size:16px;font-weight:800;font-family:'Helvetica Neue Regular';line-height:16px;margin-top:30px;" onclick={gotoThankYouPayNow} disabled={payButtonDisabled}>Pay now</button>
       </template>
       <template if:true={LenderbalanceChecked}>
-        <button class="custombuttomwithdrawCA" style="width: -webkit-fill-available;font-size:16px;font-weight:800;font-family:'Helvetica Neue Regular';line-height:16px;" onclick={gotoThankYouPayNow} disabled={payButtonDisabled}>Pay now</button>
+        <button class="custombuttomwithdrawPaynow" style="width: -webkit-fill-available;font-size:16px;font-weight:800;font-family:'Helvetica Neue Regular';line-height:16px;margin-top:30px;" onclick={gotoThankYouPayNow} disabled={payButtonDisabled}>Pay now</button>
       </template>
       <template if:true={googlePayment}>
         <c-stripe-payment-component payment-type="GooglePay" contactid={contactid} amount={finalTransactionAmount} vf-page-domain={vfPageDomain} onloading={handleStripePaymentComponentLoading} onpay={handleStripePay}></c-stripe-payment-component>
       </template>
        <template if:true={paypalPButton}>
-        <button class="custombuttomwithdrawCA" style="width: -webkit-fill-available;font-size:16px;font-weight:800;font-family:'Helvetica Neue Regular';line-height:16px;" onclick={getPaymentLink} disabled={payButtonDisabled}>Pay now</button>
+        <button class="custombuttomwithdrawPaynow" style="width: -webkit-fill-available;font-size:16px;font-weight:800;font-family:'Helvetica Neue Regular';line-height:16px;margin-top:30px;border-radius:4px;" onclick={getPaymentLink} disabled={payButtonDisabled}>Pay now</button>
       </template>
     </div>
   </template>
