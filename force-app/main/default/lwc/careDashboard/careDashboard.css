@@ -28,6 +28,8 @@
 
 }
 
+
+
 .grid-containerToggle {
   display: grid;
   grid-template-columns: auto auto;
@@ -88,7 +90,10 @@
   font-size: 16px;
   line-height: 21px;
   border-style: solid;
+  padding-left: 7px;
 }
+
+
 
 /*h1{
     font-size: 60px;
@@ -311,41 +316,7 @@ p {
   margin-top: 1%;
 }
 
-becomeacahngechampion {
-  background: #FEBE10;
-  border-radius: 4px;
-  padding:  15px 20px 15px 15px;
-  font-family: 'Helvetica Neue Bold Pro';
-  width: -webkit-fill-available;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 16px;
-  text-align: center;
-  color: #163B54;
-  border: none;
-  display: flex;
-  flex-direction:row;
-  justify-content:center;
-}
 
-becomeacahngechampion:hover {
-  background: #472175;
-  border-radius: 4px;
-  padding:  15px 20px 15px 15px;
-  font-family: 'Helvetica Neue Bold Pro';
-  width: -webkit-fill-available;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 16px;
-  line-height: 16px;
-  text-align: center;
-  color: #163B54;
-  border: none;
-  display: flex;
-  flex-direction:row;
-  justify-content:center;
-}
 
 button1 {
   background: #ffffff;
@@ -406,10 +377,7 @@ button1 {
 }
 
 @media screen and (max-width: 1018px) {
-  button {
-    margin-top: 1%;
-    width: 100%;
-  }
+
 
   .impact-section-heading {
     text-align: left !important;
@@ -441,10 +409,7 @@ button1 {
 }
 
 @media screen and (min-width:1019px) and (max-width: 1532px) {
-  button {
-    margin-top: 1%;
-    width: 200px;
-  }
+
 
   .bynumber-head {
     font-family: 'Helvetica';
@@ -1224,7 +1189,61 @@ h2 span {
   font-size: 30px;
 }
 
-@media only screen and (max-width: 360px){
+@media only screen and (min-width: 300px) and (max-width: 440px){
+  .AmountValues {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 45px;
+}
+  .H3headsMob {
+    font-size: 14px;
+    line-height: 22px;
+    font-family: 'Helvetica Neue Bold Pro';
+    color: white;
+  }
+
+  .H3headsMob1 {
+    font-size: 24px;
+    line-height: 24px;
+    font-family: 'Sketchetik Fill Bold';
+    color: white;
+  }
+  .becomeacahngechampion {
+  background: #FEBE10;
+  border-radius: 4px;
+  padding:  17px 20px 13px 15px;
+  font-family: 'Helvetica Neue Bold Pro';
+  width: -webkit-fill-available;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #163B54;
+  border: none;
+  display: flex;
+  flex-direction:row;
+  justify-content:center;
+}
+
+.becomeacahngechampion:hover {
+  background: #472175;
+  border-radius: 4px;
+  padding:  17px 20px 13px 15px;
+  font-family: 'Helvetica Neue Bold Pro';
+  width: -webkit-fill-available;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #ffffff;
+  border: none;
+  display: flex;
+  flex-direction:row;
+  justify-content:center;
+}
   .OnlyShowInDesktopAccountTransaction{
     display: none;
   }
@@ -1327,7 +1346,7 @@ h2 span {
   display: grid;
   grid-template-columns: 120px auto;
   gap: 20px;
-  padding: 10px;
+  padding: 10px 10px 10px 0px;
 }
   .CheckboxACCMargin{
     margin-top: -55px;
@@ -1402,8 +1421,8 @@ h2 span {
   }
 
   .carTitleImpact {
-    font-size: 46px;
-    line-height: 53px;
+    font-size: 30px;
+    line-height: 40px;
     font-family: 'Sketchetik Fill Bold';
     font-weight: 600;
     margin-bottom: 10px;
@@ -1456,11 +1475,11 @@ h2 span {
 
   .CarContentImpact {
     background-color: #F3F0ED;
-    padding: 15px;
+    padding: 10px;
     margin: 0px 10px 0px 0px;
     width: auto;
     min-width: auto;
-    min-height: 121px;
+    min-height: 100px;
     border-radius: 8px;
   }
 
@@ -1524,7 +1543,7 @@ h2 span {
     position: absolute;
     top: 5px;
     left: 2px;
-    background: red;
+    /* background: red; */
     height: 100px;
     width: 100px;
     border-radius: 100%;
@@ -1592,20 +1611,7 @@ h2 span {
     margin-left: 0px;
   }
 
-  .H3headsMob {
-    font-size: 16px;
-    line-height: 22px;
-    font-family: 'Helvetica Neue Bold Pro';
-    color: white;
-    margin-top: 20px;
-  }
 
-  .H3headsMob1 {
-    font-size: 30px;
-    line-height: 36px;
-    font-family: 'Sketchetik Fill Bold';
-    color: white;
-  }
 
   .MobValues {
     margin-top: 20px;
@@ -1673,7 +1679,48 @@ h2 span {
   }
 }
 
-@media only screen and (min-width: 361px) and (max-width: 600px) {
+@media only screen and (min-width: 441px) and (max-width: 600px) {
+    .AmountValues {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 25px;
+}
+  .becomeacahngechampion {
+  background: #FEBE10;
+  border-radius: 4px;
+  padding:  17px 20px 13px 15px;
+  font-family: 'Helvetica Neue Bold Pro';
+  width: -webkit-fill-available;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #163B54;
+  border: none;
+  display: flex;
+  flex-direction:row;
+  justify-content:center;
+}
+
+.becomeacahngechampion:hover {
+  background: #472175;
+  border-radius: 4px;
+  padding:  17px 20px 13px 15px;
+  font-family: 'Helvetica Neue Bold Pro';
+  width: -webkit-fill-available;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #ffffff;
+  border: none;
+  display: flex;
+  flex-direction:row;
+  justify-content:center;
+}
   .OnlyShowInDesktopAccount{
     display: none;
   }
@@ -1775,7 +1822,7 @@ h2 span {
   display: grid;
   grid-template-columns: 120px auto;
   gap: 20px;
-  padding: 10px;
+  padding: 10px 10px 10px 0px;
 }
   .CheckboxACCMargin{
     margin-top: -55px;
@@ -1850,8 +1897,8 @@ h2 span {
   }
 
   .carTitleImpact {
-    font-size: 46px;
-    line-height: 53px;
+    font-size: 30px;
+    line-height: 40px;
     font-family: 'Sketchetik Fill Bold';
     font-weight: 600;
     margin-bottom: 10px;
@@ -1904,11 +1951,11 @@ h2 span {
 
   .CarContentImpact {
     background-color: #F3F0ED;
-    padding: 15px;
+    padding: 10px;
     margin: 0px 10px 0px 0px;
     width: auto;
     min-width: auto;
-    min-height: 121px;
+    min-height: 100px;
     border-radius: 8px;
   }
 
@@ -1972,7 +2019,7 @@ h2 span {
     position: absolute;
     top: 5px;
     left: 2px;
-    background: red;
+    /* background: red; */
     height: 100px;
     width: 100px;
     border-radius: 100%;
@@ -2123,6 +2170,49 @@ h2 span {
 }
 
 @media only screen and (min-width: 601px) {
+
+      .AmountValues {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 25px;
+}
+  
+  .becomeacahngechampion {
+  background: #FEBE10;
+  border-radius: 4px;
+  padding:  17px 20px 13px 15px;
+  font-family: 'Helvetica Neue Bold Pro';
+  width: -webkit-fill-available;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #163B54;
+  border: none;
+  display: flex;
+  flex-direction:row;
+  justify-content:center;
+}
+
+.becomeacahngechampion:hover {
+  background: #472175;
+  border-radius: 4px;
+  padding:  17px 20px 13px 15px;
+  font-family: 'Helvetica Neue Bold Pro';
+  width: -webkit-fill-available;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #ffffff;
+  border: none;
+  display: flex;
+  flex-direction:row;
+  justify-content:center;
+}
   .OnlyShowInDesktopAccountTransaction{
     display: none;
   }
@@ -2218,7 +2308,7 @@ h2 span {
   display: grid;
   grid-template-columns: 120px auto;
   gap: 20px;
-  padding: 10px;
+  padding: 10px 10px 10px 0px;
 }
     .CheckboxACCMargin{
     margin-top: -2px;
@@ -2292,8 +2382,8 @@ h2 span {
   }
 
   .carTitleImpact {
-    font-size: 46px;
-    line-height: 53px;
+    font-size: 30px;
+    line-height: 40px;
     font-family: 'Sketchetik Fill Bold';
     font-weight: 600;
     margin-bottom: 10px;
@@ -2346,11 +2436,11 @@ h2 span {
 
   .CarContentImpact {
     background-color: #F3F0ED;
-    padding: 15px;
+    padding: 10px;
     margin: 0px 10px 0px 0px;
     width: auto;
     min-width: auto;
-    min-height: 121px;
+    min-height: 100px;
     border-radius: 8px;
   }
 
@@ -2565,7 +2655,7 @@ h2 span {
     position: absolute;
     top: 5px;
     left: 2px;
-    background: red;
+    /* background: red; */
     height: 100px;
     width: 100px;
     border-radius: 100%;
@@ -2573,6 +2663,47 @@ h2 span {
 }
 
 @media only screen and (min-width: 768px) {
+      .AmountValues {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 25px;
+}
+  .becomeacahngechampion {
+  background: #FEBE10;
+  border-radius: 4px;
+  padding:  17px 20px 13px 15px;
+  font-family: 'Helvetica Neue Bold Pro';
+  width: -webkit-fill-available;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #163B54;
+  border: none;
+  display: flex;
+  flex-direction:row;
+  justify-content:center;
+}
+
+.becomeacahngechampion:hover {
+  background: #472175;
+  border-radius: 4px;
+  padding:  17px 20px 13px 15px;
+  font-family: 'Helvetica Neue Bold Pro';
+  width: -webkit-fill-available;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #ffffff;
+  border: none;
+  display: flex;
+  flex-direction:row;
+  justify-content:center;
+}
   .OnlyShowInDesktopAccountTransaction{
     display: block;
   }
@@ -2590,6 +2721,21 @@ h2 span {
   font-family:'Helvetica Neue Bold Pro';
   font-size: 16px;
   line-height: 16px;
+  background-color: #FEBE10;
+  color: #002A3A;
+  border-radius: 4px;
+}
+    .untill992BecomeaCC:hover{
+  display:inline-flex;
+  width:auto;
+  padding:18px 10px 15px 10px;
+  border:none;
+  font-family:'Helvetica Neue Bold Pro';
+  font-size: 16px;
+  line-height: 16px;
+  background-color: #472175;
+  color: #ffffff;
+  border-radius: 4px;
 }
   .grid-containerDashBYourAccount {
   display: grid;
@@ -2680,7 +2826,7 @@ h2 span {
   display: grid;
   grid-template-columns: 120px auto;
   gap: 20px;
-  padding: 10px;
+  padding: 10px 10px 10px 0px;
 }
   .grid-containerTransactions{
   display: grid;
@@ -3044,7 +3190,7 @@ h2 span {
     position: absolute;
     top: 5px;
     left: 2px;
-    background: red;
+    /* background: red; */
     height: 100px;
     width: 100px;
     border-radius: 100%;
@@ -3057,6 +3203,47 @@ h2 span {
 }*/
 
 @media only screen and (min-width: 992px) and (max-width: 1146px){
+      .AmountValues {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 25px;
+}
+  .becomeacahngechampion {
+  background: #FEBE10;
+  border-radius: 4px;
+  padding:  17px 20px 13px 15px;
+  font-family: 'Helvetica Neue Bold Pro';
+  width: -webkit-fill-available;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #163B54;
+  border: none;
+  display: flex;
+  flex-direction:row;
+  justify-content:center;
+}
+
+.becomeacahngechampion:hover {
+  background: #472175;
+  border-radius: 4px;
+  padding:  17px 20px 13px 15px;
+  font-family: 'Helvetica Neue Bold Pro';
+  width: -webkit-fill-available;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #ffffff;
+  border: none;
+  display: flex;
+  flex-direction:row;
+  justify-content:center;
+}
   .AccShowinDesktop{
   display: none;
 }
@@ -3077,6 +3264,21 @@ h2 span {
   font-family:'Helvetica Neue Bold Pro';
   font-size: 18px;
   line-height: 22px;
+    background-color: #FEBE10;
+  color: #002A3A;
+  border-radius: 4px;
+}
+  .untill992BecomeaCC:hover{
+  display:inline-flex;
+  width:auto;
+  padding:18px 10px 15px 10px;
+  border:none;
+  font-family:'Helvetica Neue Bold Pro';
+  font-size: 18px;
+  line-height: 22px;
+    background-color: #472175;
+  color: #ffffff;
+  border-radius: 4px;
 }
    .grid-containerDashBYourAccount {
   display: grid;
@@ -3163,7 +3365,7 @@ h2 span {
   display: grid;
   grid-template-columns: 120px auto;
   gap: 20px;
-  padding: 10px;
+  padding: 10px 10px 10px 0px;
 }
   .grid-containerTransactions{
   display: grid;
@@ -3379,7 +3581,7 @@ h2 span {
     position: absolute;
     top: 5px;
     right: 2px;
-    background: red;
+    /* background: red; */
     height: 100px;
     width: 100px;
     border-radius: 100%;
@@ -3535,6 +3737,47 @@ h2 span {
 }
 
 @media only screen and (min-width: 1147px) {
+      .AmountValues {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 25px;
+}
+  .becomeacahngechampion {
+  background: #FEBE10;
+  border-radius: 4px;
+  padding:  17px 20px 13px 15px;
+  font-family: 'Helvetica Neue Bold Pro';
+  width: -webkit-fill-available;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #163B54;
+  border: none;
+  display: flex;
+  flex-direction:row;
+  justify-content:center;
+}
+
+.becomeacahngechampion:hover {
+  background: #472175;
+  border-radius: 4px;
+  padding:  17px 20px 13px 15px;
+  font-family: 'Helvetica Neue Bold Pro';
+  width: -webkit-fill-available;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #ffffff;
+  border: none;
+  display: flex;
+  flex-direction:row;
+  justify-content:center;
+}
   .AccShowinDesktop{
   display: none;
 }
@@ -3555,6 +3798,21 @@ h2 span {
   font-family:'Helvetica Neue Bold Pro';
   font-size: 18px;
   line-height: 22px;
+  background-color: #FEBE10;
+  color: #002A3A;
+  border-radius: 4px;
+}
+      .untill992BecomeaCC:hover{
+  display:inline-flex;
+  width:auto;
+  padding:18px 10px 15px 10px;
+  border:none;
+  font-family:'Helvetica Neue Bold Pro';
+  font-size: 18px;
+  line-height: 22px;
+  background-color: #472175;
+  color: #ffffff;
+  border-radius: 4px;
 }
   .grid-containerDashBYourAccount {
   display: grid;
@@ -3641,7 +3899,7 @@ h2 span {
   display: grid;
   grid-template-columns: 120px auto;
   gap: 20px;
-  padding: 10px;
+  padding: 10px 10px 10px 0px;
 }
   .grid-containerTransactions{
   display: grid;
@@ -3857,7 +4115,7 @@ h2 span {
     position: absolute;
     top: 5px;
     right: 2px;
-    background: red;
+    /* background: red; */
     height: 100px;
     width: 100px;
     border-radius: 100%;
@@ -4015,6 +4273,47 @@ h2 span {
 }
 
 @media only screen and (min-width: 1480px) {
+      .AmountValues {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 25px;
+}
+  .becomeacahngechampion {
+  background: #FEBE10;
+  border-radius: 4px;
+  padding:  17px 20px 13px 15px;
+  font-family: 'Helvetica Neue Bold Pro';
+  width: -webkit-fill-available;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #163B54;
+  border: none;
+  display: flex;
+  flex-direction:row;
+  justify-content:center;
+}
+
+.becomeacahngechampion:hover {
+  background: #472175;
+  border-radius: 4px;
+  padding:  17px 20px 13px 15px;
+  font-family: 'Helvetica Neue Bold Pro';
+  width: -webkit-fill-available;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #ffffff;
+  border: none;
+  display: flex;
+  flex-direction:row;
+  justify-content:center;
+}
   .AccShowinDesktop{
   display: none;
 }
@@ -4035,6 +4334,21 @@ h2 span {
   font-family:'Helvetica Neue Bold Pro';
   font-size: 18px;
   line-height: 22px;
+    background-color: #FEBE10;
+  color: #002A3A;
+  border-radius: 4px;
+}
+        .untill992BecomeaCC:hover{
+  display:inline-flex;
+  width:auto;
+  padding:18px 10px 15px 10px;
+  border:none;
+  font-family:'Helvetica Neue Bold Pro';
+  font-size: 18px;
+  line-height: 22px;
+    background-color: #472175;
+  color: white;
+  border-radius: 4px;
 }
   .grid-containerDashBYourAccount {
   display: grid;
@@ -4130,7 +4444,7 @@ h2 span {
   display: grid;
   grid-template-columns: 120px auto;
   gap: 20px;
-  padding: 10px;
+  padding: 10px 10px 10px 0px;
 }
   .grid-containerTransactions{
   display: grid;
@@ -4444,7 +4758,7 @@ h2 span {
 }
 
 .ImageDiv {
-  background-color: red;
+  /* background-color: red; */
   margin: 0;
   top: 0;
   height: 100px;
@@ -4705,11 +5019,7 @@ h2 span {
   min-width: 250px;
 }
 
-.AmountValues {
-  display: flex;
-  justify-content: center;
-  margin-top: 45px;
-}
+
 
 tr:nth-child(even) {
   background-color: #f2f2f2;

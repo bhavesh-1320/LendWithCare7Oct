@@ -147,8 +147,8 @@ export default class CareHomePage_ourLoans extends LightningElement {
                     obj.Button = loan.Loan_Type__c;
                     obj.Loan_Type__c = loan.Loan_Type__c;
                     obj.readMoreLink = this.borrowerUrl + '?loanId='+btoa(loan.Id);
-                    obj.amountFunded = loan.Amount_Funded__c!=undefined?loan.Amount_Funded__c:0;
-                    obj.publishedAmount = loan.Published_Amount_AUD__c!=undefined?'$'+loan.Published_Amount_AUD__c:'$'+0;
+                    obj.amountFunded = loan.Amount_Funded__c!=undefined?loan.Amount_Funded__c.toFixed(2):0;
+                    obj.publishedAmount = loan.Published_Amount_AUD__c!=undefined?'$'+loan.Published_Amount_AUD__c.toFixed(2):'$'+0;
                     obj.Published_Amount_AUD__c = loan.Published_Amount_AUD__c;
                     obj.progress = loan.Funded__c != undefined? 'width:'+(loan.Funded__c >=98 ? 98 : loan.Funded__c)+'%;': 'width:0;';
                     obj.isButtonVisible = false;

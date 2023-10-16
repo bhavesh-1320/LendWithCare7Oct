@@ -21,10 +21,12 @@
 						<div class="item2 MobSizes">
 							<h3 class="H3headsMob">Welcome back</h3>
 							<h3 class="H3headsMob1">{UserName}</h3>
+							<a style="color: white; text-decoration: underline;" onclick={OpenFileModel}>Upload a Profile Picture</a>
+     						<input type="file" id="fileInput" accept=".jpeg,.png,.jpg" onchange={handleFileSelection} style="display: none;" />
 						</div>
 					</div>
 					<div>
-						<div class="AmountValues" style="margin-right: 25px;">
+						<div class="AmountValues">
 							<p
 								style="font-size:16px;line-height:16px;color:white;margin-top:10px;text-align:right;font-family:'Helvetica Neue Bold Pro';">
 								${AmountValues}</p>
@@ -154,7 +156,7 @@
 				</div>
 				<template if:false={Champion}>
 					<div class="" style="margin:30px 0px 0px 0px;width:-webkit-fill-available;">
-						<button class="becomeacahngechampion"><span style="font-size:35px;margin:2px 8px 0px 0px;">&#x2606;</span> Become a Change Champion</button>
+						<button onclick={navigateTocarebecomechangechampionURL} class="becomeacahngechampion"><span style="font-size:35px;margin:2px 8px 0px 0px;">&#x2606;</span> Become a Change Champion</button>
 					</div>
 				</template>
 			</div>
@@ -201,7 +203,7 @@
 								style="color: #E4761E;font-size: 40px;line-height: 57px;font-family: 'Sketchetik Fill Bold';">.{lendAmt.Decimal}</span>
 							</h3>
 							<p style="font-family: 'Helvetica Neue Bold Pro';font-size:20px;line-height:27px;">Money
-								available in your account</p>
+								available in your lender account balance</p>
 						</template>
 					</div>
 				</div>
@@ -263,7 +265,7 @@
 				<div class="TopUpAcc">
 					<a onclick={topupLenderBalance} style="color:#002A3A;font-family:''Helvetica Neue Bold Pro';"><span
 							style="font-size:25px;font-weight:bold;display:flex;float:left;">&rarr;</span>&nbsp;
-						Top up account</a>
+						Top up lender account balance</a>
 				</div>
 			</lightning-layout-item>
 			<lightning-layout-item size="12" small-device-size="12" medium-device-size="12" large-device-size="12"
@@ -311,9 +313,10 @@
 					<div class="search-header" style="padding: 0px 20px 0px 20px">
 						<h3 class="donateMessage"> How much would you like to donate? </h3>
 						<div class="field">
-							<input id="donationInput" class="ClassInputFields italic-placeholder" type="number"
-							step="0.01" onpaste={preventPaste}	onchange={handleDonationchange} placeholder={PlaceholderAmountValues} value={donationAmount}
-							></input>
+							
+							<input class="donationInput ClassInputFields italic-placeholder" type="text"
+							step="0.01" onpaste={preventPaste} oninput={handleDonationchange} placeholder={PlaceholderAmountValues} 
+							value={donationAmount}></input>
 						</div>
 						<hr style="margin: 10px 0px 0px 0px">
 						<button class="UpdateButtonMakAnotherloanPersonal" style="width: -webkit-fill-available;margin:20px 0px 20px 0px;"
@@ -397,11 +400,13 @@
 						<!-- padding="horizontal-small" -->
 						<div class="MoneyAvailableMobile slds-m-bottom_small">
 							<div class="TextStyleMobile">
+								<template if:true={lendAmt}>
 								<h3 style="font-size:60px;color:#E4761E;line-height:69px;font-family: 'Sketchetik Fill Bold';">
-									${AmountValues}<span
-										style="color: #E4761E;font-size: 40px;line-height: 57px;font-family: 'Sketchetik Fill Bold';">.00</span>
+									${lendAmt.Number}<span
+										style="color: #E4761E;font-size: 40px;line-height: 57px;font-family: 'Sketchetik Fill Bold';">.{lendAmt.Decimal}</span>
 								</h3>
-								<p style="font-weight:800">Money available in your account</p>
+								<p style="font-weight:800">Money available in your lender account balance</p>
+								</template>
 							</div>
 						</div>
 						<div class="container" style="padding:0px 0px 0px 0px;">
@@ -417,7 +422,7 @@
 						<div class="withdrawMobile">
 							<a onclick={topupLenderBalance} style="color:#002A3A;font-size:16px;line-height:16px;font-family:'Helvetica Neue Bold Pro';"><span
 									style="font-size:25px;font-weight:bold;display:flex;float:left">&rarr;</span>&nbsp;
-								Top up account</a>
+								Top up lender account balance</a>
 						</div>
 						<div style="margin:10px 10px 10px 0px" class="slds-align_absolute-center">
 							<div style="min-height:120px;margin-right:-21px;"><lightning-input checked={relendCheckbox} onchange={handleAutoReLend} type="checkbox" variant="standard" name="name"></lightning-input></div>
@@ -850,7 +855,7 @@
 								  line-height: 19px;
 								  color: #002A3A;width: 50px;text-align: center;">
 										<div style="display: flex;align-items: center;">
-											<div style="flex: 1;">{transaction.Amount__c}</div>
+											<div style="flex: 1;">${transaction.Amount__c}</div>
 											<!--<div style="margin-left: 20px;">
 												<button disabled={transaction.disableDownloadButton}
 													class={transaction.downloadButtonClass} title="Download"
@@ -875,7 +880,7 @@
 												<button disabled={transaction.disableDownloadButton} data-template="LWC Donation PDF"
 													class={transaction.downloadButtonClass} title="Download"
 													data-transaction-id={transaction.Id} onclick={handleDownload}
-													style="width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; padding: 0; border-radius:8px; border: none;">
+													style="background-color:#FEBE10;width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; padding: 0; border-radius:8px; border: none;">
 													<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
 														stroke="currentColor" width="16" height="16">
 														<path stroke-linecap="round" stroke-linejoin="round"
@@ -1068,7 +1073,7 @@
 								line-height: 19px;
 								color: #002A3A;width: 50px;text-align: center;">
 										<div style="display: flex;align-items: center;">
-											<div style="flex: 1;">{transaction.Amount__c}</div>
+											<div style="flex: 1;">${transaction.Amount__c}</div>
 											<!--<div style="margin-left: 20px;">
 												<button disabled={transaction.disableDownloadButton}
 													class={transaction.downloadButtonClass} title="Download"
@@ -1092,7 +1097,7 @@
 												<button disabled={transaction.disableDownloadButton} data-template="LWC Donation PDF"
 													class={transaction.downloadButtonClass} title="Download"
 													data-transaction-id={transaction.Id} onclick={handleDownload}
-													style="width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; padding: 0; border-radius:8px; border: none;">
+													style="background-color:#FEBE10;width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; padding: 0; border-radius:8px; border: none;">
 													<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
 														stroke="currentColor" width="16" height="16">
 														<path stroke-linecap="round" stroke-linejoin="round"
@@ -1275,7 +1280,7 @@
 								line-height: 19px;
 								color: #002A3A;width: 50px;text-align: center;">
 										<div style="display: flex;align-items: center;">
-											<div style="flex: 1;">{transaction.Amount__c}</div>
+											<div style="flex: 1;">${transaction.Amount__c}</div>
 											<!--<div style="margin-left: 20px;">
 												<button disabled={transaction.disableDownloadButton}
 													class={transaction.downloadButtonClass} title="Download"
@@ -1299,7 +1304,7 @@
 												<button disabled={transaction.disableDownloadButton} data-template="LWC Donation PDF"
 													class={transaction.downloadButtonClass} title="Download"
 													data-transaction-id={transaction.Id} onclick={handleDownload}
-													style="width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; padding: 0; border-radius:8px; border: none;">
+													style="background-color:#FEBE10;width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; padding: 0; border-radius:8px; border: none;">
 													<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
 														stroke="currentColor" width="16" height="16">
 														<path stroke-linecap="round" stroke-linejoin="round"

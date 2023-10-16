@@ -68,7 +68,7 @@ public without sharing class LWC_AllLoansCtrl {
     // All Loan which are featured for homepage
     @AuraEnabled(Cacheable=true)
     public static list<Loan__c> getAllLoans_HomePage(){
-        String strLoanSoql = 'Select Id, Name, Published_Amount_AUD__c, Published_Date__c, Loan_Title__c, Borrower__r.Country__c,';
+        String strLoanSoql = 'Select Id, Name, Published_Amount_AUD__c, Published_Date__c, Loan_Title__c, Borrower__r.Country__c,Expected_Fund_From_Cart__c,';
         strLoanSoql += ' Loan_Description__c, Loan_Purpose__c, Loan_Principal_Disbursed_AUD__c, Loan_Term_Months__c, Loan_Schedule__c, Loan_Type__c,';
         strLoanSoql += ' Number_of_Lenders__c, Amount_Funded__c, Funded__c, CMS_Key__c From Loan__c';
         strLoanSoql += ' Where (Stage__c != \'Cancelled\' AND Stage__c != \'Repaid\' AND Stage__c != \'Written off\' AND Stage__c != \'Expired\')'; 
@@ -138,7 +138,7 @@ public without sharing class LWC_AllLoansCtrl {
         //Integer offset = (pageNumber - 1) * pageSize;
         
         String strLoanSoql = 'Select Id, Name, Published_Date__c, Loan_Title__c,Borrower__r.Postcode__c, Borrower__r.Country__c,';
-        strLoanSoql += ' Loan_Description__c, Loan_Purpose__c, Loan_Term_Months__c, Loan_Schedule__c, Loan_Type__c,';
+        strLoanSoql += ' Loan_Description__c, Loan_Purpose__c, Loan_Term_Months__c, Loan_Schedule__c, Loan_Type__c,Expected_Fund_From_Cart__c,';
         strLoanSoql += ' Number_of_Lenders__c, Amount_Funded__c, Funded__c, CMS_Key__c, Published_Amount_AUD__c,CreatedDate,Location_of_Business__c From Loan__c ';
         strLoanSoql += ' Where (Stage__c != \'Cancelled\' AND Stage__c != \'Repaid\' AND Stage__c != \'Written off\' AND Stage__c != \'Expired\')'; 
         strLoanSoql += ' AND Loan_Proposal_Status__c=\'Published\'';
@@ -562,7 +562,7 @@ public without sharing class LWC_AllLoansCtrl {
                         }
                     }
                 }
-                String strLoanTypeSoql = 'SELECT Id,Loan_Purpose__c,Amount_Left_Before_Fully_Funded__c, (SELECT ContentDocumentId, ContentDocument.Title FROM ContentDocumentLinks ), Loan_Title__c, Borrower__r.Name, Amount_Funded__c, Borrower__r.Description, Borrower__r.Postcode__c, Borrower__r.Country__c, Loan_Description__c, LWC_Loan_Description__c, Funded__c, Published_Amount_AUD__c, Loan_Type__c, Loan_Term_Months__c, Loan_Schedule__c FROM Loan__c WHERE Loan_Type__c = \'' + String.escapeSingleQuotes(loans[0].Loan_Type__c) + '\' AND Id !=\''+loanId+'\' ORDER BY CreatedDate DESC LIMIT 4';
+                String strLoanTypeSoql = 'SELECT Id,Loan_Purpose__c,Amount_Left_Before_Fully_Funded__c, (SELECT ContentDocumentId, ContentDocument.Title FROM ContentDocumentLinks ), Loan_Title__c, Borrower__r.Name, Amount_Funded__c, Borrower__r.Description, Borrower__r.Postcode__c, Borrower__r.Country__c, Loan_Description__c, LWC_Loan_Description__c, Funded__c, Published_Amount_AUD__c, Loan_Type__c, Loan_Term_Months__c, Loan_Schedule__c FROM Loan__c WHERE Loan_Type__c = \'' + String.escapeSingleQuotes(loans[0].Loan_Type__c) + '\' AND Id !=\''+loanId+'\' AND Loan_Proposal_Status__c = \'Published\' ORDER BY CreatedDate DESC LIMIT 4';
                 relatedLoans =  Database.query(strLoanTypeSoql);
 
                 Set<Id> contentDocumentIdsRelLoans = new Set<Id>();
@@ -701,12 +701,12 @@ public without sharing class LWC_AllLoansCtrl {
         }
         
         // Querying the Breakdown data.
-        Contact contactRecord = [SELECT Id, Name, Total_Loans__c, Total_Amount_Lent__c, Total_Donation__c, Champion__c,Auto_Relend__c, Lender_Balance__c, Total_People_Helped__c, Profile_Picture__c FROM Contact WHERE Id = :contactId LIMIT 1];
+        Contact contactRecord = [SELECT Id, FirstName, Name, Total_Loans__c, Total_Amount_Lent__c, Total_Donation__c, Champion__c,Auto_Relend__c, Lender_Balance__c, Total_People_Helped__c, Profile_Picture__c FROM Contact WHERE Id = :contactId LIMIT 1];
         AggregateResult sumOfTransactionsAmount = [SELECT SUM(Amount__c) FROM Transaction__c WHERE Lender__c = :contactId];
         AggregateResult sumOfLoansJobsCreated = [SELECT SUM(Jobs_Created__c) FROM Loan__c WHERE Id IN :loanIds];
         
         // Extracting values from AggregateResult
-        Integer totalTransactionsAmount = sumOfTransactionsAmount != null ? ((Decimal)sumOfTransactionsAmount.get('expr0')).intValue() : 0;
+        Integer totalTransactionsAmount = sumOfTransactionsAmount != null && sumOfTransactionsAmount.get('expr0')!=null ? ((Decimal)sumOfTransactionsAmount.get('expr0')).intValue() : 0;
         //Integer sumOfJobsCreated = sumOfLoansJobsCreated != null ? ((Decimal)sumOfLoansJobsCreated.get('expr0')).intValue() : 0;
         Integer sumOfJobsCreated = 0; // Default value
 
@@ -720,7 +720,24 @@ public without sharing class LWC_AllLoansCtrl {
         ContactData contactData = new ContactData(contactRecord, totalTransactionsAmount, sumOfJobsCreated,mapOfTypeAndAmount);
         return contactData;
     }
-    
+    /* @AuraEnabled(cacheable=true)
+    public static String getProfileImage(String contId) {
+        if( contId!=null ){
+            List<ContentDocumentLink> contDocLinks = [SELECT Id, ContentDocumentId, ContentDocument.Title FROM 
+                                                        ContentDocumentLink WHERE ContentDocument.Title Like '%Profile%'
+                                                        AND LinkedEntityId = :contId
+                                                    ];
+            if( !contDocLinks.isEmpty() ){
+                List<ContentDistribution> cds = [SELECT ContentDownloadUrl, ContentDocumentId FROM ContentDistribution 
+                                            WHERE ContentDocumentId = :contDocLinks[0].ContentDocumentId
+                                            ];
+                if( !cds.isEmpty() ){
+                    return cds[0].ContentDownloadUrl;
+                }
+            }
+        }
+        return null;
+    } */
     @AuraEnabled(Cacheable=true)
     public static Map<String, Decimal> getImpactInfo() {
         Set<Id> loanIds = new Set<Id>();
@@ -914,7 +931,10 @@ public without sharing class LWC_AllLoansCtrl {
         
         Cart__c cart=[select Id from Cart__c where Contact__c =:conId];
         for(Transaction__c tr:trData){
-            tr.Lender__c = contactId;
+            if(contactId != null){
+                tr.Lender__c = contactId;
+            }
+            
             toUpdate.add(tr);
             cartItemsId.add(tr.Cart_Items__c);
         }
@@ -1369,41 +1389,26 @@ public without sharing class LWC_AllLoansCtrl {
     @AuraEnabled
     public static void refundAndDonate(Id contactId, Decimal refundAmount, Decimal donateAmount, String cardNumber) {
         Decimal totalRefundAmount = refundAmount;
-        
+        boolean caseCreation=false;
         DateTime todayDate = DateTime.now();
         DateTime oneMonthEgo = todayDate.addDays(-30);
         
-        List<Case> cases = [SELECT Id FROM Case WHERE ContactId = :contactId AND CreatedDate >= :oneMonthEgo];
+        List<Contact> contacts = [SELECT Id, Number_of_Refunds__c, Last_Refund_Date__c FROM Contact WHERE Id = :contactId];
         
-        Id RefundRecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName()
-            .get('Refund').getRecordTypeId();
-        
-        Contact con = [SELECT Id, AccountId FROM Contact WHERE Id = :contactId];
-        
-        if (cases.size() >= 2) {
-            Case newCase = new Case(
-            	ContactId = contactId,
-                Status = 'Open',
-                Type = 'Refund',
-                RecordTypeId = 'RefundRecordTypeId',
-                CurrencyIsoCode = 'AUD',
-                Priority = 'High',
-                AccountId = con.AccountId
-            );
-            insert newCase;
+        if (contacts[0].Number_of_Refunds__c >= 2 && refundAmount > 0) {
+            createRefundCase(contactId,refundAmount);
+            caseCreation=true;
+            Integer dayDifference = System.today().daysBetween(Date.newInstance(contacts[0].Last_Refund_Date__c.year(), contacts[0].Last_Refund_Date__c.month(), contacts[0].Last_Refund_Date__c.day()));
+            if(dayDifference > 30) {
+                contacts[0].Number_of_Refunds__c = 0;
+            } else {
+                contacts[0].Number_of_Refunds__c = contacts[0].Number_of_Refunds__c + 1;
+            }
+            update contacts[0];
         } else {
             if(totalRefundAmount > 100) {
-                //create case 
-                Case newCase = new Case(
-                    ContactId = contactId,
-                    Status = 'Open',
-                    Type = 'Refund',
-                    RecordTypeId = 'RefundRecordTypeId',
-                    CurrencyIsoCode = 'AUD',
-                    Priority = 'High',
-                    AccountId = con.AccountId
-                );
-                insert newCase;
+                createRefundCase(contactId,refundAmount);
+                caseCreation=true;
             } else if(totalRefundAmount > 0 && totalRefundAmount <= 100) {
                 DateTime oneYearEgo = todayDate.addYears(-1);
                 Id lendOppRecordType = Schema.SObjectType.Opportunity.getRecordTypeInfosByDeveloperName()
@@ -1423,56 +1428,72 @@ public without sharing class LWC_AllLoansCtrl {
                     }
                 }
                 
-                Map<String, Map<String, Object>> chargePaymentsToUpdate = new Map<String, Map<String, Object>>();
-                
-                for(String chargeId: refundCharges.keySet()) {
-                    Decimal amountToRefund = 0;
+                if(refundCharges.size() == 0) {
+                    createRefundCase(contactId,refundAmount);
+                    caseCreation=true;
+                } else {
+                    Map<String, Map<String, Object>> chargePaymentsToUpdate = new Map<String, Map<String, Object>>();
                     
-                    if(refundAmount >= 0) {
-                        if(refundAmount > refundCharges.get(chargeId)) {
-                            amountToRefund = refundCharges.get(chargeId);
-                        } else {
-                            amountToRefund = refundAmount;
-                        }
-                        refundAmount = refundAmount - amountToRefund;
+                    for(String chargeId: refundCharges.keySet()) {
+                        Decimal amountToRefund = 0;
                         
-                        System.debug('chargeId -> ' + chargeId);
-                        System.debug('charge amount -> ' + refundCharges.get(chargeId));
-                        System.debug('amountToRefund -> ' + amountToRefund);
-                        System.debug('refundAmount remaining -> ' + refundAmount);
-                        
-                        Map<String, String> requestParameters = new Map<String, String>();
-                        requestParameters.put('amount', String.valueOf(Integer.valueOf(amountToRefund*100)));
-                        requestParameters.put('charge', chargeId);
-                        
-                        HttpResponse refundResponse = StripeConnection.postRefund(createRequestBody(requestParameters));
-                        
-                        if(refundResponse.getStatusCode() == 200) {
-                            Map<String, Object> refundWrapper = (Map<String, Object>) JSON.deserializeUntyped(refundResponse.getBody());
-                            chargePaymentsToUpdate.put(chargeId, refundWrapper);
+                        if(refundAmount >= 0) {
+                            if(refundAmount > refundCharges.get(chargeId)) {
+                                amountToRefund = refundCharges.get(chargeId);
+                            } else {
+                                amountToRefund = refundAmount;
+                            }
+                            refundAmount = refundAmount - amountToRefund;
+                            
+                            System.debug('chargeId -> ' + chargeId);
+                            System.debug('charge amount -> ' + refundCharges.get(chargeId));
+                            System.debug('amountToRefund -> ' + amountToRefund);
+                            System.debug('refundAmount remaining -> ' + refundAmount);
+                            
+                            Map<String, String> requestParameters = new Map<String, String>();
+                            requestParameters.put('amount', String.valueOf(Integer.valueOf(amountToRefund*100)));
+                            requestParameters.put('charge', chargeId);
+                            
+                            HttpResponse refundResponse = StripeConnection.postRefund(createRequestBody(requestParameters));
+                            
+                            if(refundResponse.getStatusCode() == 200) {
+                                Map<String, Object> refundWrapper = (Map<String, Object>) JSON.deserializeUntyped(refundResponse.getBody());
+                                chargePaymentsToUpdate.put(chargeId, refundWrapper);
+                            }
                         }
                     }
+                    
+                    for(String chargeId: chargePaymentsToUpdate.keySet()) {
+                        Map<String, Object> refundWrapper= chargePaymentsToUpdate.get(chargeId);
+                        npe01__OppPayment__c payment = [SELECT Id FROM npe01__OppPayment__c WHERE npe01__Check_Reference_Number__c = :chargeId];
+                        payment.Refund_Reference_Number__c = String.valueOf(refundWrapper.get('id'));
+                        if(String.valueOf(refundWrapper.get('status')) == 'succeeded') {
+                            payment.Refund_Status__c = 'Processed';  
+                        } 
+                        update payment;
+                    }
+                    
+                    Transaction__c refundtrans = new Transaction__c(
+                        Lender__c = contactId,
+                        Amount__c = totalRefundAmount,
+                        Type__c = 'Withdrawal',
+                        Completed_Date__c = system.today(),
+                        Status__c = 'Completed',
+                        Transaction_Date__c = System.now(),
+                        Transaction_Reason__c = 'Refunded stripe charge ids ' + String.join(chargePaymentsToUpdate.keySet(), ',')
+                    );
+                    insert refundtrans;
+                    
+                    if(contacts[0].Number_of_Refunds__c != null) {
+                        contacts[0].Number_of_Refunds__c = contacts[0].Number_of_Refunds__c + 1;
+                    } else {
+                        contacts[0].Number_of_Refunds__c = 1;
+                    }
+                    contacts[0].Last_Refund_Date__c = todayDate;
+                    Database.DMLOptions dml = new Database.DMLOptions(); 
+                    dml.DuplicateRuleHeader.AllowSave = true;
+                    Database.SaveResult sr=Database.update(contacts[0], dml);
                 }
-                
-                for(String chargeId: chargePaymentsToUpdate.keySet()) {
-                    Map<String, Object> refundWrapper= chargePaymentsToUpdate.get(chargeId);
-                    npe01__OppPayment__c payment = [SELECT Id FROM npe01__OppPayment__c WHERE npe01__Check_Reference_Number__c = :chargeId];
-                    payment.Refund_Reference_Number__c = String.valueOf(refundWrapper.get('id'));
-                    if(String.valueOf(refundWrapper.get('status')) == 'succeeded') {
-                        payment.Refund_Status__c = 'Processed';  
-                    } 
-                    update payment;
-                }
-                
-                Transaction__c refundtrans = new Transaction__c(
-                    Lender__c = contactId,
-                    Amount__c = donateAmount,
-                    Type__c = 'Repayment',
-                    Completed_Date__c = system.today(),
-                    Status__c = 'Completed',
-                    Transaction_Date__c = System.now()
-                );
-                insert refundtrans;
             } 
         }
         
@@ -1484,7 +1505,28 @@ public without sharing class LWC_AllLoansCtrl {
             );
             
             donateFromDashboard(trans);
-        }  
+        }
+    }
+    
+    private static void createRefundCase(Id contactId, Decimal refundAmount) {
+        Id RefundRecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName()
+            .get('Withdrawal').getRecordTypeId();  
+                
+        Contact con = [SELECT Id, AccountId FROM Contact WHERE Id = :contactId];
+        
+        Case newCase = new Case(
+            ContactId = contactId,
+            Status = 'Open',
+            Type = 'Withdrawal',
+            Withdrawal_Amount__c=refundAmount,
+            RecordTypeId = RefundRecordTypeId,
+            CurrencyIsoCode = 'AUD',
+            Priority = 'High',
+            AccountId = con.AccountId,
+            Subject = 'Lender has requested withdrawal.',
+            Origin = 'Web'
+        );
+        insert newCase;
     }
     
     private static String createRequestBody(Map<String, String> requestParameters) {
@@ -1499,4 +1541,66 @@ public without sharing class LWC_AllLoansCtrl {
         }
         return requestBody;
     }
+    //Profile
+    @AuraEnabled
+  public static String uploadFile(String base64, String filename, String recordId) {
+        System.debug('File Data : '+base64+'File Name : '+filename+'Record Id : '+recordId);
+        List<ContentDocumentLink> oldContentDocumentLink=[SELECT Id, LinkedEntityId, ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId=:recordId];
+        set<Id> oldContentDocumentsIds=new set<Id>();
+        for(ContentDocumentLink contentDocumentLink:oldContentDocumentLink){
+            oldContentDocumentsIds.add(contentDocumentLink.ContentDocumentId);
+        }
+        List<ContentDocument> oldContentDocuments=[SELECT Id, Title FROM ContentDocument WHERE Id=:oldContentDocumentsIds AND Title LIKE '%Profile%'];
+        if(oldContentDocuments.size() > 0){
+            System.debug('Old ContentDocument IDs : '+oldContentDocuments);
+            delete oldContentDocuments;
+        }
+
+        ContentVersion cv = createContentVersion(base64, filename);
+        ContentDocumentLink cdl = createContentLink(cv.Id, recordId);
+        if (cv == null || cdl == null) { return null; }
+        if( cdl!=null ){
+            List<ContentDistribution> cds = [SELECT ContentDownloadUrl, ContentDocumentId FROM ContentDistribution 
+                                                 WHERE ContentDocumentId =:cdl.ContentDocumentId
+                                                ];
+            if( !cds.isEmpty() && cds.size() > 0 ){
+                Contact c = new Contact( Id = recordId, Profile_Picture__c = cds[0].ContentDownloadUrl );
+                UPDATE c;
+            }
+            return cds[0].ContentDownloadUrl;
+        }
+        return cv.Title;
+  }
+  
+  private static ContentVersion createContentVersion(String base64, String filename) {
+    ContentVersion cv = new ContentVersion();
+    cv.VersionData = EncodingUtil.base64Decode(base64);
+    cv.Title = filename;
+    cv.PathOnClient = filename;
+    try {
+      insert cv;
+      return cv;
+    } catch(DMLException e) {
+      System.debug(e);
+      return null;
+    }
+  }
+
+  private static ContentDocumentLink createContentLink(String contentVersionId, String recordId) {
+              if (contentVersionId == null || recordId == null) { return null; }
+    ContentDocumentLink cdl = new ContentDocumentLink();
+    cdl.ContentDocumentId = [
+      SELECT ContentDocumentId 
+      FROM ContentVersion 
+      WHERE Id =: contentVersionId
+    ].ContentDocumentId;
+    cdl.LinkedEntityId = recordId;
+    try {
+      insert cdl;
+      return cdl;
+    } catch(DMLException e) {
+      System.debug(e);
+      return null;
+    }
+  }
 }

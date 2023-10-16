@@ -2,7 +2,7 @@ import { LightningElement, track, api } from 'lwc';
 import PlusIC from '@salesforce/resourceUrl/PlusIconss';
 import UpIcons from '@salesforce/resourceUrl/UpIconforBorrower';
 import getLoanDetails from '@salesforce/apex/LWC_AllLoansCtrl.getLoanDetails';
-export default class careBorrowersPageDev2 extends LightningElement {
+export default class careBorrowersPageProjectImpact extends LightningElement {
     coverImage;
     view14 = false;
     showRepaySchedules = false;
@@ -127,29 +127,50 @@ export default class careBorrowersPageDev2 extends LightningElement {
                 } else{
                     this.progressStyle = 'background-color: #ffd700;width:'+len+'%;';
                 }
-                
-                if( loan.Transactions__r!= undefined && loan.Transactions__r.length>0 ){
-                    var trans = [];
-                    for(var val of loan.Transactions__r){
-                        if( val.Lender__r != undefined && val.Lender__r.Name != undefined ){
-                            var pPic = val.Lender__r!=undefined && val.Lender__r.Profile_Picture__c != undefined ? this.htmlDecode(this.htmlDecode(val.Lender__r.Profile_Picture__c)):'';
-                            var avatar = false;
-                            if(pPic == '')  avatar = true;
-                            //console.log('pPic:',pPic);
-                            var obj = {'Name':val.Lender__r.Name, 'ProfilePic':pPic, 'avatar':avatar};
-                            trans.push( obj );
-                        } else{
-                            continue;
-                        }
+                if( loan.Repayment_Schedules__r!= undefined && loan.Repayment_Schedules__r.length>0 ){
+                    this.showRepaySchedules = true;
+                    var i = 1;
+                    var repaySchedules = [];
+                    for(var val of loan.Repayment_Schedules__r){
+                        var dueDate = val.Due_Date__c != undefined ? val.Due_Date__c : '-';
+                        var expectedAmount = val.Amount_Due__c != undefined ? val.Amount_Due__c : '-';
+                        var repayDate = val.Repayment_Date__c != undefined ? val.Repayment_Date__c : '-';
+                        var obj = {'dueDate':dueDate, 'expectedAmount':expectedAmount, 'repayDate':repayDate};
+                        obj.classes = i%2==0 ? 'slds-grid tableTitleContentSecond' : 'slds-grid tableTitleContent';
+                        repaySchedules.push( obj );
+                        i++;
                     }
-                    this.contributors = trans;
-                    if( trans.length > 0 )  this.showContributorsSection = true;
-                    this.showContributors = trans.slice( 0, this.contributorsCount );
-                    if( this.showContributors.length > 0 && this.showContributors.length<this.contributors.length ){
-                        this.view14 = true;
-                    }
+                    this.repaymentSchedules = repaySchedules;
                 }
                 
+                  
+                
+                        
+            if( result!=undefined && result.CMSContent!=undefined ){
+                var r = JSON.parse(result.CMSContent);
+                if (r != undefined) {
+                    var arr = [];
+                    for (var val of r.items) {
+                        if (val.type == 'CareAustraliaSite' && val.contentNodes.Tag != undefined &&
+                            val.contentNodes.Tag.value == 'CareBorrowers-ProjectImpact') {
+                            var body = this.htmlDecode(val.contentNodes.Body.value);
+                           /* body = body.replaceAll('&lt;', '');
+                            body = body.replaceAll('/p&gt;', '');
+                            body = body.replaceAll('p&gt;', '');*/
+                            if (val.contentNodes.Tag != undefined) {
+                                var obj = { 'title': val.title, 'body': body, 'idx': parseInt(val.contentNodes.SortOrder.value) };
+                                arr.push(obj);
+                            }
+                        }
+                    }
+                    if (arr.length > 0) {
+                        arr.sort((a, b) => {
+                            return a.idx - b.idx;
+                        });
+                        this.projectImpact = arr;
+                    }
+                }
+            }
             setTimeout(() => {
                 this.spin = false;
             }, 3000);

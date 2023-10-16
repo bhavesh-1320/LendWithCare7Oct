@@ -1,15 +1,15 @@
 <template>
-  <div class="wrapper">
+  
  <div class="headers">
 
     <!--<img src={banner} alt="banner">-->
 
     <c-care-nav-bar onfromnavbar={fromNavBar} onstopscroll={stopScroll} onresetscroll={resetScroll}
     carecart={checkout} loanidfromparent={loanIdsToChild} amounttocart={amountAddedToCart} loanids={loanIdsToCart}
-    ondelete={handleDelete} onclearloans={clearLoans}></c-care-nav-bar>
+    ondelete={handleDelete} onclearloans={clearLoans} ondeleteallloans={handleDeletesAllAfterTimeout}></c-care-nav-bar>
 
 
-  
+  <div class="wrapper">
 
 <lightning-layout multiple-rows class="slds-p-bottom_xx-large">
   <!--<lightning-layout-item size="12" class="slds-p-around_small" small-device-size="6" medium-device-size="6" 
@@ -58,8 +58,8 @@
 
     
       <lightning-layout-item size="12" padding="around-small" small-device-size="12" 
-      medium-device-size="6" large-device-size="6" class="slds-align_absolute-center">
-        <img src={AllLoansHeaderImage} width="100%">
+      medium-device-size="6" large-device-size="6">
+        <img src={AllLoansHeaderImage} width="100%" style="margin:10px 0px 0px 0px">
       </lightning-layout-item>
 
 
@@ -102,7 +102,7 @@
       </div>
       <a style="padding:10px;color:white;text-decoration: none;font-family: 'Helvetica Neue Bold Pro';font-weight:800;" 
       onclick={gotoBorrowersPageFL} class="link">Read more &#10095;</a> 
-			<div class="slds-grid slds-wrap" style="margin:0px 10px 0px 10px">
+			<div class="slds-grid slds-wrap" ><!-- style="margin:0px 10px 0px 10px" -->
 				<div style="padding: 8px;" class="slds-p-right_small slds-col slds-small-size_6-of-12 slds-medium-size_6-of-12 slds-large-size_6-of-12">
 					<!--<button class="Carouselvaluebottom slds-align_absolute-center">$25<div class="dropdown-arrow"></div></button>-->
           <div class="custom-combobox1">
@@ -122,7 +122,7 @@
                       <option value="200">$200</option>
                       <option value="225">$225</option>-->
                       <template for:each={fundingOptions} for:item="option">
-                        <option key={option.value} value={option.value}>{option.label}</option>
+                        <option key={option.value} value={option.value}  selected={option.selected}>{option.label}</option>
                       </template>
                     </select>
                   </div>
@@ -134,7 +134,7 @@
 			                      viewBox="0 0 16 16">
 			  <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
 			</svg>-->
-			             <img style="height: 17.4px;width: 17.65px;margin-top: -2px;" src={cartIcon}>         &nbsp; {buttonMessage}</button>
+			             <img style="height: 17.4px;width: 17.65px;margin-top: -2px;" src={cartIcon}>         &nbsp; Add to cart</button>
           </template>
 
            <template if:true={checkOutButton}>
@@ -143,7 +143,7 @@
 			                      viewBox="0 0 16 16">
 			  <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l1.25 5h8.22l1.25-5H3.14zM5 13a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
 			</svg>-->
-			              <img style="height: 17.4px;width: 17.65px;margin-top: -2px;" src={cartIcon}>        &nbsp; {buttonMessage}</button>
+			              <img style="height: 17.4px;width: 17.65px;margin-top: -2px;" src={cartIcon}>        &nbsp; Check out</button>
           </template>
 				</div>
 			</div>
@@ -503,12 +503,13 @@
   <section role="dialog" tabindex="-1" aria-modal="true" aria-label="Meaningful description of the modal content"
     class="slds-modal slds-fade-in-open">
     <div ><!-- class="slds-modal__container" -->
-      <button style="max-width:75%;" class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse slds-align_absolute-center" onclick={closeErrorPopup}>
+      
+      <div style="width:75%;border-radius:5px;display:block;" class="slds-modal__content slds-p-around_medium slds-modal__content_headless slds-align_absolute-center" id="modal-content-id-1">
+        <p class="slds-align_absolute-center">{errorMessageOnTransaction}</p>
+        <button style="max-width:75%;margin-top: 20px;" class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse slds-align_absolute-center" onclick={closeErrorPopup}>
   
   close
   </button>
-      <div style="width:75%" class="slds-modal__content slds-p-around_medium slds-modal__content_headless slds-align_absolute-center" id="modal-content-id-1">
-        <p class="slds-align_absolute-center">{errorMessageOnTransaction}</p>
       </div>
 
     </div>

@@ -21,7 +21,8 @@ import updateAutoRelend from '@salesforce/apex/LWC_AllLoansCtrl.updateAutoRelend
 import downloadPDF from '@salesforce/apex/CareHomePageCtrl.getPdfFileAsBase64String';
 import LWCSectionMetaData from '@salesforce/apex/CareHomePageCtrl.LWCSectionMetaData';
 import profilePicAvatar from '@salesforce/resourceUrl/profilePicAvatar';
-
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import uploadFile from '@salesforce/apex/LWC_AllLoansCtrl.uploadFile';
 // import getContactFieldsRecordInfo from '@salesforce/apex/CareHomePageCtrl.getContactFieldsRecordInfo';
 
 // this gets you the logged in user
@@ -286,10 +287,12 @@ export default class CareDashboard extends LightningElement {
     @wire(getContactInfo, { contactId: '$contactid' })
     wiredContactData({ error, data }) {
         if (data) {
-            console.log('result contact --> ', JSON.stringify(data))
-            this.AvatarImg = data.contactRecord.Profile_Picture__c !=undefined && data.contactRecord.Profile_Picture__c !=''?data.contactRecord.Profile_Picture__c: this.profilePicAvatar ;
+            console.log('result contact --> ', JSON.stringify(data));
+            console.log('PP:',data.contactRecord.Profile_Picture__c);
+            console.log('PP:',this.htmlDecode(this.htmlDecode(data.contactRecord.Profile_Picture__c)));
+            this.AvatarImg = data.contactRecord.Profile_Picture__c !=undefined && data.contactRecord.Profile_Picture__c !=''?this.htmlDecode(this.htmlDecode(data.contactRecord.Profile_Picture__c)): this.profilePicAvatar ;
             console.log(this.AvatarImg);
-            this.UserName = data.contactRecord.Name;
+            this.UserName = data.contactRecord.FirstName;
             this.AmountValues = data.contactRecord.Lender_Balance__c;
             var lAmt = this.AmountValues != null && this.AmountValues != undefined ? this.AmountValues + '' : '0';
             lAmt = lAmt.split('.');
@@ -300,16 +303,17 @@ export default class CareDashboard extends LightningElement {
             } else if (lAmt == undefined || lAmt.length <= 0) {
                 this.lendAmt = { 'Number': '0', 'Decimal': '00' };
             }
-            this.donationAmount = data.contactRecord.Lender_Balance__c;
+            this.donationAmount = '$'+data.contactRecord.Lender_Balance__c;
             this.PlaceholderAmountValues = '$' + this.AmountValues;
             this.zeroBalanceofLender = data.contactRecord.Lender_Balance__c <= 0 ? true : false;
             this.TotalLoans = data.contactRecord.Total_Loans__c != null ? data.contactRecord.Total_Loans__c : '0';
             var changeChampionTemplate = localStorage.getItem('isCC');
             console.log('this.changeChampionTemplate 304 ', changeChampionTemplate)
-            if (changeChampionTemplate != null && changeChampionTemplate != undefined && changeChampionTemplate !='false' && changeChampionTemplate!=false) {
+            this.Champion = data.contactRecord.Champion__c;
+            /* if (changeChampionTemplate != null && changeChampionTemplate != undefined && changeChampionTemplate !='false' && changeChampionTemplate!=false) {
                 this.Champion = true;
                 console.log('307');
-            }
+            } */
             //this.Champion = data.contactRecord.Champion__c;
             this.relendCheckbox = data.contactRecord.Auto_Relend__c;
             this.JobsCreated = data.sumOfJobsCreated != null ? data.sumOfJobsCreated : '0';
@@ -360,7 +364,7 @@ export default class CareDashboard extends LightningElement {
             }
             // this.Withdrawnfromyouraccount = data.mapOfTypeAndAmount['Withdrawal'] != null ? data.mapOfTypeAndAmount['Withdrawal'] : '0';
 
-            this.carouselItemsImpact = [{title:this.TotalLoans,description:'Number of loans'},{title:this.Totalamountlent,description:'Total amount lent'},
+            this.carouselItemsImpact = [{title:this.TotalLoans,description:'Number of loans'},{title:'$'+this.Totalamountlent,description:'Total amount lent'},
                                         {title:this.JobsCreated,description:'Jobs created'},{title:this.Peoplehelped,description:'People helped'}
                                         ];
             this.carouselItemsImpactBreak = [{title:data.mapOfTypeAndAmount['Repayment'] != null && data.mapOfTypeAndAmount['Repayment'] != undefined ? data.mapOfTypeAndAmount['Repayment'] + '' : '0',description:'Repaid by borrower'},
@@ -491,8 +495,105 @@ export default class CareDashboard extends LightningElement {
             console.log(err);
         });
     }
+    //Profile icon
+    fileData;
+    fileSize;
+    OpenFileModel(){
+        const fileInput = this.template.querySelector('input[type="file"]');
+        fileInput.click();
+    }
+    handleFileSelection(event) 
+    {
+        const selectedFile = event.target.files[0];
+        if (selectedFile) 
+        {
+            
+                const file = selectedFile;
+                console.log( 'SELFile:',selectedFile );
+                console.log('File Size : ',file.size);
+                 this.fileSize = this.formatFileSize(file.size);
+                 console.log('File Size : ',this.fileSize);
+                 if( file.type.includes('jpeg')||file.type.includes('png') ||file.type.includes('jpg')){
+                    if (this.fileSize.size == 'Bytes' || (this.fileSize.num <= 200 && this.fileSize.size == 'KB')) 
+                    {
+                        console.log('Enter')
+                        var reader = new FileReader()
+                        reader.onload = () => 
+                        {
+                            var base64 = reader.result.split(',')[1]
+                            this.fileData = 
+                            {
+                                 'filename': 'Profile '+file.name,
+                                'base64': base64,
+                                'recordId': this.contactid
+                            }
+                            console.log('File Data ',this.fileData)
+                            this.handleFileUpload();                
+                        }
+                        reader.readAsDataURL(file)
+                        console.log('File Data -- > ',this.fileData);
+                    }
+                    else
+                    {
+                        let message = 'File size exceed ' + this.fileSize.num+this.fileSize.size;
+                        this.dispatchEvent(new ShowToastEvent
+                        ({
+                            title: 'Error',
+                            message: message,
+                            variant: 'error'
+                        }));
+                    }
+                 } else{
+                    let message = 'File type is not supported';
+                        this.dispatchEvent(new ShowToastEvent
+                        ({
+                            title: 'Error',
+                            message: message,
+                            variant: 'error'
+                        }));
+                 }
+
+        }
+    }
+    handleFileUpload(){
+    
+        if(this.fileData!=null || this.fileData!=undefined)
+            {
+                console.log('Calling Apex Method to Upload File : ',this.fileData);
+                const {base64, filename, recordId} = this.fileData
+                uploadFile({ base64, filename, recordId }).then(result=>
+                {
+                    this.fileData = null;
+                    this.AvatarImg = result;
+                    let title = ''+filename+' uploaded successfully!!'
+                     const toastEvent = new ShowToastEvent({
+                        title, 
+                        variant:"success"
+                    })
+                    this.dispatchEvent(toastEvent);
+                 }).catch(err=>{
+                    console.log( err );
+                 })
+            }
+    }
+
+    formatFileSize(bytes,decimalPoint) 
+    {
+        if (bytes == 0) return '0 Bytes';
+        console.log('OUTPUT : ',bytes);
+        var k = 1000,
+            dm = decimalPoint || 2,
+            sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'],
+            i = Math.floor(Math.log(bytes) / Math.log(k));
+            console.log('DDD:',i);
+            console.log( 'DMM:',(bytes / Math.pow(k, i)).toFixed(dm) );
+            return {'num':parseFloat((bytes / Math.pow(k, i)).toFixed(dm)), 'size':sizes[i]};
+    }
+
+
     connectedCallback() {
         this.currentUser();
+
         //this.getCMSContent();
         // getCommunityUser()
         //     .then(result => {
@@ -505,6 +606,7 @@ export default class CareDashboard extends LightningElement {
         // let checkbox = this.template.querySelector('[data-id="relendCheckbox"]');
         // checkbox.checked = true;
     }
+
 
     // async fetchAndSetImage(url) {
     //     const dataUrl = await fetchAndConvertImage(url);
@@ -772,18 +874,30 @@ export default class CareDashboard extends LightningElement {
     }
     canDonate = false;
     handleDonationchange(event) {
+        //this.donationAmountDollar = event.target.value;
+        let inputValue = event.target.value;
+        console.log('inputValue-->'+inputValue);
+        // Remove non-numeric characters using regular expression
+        inputValue = inputValue.replace(/\D/g, '');
+
+        // Set the sanitized value back to the input field
+        event.target.value = inputValue;
+        
+        //this.addFormatter();
         this.canDonate = true;
         console.log('this.donationAmount - ', event.target.value)
         if (event.target.value > 0) {
             console.log('its number only ')
-            this.donationAmount = parseFloat(event.target.value);
+            this.donationAmount = '$'+inputValue;
+            //this.donationAmount = parseFloat(event.target.value);
             this.canDonate = false;
         }
     }
 
     handleDonate(event) {
         // Ensure donationAmount is defined and parsed properly from the input
-        const donationAmount = parseFloat(this.donationAmount);
+        const donationAmountFiltered = this.donationAmount.replace('$','');
+        const donationAmount = parseFloat(donationAmountFiltered);
         console.log('parseFloat(this.AmountValues) ', parseFloat(donationAmount));
         console.log('parseFloat(this.AmountValues) ', parseFloat(this.AmountValues));
         this.isLoading = true;

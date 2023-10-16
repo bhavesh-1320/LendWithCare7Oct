@@ -42,19 +42,7 @@
   font-family: 'Sketchetik Fill Bold';
   }
   
-  .closeBtn{
-    background: #FEBE10;
-    border-radius: 4px;
-    padding: 12px 0px;
-    width: 380px;
-    font-family: 'Sketchetik Fill Bold';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 16px;
-    text-align: center;
-    color: #163B54;
-  }
+  
   .loanSchedule{
     display:inline;
     font-size:30px;
@@ -73,11 +61,11 @@
   }
   
    p {
-     font-family: 'Helvetica Neue Regular';
+     font-family: 'Helvetica';
      color:#002A3A;
   }
   a {
-     font-family: 'Helvetica Neue Regular';
+     font-family: 'Helvetica';
      color:#002A3A;
   }
   .catogory1{
@@ -87,7 +75,7 @@
     padding:10px;
     color:white;
     border-color: white;
-    font-family: 'Helvetica Neue Regular';
+    font-family: 'Helvetica';
     font-weight: 800;
   }
   .catogory1 :hover{
@@ -97,7 +85,7 @@
     padding:10px;
     color:white;
     border-color: white;
-    font-family: 'Helvetica Neue Regular';
+    font-family: 'Helvetica';
     font-weight: 800;
   }
   .projectheading{
@@ -110,7 +98,7 @@
   .moreButton{
     width: 100%;
     color: #002A3A;
-    font-family: 'Helvetica Neue Regular';
+    font-family: 'Helvetica';
     font-size: 16px;
     line-height: 16px;
     font-weight: bold;
@@ -120,14 +108,14 @@
     padding: 15px;
   }
   .tableHeadings{
-    font-family: 'Helvetica Neue Regular';
+    font-family: 'Helvetica';
     padding: 15px;
     font-size: 16px;
     line-height: 19px;
     color: white;
   }
   .tableHeadingsContent{
-    font-family: 'Helvetica Neue Regular';
+    font-family: 'Helvetica';
     padding: 15px;
     font-size: 16px;
     line-height: 19px;
@@ -155,12 +143,11 @@
     background: #F3F0ED;
   }
   .bynumber-content{
-    font-family: 'Helvetica Neue Regular';
+    font-family: 'Helvetica';
     font-weight: bold;
     font-size: 14px;
     line-height: 19px;
     color: #002A3A; 
-    margin-left:20px;
     margin-right: 20px;
     text-align: left;
   }
@@ -170,12 +157,11 @@
     font-size: 26px;
     line-height: 35px;
     color: #E4761E; 
-    margin-left:20px;
     margin-right: 20px;
     text-align: left;
   }
   .loanTitle{
-    font-family: 'Helvetica Neue Regular';
+    font-family: 'Helvetica';
   font-size: 16px;
     line-height: 19px;
     color: white;
@@ -194,7 +180,7 @@
     border-radius: 4px;
   }
   .section-content{
-    font-family: 'Helvetica Neue Regular';
+    font-family: 'Helvetica';
     
     font-size: 16px;
     line-height: 22px;
@@ -256,8 +242,6 @@
   .carTitle{
       font-size: 16px;
       font-weight: 800;
-      font-family: 'Sketchetik Fill Bold';
-      color: #002A3A;
   }
   .locastions{
     display: inline-flex;
@@ -265,22 +249,21 @@
   }
   .carPara{
     margin-bottom: 10px;
-    font-family: 'Helvetica Neue Regular';
+    font-family: 'Helvetica';
     font-weight: 800;
   }
   .carButton{
-    font-family: 'Helvetica Neue Bold Pro';
-    background: none;
-    border-radius: 23px;
-    border-width: 2px;
-    width: 145px;
-    font-size: 12px;
-    padding: 2px;
-    border-style: solid;
-    color: #002A3A;
-    border-color: #002A3A;
+      background: none;
+      border-radius: 20px;
+      border-width: 2px;
+      width: auto;
+      font-size: 12px;
+      font-weight: 800;
+      height: 25px;
+      padding: 0px 10px 0px 10px;
+      margin-bottom: 5px;
+      color: #002A3A;
   }
-
   .CarButtons:hover{
     color: #002A3A;
     background:none;
@@ -324,14 +307,20 @@
     margin-top: 10px;
   }
   .progressBar {
+    width: 98%;
     height: 10px;
     background-color: #ffffff;
     border-radius: 5px;
+    margin-left: 10px;
+    padding: 0.5px;
   }
   .progressBar1 {
+    width: 98%;
     height: 10px;
     background-color: #ffffff;
     border-radius: 5px;
+    margin-left: 10px;
+    padding: 0.5px;
   }
   .progressBarInner {
     height: 50%;
@@ -353,7 +342,7 @@
     width: 24px;
   }
   .dots {
-      display: inline-flex;
+      display: inline;
       justify-content: center;
   }
   
@@ -377,7 +366,7 @@
     padding:5px;
   }
   @media only screen and (max-width: 600px){
-    .pad{
+        .pad{
       padding-left: 20px;
       padding-right: 20px;
     }
@@ -424,7 +413,8 @@
   }
   .carouselCustom {
       position: relative;
-      overflow: auto;
+      overflow: hidden;
+      margin: 10px 10px 10px 10px;
   }
   .sliderCustom {
       display: flex;
@@ -432,7 +422,7 @@
       width: 350%;
   }
   .loanDescription{
-  font-family: 'Helvetica Neue Regular';
+  font-family: 'Helvetica';
   font-size: 16px;
     line-height: 19px;
     font-weight: bold;
@@ -489,7 +479,8 @@
   }
   .carouselCustom {
       position: relative;
-      overflow: auto;
+      overflow: hidden;
+      margin: 10px 10px 10px 10px;
   }
   .sliderCustom {
       display: flex;
@@ -497,7 +488,7 @@
       width: 350%;
   }
   .loanDescription{
-  font-family: 'Helvetica Neue Regular';
+  font-family: 'Helvetica';
   font-size: 16px;
     line-height: 19px;
     font-weight: bold;
@@ -554,7 +545,8 @@
   }
   .carouselCustom {
       position: relative;
-      overflow: auto;
+      overflow: hidden;
+      margin: 60px 60px 60px 60px;
   }
   .sliderCustom {
       display: flex;
@@ -562,7 +554,7 @@
       width: 100%;
   }
   .loanDescription{
-  font-family: 'Helvetica Neue Regular';
+  font-family: 'Helvetica';
   font-size: 16px;
     line-height: 19px;
     font-weight: bold;
@@ -572,7 +564,7 @@
   }
   
   @media only screen and (min-width: 992px){
-            .pad{
+        .pad{
       padding-left: 10%;
       padding-right: 10%;
     }
@@ -619,7 +611,8 @@
   }
   .carouselCustom {
       position: relative;
-      overflow: auto;
+      overflow: hidden;
+      margin: 60px 60px 60px 60px;
   }
   .sliderCustom {
       display: flex;
@@ -627,7 +620,7 @@
       width: 100%;
   }
   .loanDescription{
-  font-family: 'Helvetica Neue Regular';
+  font-family: 'Helvetica';
   font-size: 16px;
     line-height: 19px;
     font-weight: bold;
@@ -638,7 +631,7 @@
   }
   
   @media only screen and (min-width: 1200px){
-            .pad{
+        .pad{
       padding-left: 10%;
       padding-right: 10%;
     }
@@ -685,7 +678,8 @@
   }
   .carouselCustom {
       position: relative;
-      overflow: auto;
+      overflow: hidden;
+      margin: 60px 60px 60px 60px;
   }
   .sliderCustom {
       display: flex;
@@ -693,7 +687,7 @@
       width: 100%;
   }
   .loanDescription{
-  font-family: 'Helvetica Neue Regular';
+  font-family: 'Helvetica';
   font-size: 16px;
     line-height: 19px;
     font-weight: bold;
@@ -703,7 +697,7 @@
   }
   
   @media only screen and (min-width: 1500px){
-            .pad{
+        .pad{
       padding-left: 10%;
       padding-right: 10%;
     }
@@ -727,11 +721,11 @@
   
   /* media queries ends here */
   .slide {
-      flex: 0 0 calc(1128px / 4); /* Adjust the percentage value based on the number of visible cards */
-      min-width: calc(1128px / 4); /* Adjust the percentage value based on the number of visible cards */
+      flex: 0 0 calc(100% / 4); /* Adjust the percentage value based on the number of visible cards */
+      min-width: calc(100% / 4); /* Adjust the percentage value based on the number of visible cards */
       background-color: #F3F0ED;
       border-radius: 5px;
-      margin-right: 10px;
+      padding: 10px;
     height:fit-content;
   }
   
@@ -753,7 +747,7 @@
   }
   
   .dots {
-      display: inline-flex;
+      display: inline;
       justify-content: center;
   }
   
@@ -796,40 +790,43 @@
     margin: 10px 0px 10px 0px;
   }
   .carButton{
-    font-family: 'Helvetica Neue Bold Pro';
-    background: none;
-    border-radius: 23px;
-    border-width: 2px;
-    width: 145px;
-    font-size: 12px;
-    padding: 2px;
-    border-style: solid;
-    color: #002A3A;
-    border-color: #002A3A;
+      background: none;
+      border-radius: 20px;
+      border-width: 2px;
+      width: auto;
+      font-size: 12px;
+      font-weight: 800;
+      height: 25px;
+      padding: 0px 10px 0px 10px;
+      margin-bottom: 5px;
+      color: #002A3A;
   }
-
   .CarContent{
     margin: 15px;
   }
   .carTitle{
       font-size: 16px;
       font-weight: 800;
-      font-family: 'Sketchetik Fill Bold';
-      color: #002A3A;
   }
   .carPara{
     margin-bottom: 10px;
-    font-family: 'Helvetica Neue Regular';
+    font-family: 'Helvetica',sans-serif;
   }
   .progressBar {
+    width: 80%;
     height: 10px;
     background-color: #ffffff;
     border-radius: 5px;
+    margin-left: 10px;
+    padding: 0.5px;
   }
   .progressBar1 {
+    width: 80%;
     height: 10px;
     background-color: #ffffff;
     border-radius: 5px;
+    margin-left: 10px;
+    padding: 0.5px;
   }
   
   .shoppingCart {
@@ -860,11 +857,11 @@
   }
   
   .slide {
-      flex: 0 0 calc(1128px / 4); /* Adjust the percentage value based on the number of visible cards */
-      min-width: calc(1128px / 4); /* Adjust the percentage value based on the number of visible cards */
+      flex: 0 0 calc(100% / 4); /* Adjust the percentage value based on the number of visible cards */
+      min-width: calc(100% / 4); /* Adjust the percentage value based on the number of visible cards */
       background-color: #F3F0ED;
       border-radius: 5px;
-      margin-right: 10px;
+      padding: 10px;
   }
   
   .controls {
@@ -885,7 +882,7 @@
   }
   
   .dots {
-      display: inline-flex;
+      display: inline;
       justify-content: center;
   }
   
@@ -919,7 +916,7 @@
   }
   .carParaImpact{
     padding-bottom: 50px;
-    font-family: 'Helvetica Neue Regular';
+    font-family: 'Helvetica',sans-serif;
   }
   .locastionsImpact{
     display: inline-flex;
@@ -961,6 +958,7 @@
     .CarouselAddtocartButton{
       border:none;
       background: #FEBE10;
+      width:auto;
       border-style: none;
       border-radius: 2px;
       margin: 10px 0px 10px 0px;
@@ -968,26 +966,11 @@
       width: -webkit-fill-available;
       font-size:12px;
       font-weight:800;
-      color:#002A3A;
-      font-family: 'Helvetica Neue Bold Pro';
     }
-    .CarouselAddtocartButton:hover{
-      border:none;
-      background: #472175;
-      border-style: none;
-      border-radius: 2px;
-      margin: 10px 0px 10px 0px;
-      padding:10px;
-      width: -webkit-fill-available;
-      font-size:12px;
-      font-weight:800;
-      color:#ffffff;
-      font-family: 'Helvetica Neue Bold Pro';
-      }
     .ProjectsBack{
       color: white;
       font-weight: 800;
-      font-family: 'Helvetica Neue Regular';
+      font-family: 'Helvetica';
       font-size: 10px;
     }
     .sticky-wrapper{
@@ -1022,7 +1005,7 @@
     border-radius: 50%;
     border: none;
     background-color: #bbb;
-    margin: -6px 30px;
+    margin: 0 30px;
     cursor: pointer;
   }
   
@@ -1032,64 +1015,20 @@
     border-radius: 50%;
     border: none;
     background-color: #bbb;
-    margin: -6px 30px;
+    margin: 0 30px;
     cursor: pointer;
   }
-  .custom-select {
-    border: 2px solid #002A3A; /* Adjust the color and width as needed */
-    width: 100%; /* Adjust the width as needed */
-    padding: 8px;
-    font-family: 'Helvetica Neue Bold Pro';
-    
-    font-size: 16px;
-    line-height: 21px;
-    border-radius: 4px;
-    background-color: #ffffff;
-  }
-  .Carouselvaluebottom{
-    background-color:white;
-    padding:10px;
-    border-style: none;
-    border-radius: 4px;
-    width: -webkit-fill-available;
-    margin: 10px 0px 10px 0px;
-    font-size:15px;
-    
-    line-height: 21px;
-    color: #002A3A;
-    font-family: 'Helvetica Neue Bold Pro';
-  }
-  .Carouselvaluebottom:hover{
-    background-color:white;
-    padding:10px;
-    border-style: none;
-    border-radius: 4px;
-    width: -webkit-fill-available;
-    margin: 10px 0px 10px 0px;
-    font-size:15px;
-    
-    line-height: 21px;
-    font-family: 'Helvetica Neue Bold Pro';
-    color: #002A3A;
-  }
+  
   .dots button:hover {
     width: 22px;
     height: 10px;
     border-radius: 50%;
     border: none;
     background-color: #bbb;
-    margin: -6px 30px;
+    margin: 0 30px;
     cursor: pointer;
   }
   
   .dots button.active {
     background-color: #333;
   }
-
-  .carouselCustom::-webkit-scrollbar {
-    width: 0.1rem;
-    background-color: transparent;
-}
-.carouselCustom::-webkit-scrollbar-thumb {
-    background-color: transparent;
-}

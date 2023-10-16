@@ -8,89 +8,15 @@
   src: url('/LendwithCare/s/sfsites/c/resource/SiteFonts/SiteFonts/HelveticaNeueCyr-Roman.woff') format('woff');
   
 }
-
+/*@font-face {
+  font-family: 'Helvetica Neue Bold Pro';
+  src: url('/s/sfsites/c/resource/SiteFonts/SiteFonts/HelveticaNeueProBold.woff') format('woff');
+  
+}*/
 @font-face {
   font-family: 'Helvetica Neue Bold Pro';
   src: url('/LendwithCare/s/sfsites/c/resource/SiteFonts/SiteFonts/HelveticaNeueProBold.woff') format('woff');
   
-}
-.custom-combobox {
-  border-radius: 4px;
-  padding: 4px;
-  display: inline-block;
-  width: 100%;
-}
-.custom-select {
-  border: 2px solid #002A3A; /* Adjust the color and width as needed */
-  width: 100%; /* Adjust the width as needed */
-  padding: 8px;
-  font-family: 'Helvetica Neue Bold Pro';
-  
-  font-size: 16px;
-  line-height: 21px;
-  border-radius: 4px;
-  background-color: #ffffff;
-}
-.CarouselAddtocartButton{
-  border:none;
-  background: #FEBE10;
-  border-style: none;
-  border-radius: 4px;
-  margin: 14px 0px 10px 0px;
-  padding:10px;
-  width: -webkit-fill-available;
-  font-size:13px;
-  
-     line-height: 16px;
-  font-family: 'Helvetica Neue Bold Pro';
-  height: 35px;
-}
-.CarouselAddtocartButton:hover{
-  
-  background: #472175;
-  border-color: white;
-  border-style: solid;
-  border-width: 1px;
-  border-radius: 4px;
-  margin: 14px 0px 10px 0px;
-  padding:10px;
-  width: -webkit-fill-available;
-  font-size:13px;
-   line-height: 16px;
-   color: white;
-  
-  font-family: 'Helvetica Neue Bold Pro';
-  height: 35px;
-}
-.CarouselAddtocartButton:hover .filliconcolor{
-    
-  fill: white;
-}
-.Carouselvaluebottom{
-  background-color:white;
-  padding:10px;
-  border-style: none;
-  border-radius: 4px;
-  width: -webkit-fill-available;
-  margin: 10px 0px 10px 0px;
-  font-size:15px;
-  
-  line-height: 21px;
-  color: #002A3A;
-  font-family: 'Helvetica Neue Bold Pro';
-}
-.Carouselvaluebottom:hover{
-  background-color:white;
-  padding:10px;
-  border-style: none;
-  border-radius: 4px;
-  width: -webkit-fill-available;
-  margin: 10px 0px 10px 0px;
-  font-size:15px;
-  
-  line-height: 21px;
-  font-family: 'Helvetica Neue Bold Pro';
-  color: #002A3A;
 }
 .header{
     display: flex;
@@ -208,6 +134,10 @@
 .bodyBackground{
     background: linear-gradient(205.75deg, #422371 0%, #163B54 100%);
 }
+.bodyBackground1{
+    background: linear-gradient(205.75deg, #2A3061 20%, #193956 50%);
+    height: 200px;
+}
 .howItWorkSection{
     color: white;
 }
@@ -299,7 +229,7 @@ button {
 .section-discription {
     font-family: 'Helvetica Neue Bold Pro';
     font-style: normal;
-    font-size: 26px;
+    font-size: 20px;
     line-height: 32px;
     color: #FFFFFF;
     text-align: center;
@@ -1494,8 +1424,26 @@ html {
 /*Media Queries - Mobile Responsive-Starts*/
 
 @media only screen and (max-width: 600px) {
-  .ourLoansHeadings{
+  .displayNavigation{
+    display: inline-flex;
+    justify-content:center;
+    margin-top:40px;
+    width: 100%;
+  }
+    .ourImpactHeading{
     text-align: left;
+  }
+  .onlyForMobile{
+    display: block;
+  }
+  .onlyForDesktop{
+    display: none;
+  }
+  .bodyBackground1{
+    background: #193956;
+    height: 320px;
+    padding: 30px 0px 10px 0px;
+    margin-top: -10px;
   }
       .bynumbercontentsUpdated{
         font-size: 14px;
@@ -1546,7 +1494,6 @@ display: none;
 .CheckImage{
   height: 40px;
   align-self: center;
-  //padding-left: 100px;
 }
 .reviewer-name, .reviewer-position {
     font-family: 'Sketchetik Fill Bold';
@@ -1602,8 +1549,6 @@ display: none;
     line-height: 50px;
     color: #FFFFFF;
     text-align: left;
-	//display: grid;
-	//margin-left: -9px;
 }
 .section-heading-Banner {
     font-family: 'Sketchetik Fill Bold';
@@ -1650,8 +1595,8 @@ display: none;
 }
 .carouselImpact {
     position: relative;
-    overflow: hidden;
-	margin: -60px 10px 10px 10px;
+    overflow: auto;
+	margin-top: -125px;
 }
 .sliderImpact {
     display: flex;
@@ -1661,6 +1606,7 @@ display: none;
 .carouselCustom {
     position: relative;
     overflow: auto;
+	margin: 10px 10px 10px 10px;
 }
 .sliderCustom {
     display: flex;
@@ -1688,8 +1634,26 @@ display: none;
 }
 }
 @media only screen and (min-width: 600px) {
-  .ourLoansHeadings{
+  .displayNavigation{
+    display: inline-flex;
+    justify-content:center;
+    margin-top:40px;
+    width: 100%;
+  }
+    .ourImpactHeading{
     text-align: left;
+  }
+  .onlyForMobile{
+    display: block;
+  }
+    .onlyForDesktop{
+    display: none;
+  }
+    .bodyBackground1{
+    background: #193956;
+    height: 270px;
+    padding: 30px 0px 10px 0px;
+    margin-top: -10px;
   }
       .bynumbercontentsUpdated{
         font-size: 14px;
@@ -1718,7 +1682,6 @@ display: none;
   .pad{
   padding-left: 10%;
   padding-right: 10%;
-  
 }
   .browse-project-detail{
     text-align: center;
@@ -1776,7 +1739,6 @@ display: none;
 .CheckImage{
   height: 40px;
   align-self: center;
-  //padding-left: 100px;
 }
 .single-testimonial {
         text-align: center !important;
@@ -1813,8 +1775,8 @@ display: none;
 }
  .carouselImpact {
     position: relative;
-    overflow: hidden;
-	margin: -60px 10px 10px 10px;
+    overflow: auto;
+	margin-top: -100px;
 }
 .sliderImpact {
     display: flex;
@@ -1824,6 +1786,7 @@ display: none;
 .carouselCustom {
     position: relative;
     overflow: auto;
+	margin: 10px 10px 10px 10px;
 }
 .sliderCustom {
     display: flex;
@@ -1865,9 +1828,25 @@ display: none;
 }
 }
 @media only screen and (min-width: 768px) {
-  .ourLoansHeadings{
+  .displayNavigation{
+    display: inline-flex;
+    justify-content:center;
+    margin-top:40px;
+    width: 100%;
+  }
+    .ourImpactHeading{
     text-align: center;
   }
+  .onlyForMobile{
+    display: block;
+  }
+    .onlyForDesktop{
+    display: none;
+  }
+  .bodyBackground1{
+    background: linear-gradient(205.75deg, #2A3061 20%, #193956 50%);
+    height: 250px;
+}
         .bynumbercontentsUpdated{
         font-size: 20px;
         font-family: 'Helvetica Neue Bold Pro';
@@ -1960,8 +1939,8 @@ display: none;
 }
 .carouselImpact {
     position: relative;
-    overflow: hidden;
-	margin: -60px 60px 60px 60px;
+    overflow: auto;
+	margin-top: -100px;
 }
 .sliderImpact {
     display: flex;
@@ -1998,9 +1977,25 @@ display: none;
 }
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
-  .ourLoansHeadings{
+  .displayNavigation{
+    display: inline-flex;
+    justify-content:center;
+    margin-top:40px;
+    width: 100%;
+  }
+    .ourImpactHeading{
     text-align: center;
   }
+  .onlyForMobile{
+    display: none;
+  }
+    .onlyForDesktop{
+    display: flex;
+  }
+  .bodyBackground1{
+    background: linear-gradient(205.75deg, #2A3061 20%, #193956 50%);
+    height: 250px;
+}
           .bynumbercontentsUpdated{
         font-size: 20px;
         font-family: 'Helvetica Neue Bold Pro';
@@ -2094,8 +2089,8 @@ display: none;
 }
 .carouselImpact {
     position: relative;
-    overflow: hidden;
-	margin: -60px 60px 60px 0px;
+    overflow: auto;
+	margin-top: -100px;
 }
 .sliderImpact {
     display: flex;
@@ -2131,9 +2126,25 @@ display: none;
 }
 }
 @media only screen and (min-width: 1200px) {
-  .ourLoansHeadings{
+   .displayNavigation{
+    display: inline-flex;
+    justify-content:center;
+    margin-top:40px;
+    width: 100%;
+  }
+    .ourImpactHeading{
     text-align: center;
   }
+  .onlyForMobile{
+    display: none;
+  }
+  .onlyForDesktop{
+    display: flex;
+  }
+  .bodyBackground1{
+    background: linear-gradient(205.75deg, #2A3061 20%, #193956 50%);
+    height: 250px;
+}
           .bynumbercontentsUpdated{
         font-size: 20px;
         font-family: 'Helvetica Neue Bold Pro';
@@ -2227,8 +2238,8 @@ display: none;
 }
 .carouselImpact {
     position: relative;
-    overflow: hidden;
-	margin: -60px 60px 60px 0px;
+    overflow: auto;
+	margin-top: -100px;
 }
 .sliderImpact {
     display: flex;
@@ -2263,10 +2274,36 @@ display: none;
   display: none;
 }
 }
+@media only screen and (min-width: 1435px){
+  .displayNavigation{
+    display: inline-flex;
+    justify-content:center;
+    margin-top:40px;
+  }
+  .pad{
+  padding-left: 10%;
+  padding-right: 10%;
+}
+}
 @media only screen and (min-width: 1500px) {
-  .ourLoansHeadings{
+   .displayNavigation{
+    display: inline-flex;
+    justify-content:center;
+    margin-top:40px;
+  }
+  .ourImpactHeading{
     text-align: center;
   }
+  .onlyForMobile{
+    display: none;
+  }
+  .onlyForDesktop{
+    display: flex;
+  }
+    .bodyBackground1{
+    background: linear-gradient(205.75deg, #2A3061 20%, #193956 50%);
+    height: 250px;
+}
           .bynumbercontentsUpdated{
         font-size: 20px;
         font-family: 'Helvetica Neue Bold Pro';
@@ -2313,11 +2350,12 @@ text-align:  left;
 .ImagesMob{
   display: none;
 }
-.pad{
+  .pad{
   padding-left: 10%;
   padding-right: 10%;
 }
 }
+
 
 /*Media Queries - Mobile Responsive-Ends*/
 
@@ -2326,10 +2364,12 @@ text-align:  left;
 
 .slides {
     flex: 0 0 calc(100% / 4); /* Adjust the percentage value based on the number of visible cards */
-   min-width: 282px;/*  Adjust the percentage value based on the number of visible cards */
+   /* min-width: calc(100% / 4);  Adjust the percentage value based on the number of visible cards */
     background-color: #F3F0ED;
     border-radius: 5px;
-	margin-right: 10px;
+	margin: 10px;
+  min-width: 310px;
+  min-height: 480px;
 }
 
 .controls {
@@ -2410,10 +2450,10 @@ text-align:  left;
     background: none;
     border-radius: 23px;
     border-width: 2px;
-    width: max-content;
-    font-size: 12px;
-    padding: 2.5px 20px 2px 20px;
-    /*margin-bottom: 20px;*/
+    width: 100px;
+    font-size: 10px;
+    padding: 2px;
+    margin-bottom: 20px;
     border-style: solid;
     color: #002A3A;
     border-color: #002A3A;
@@ -2423,7 +2463,6 @@ text-align:  left;
   line-height: 21px;
   color: #002A3A;
   font-family: 'Helvetica Neue Bold Pro';
-  padding: 10px 15px;
 }
 .AddTocarttButtonsYellow{
   background-color:#FEBE10; 
@@ -2466,21 +2505,17 @@ text-align:  left;
     font-weight: 800;
     margin-bottom: 10px;
     color: #002A3A;
-    /*height: 55px;*/
 }
 .carPara{
   margin-bottom: 10px;
   font-family: 'Helvetica Neue Regular';
   color: #002A3A;
-  min-height: 72px;
 }
 .progressBar {
-  width: auto;
+  width: 100%;
   height: 10px;
   background-color: #ffffff;
   border-radius: 5px;
-  margin-left: 10px;
-  margin-right: 10px;
   padding: 0.5px;
 }
 
@@ -2491,7 +2526,9 @@ text-align:  left;
 }
 .progressBarInner {
   height: 50%;
+  background-color: #ffd700; 
   border-radius: 5px;
+  width: 50%; 
   margin: 2.5px;
 }
 
@@ -2501,10 +2538,10 @@ text-align:  left;
 
 .slide {
     flex: 0 0 calc(100% / 4); /* Adjust the percentage value based on the number of visible cards */
-    min-width: calc(100% / 4);/*  Adjust the percentage value based on the number of visible cards */
+    min-width: 282px; /* Adjust the percentage value based on the number of visible cards - min-width: 311px;*/
     background-color: #F3F0ED;
     border-radius: 5px;
-	margin-right: 10px;
+    margin-right: 10px;
 }
 
 .controls {
@@ -2525,34 +2562,30 @@ text-align:  left;
 }
 
 
-
-
-
-
 .HeadImageImpact{
     height: 150px;
-    margin: 5px;
+    margin: 20px;
     border-radius: 5px;
 }
 .CarContentImpact{
-  margin: 15px;
+  margin: 20px;
 }
 .carTitleImpact{
   font-family: 'Sketchetik Fill Bold';
-    font-size: 24px;
+    font-size: 23px;
     line-height: 26px;
     font-weight: 800;
     margin-bottom: 10px;
     color: #002A3A;
-    min-height: 75px;
+    height: 75px;
 }
 .carParaImpact{
-  padding-bottom: 50px;
   font-family: 'Helvetica Neue Regular';
   font-size: 12px;
   line-height: 16px;
   font-weight: 100;
   color: #002A3A;
+  min-height: 72px;
 }
 .locastionsImpact{
   display: inline-flex;
@@ -2560,17 +2593,15 @@ text-align:  left;
 }
 .carButtonImpact{
     background: #FEBE10;
-    border-radius: 2px;
-    width: 280px;
+    border-radius: 2px; /*width: 280px;*/
   font-size: 16px;
   line-height: 16px;
     height: 35px;
-    margin-bottom: 20px;
     bottom: 0;
-    position: absolute;
     border-Style: None;
     font-family: 'Helvetica Neue Bold Pro';
     color: #002A3A;
+    width: -webkit-fill-available;
 }
 .dotClass{
     height: 8px;
@@ -2649,7 +2680,7 @@ text-align:  left;
 
 .container {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: repeat(2, 1fr);
   grid-gap: 10px;
 }
 
@@ -2658,7 +2689,8 @@ text-align:  left;
   border-radius: 5px;
   font-size: 14px;
   font-weight: 800;
-  width: auto;
+  padding: 14px;
+  width: 100%;
 }
 
 
@@ -2693,10 +2725,16 @@ text-align:  left;
   justify-content: flex-end;
   height: 300px; /* Set the height of the container to your desired height */
 }
-.carouselCustom::-webkit-scrollbar {
+.grid-cardcontainer {
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  gap: 10px 20px;
+  padding: 10px;
+}
+.carouselImpact::-webkit-scrollbar {
     width: 0.1rem;
     background-color: transparent;
 }
-.carouselCustom::-webkit-scrollbar-thumb {
+.carouselImpact::-webkit-scrollbar-thumb {
     background-color: transparent;
 }

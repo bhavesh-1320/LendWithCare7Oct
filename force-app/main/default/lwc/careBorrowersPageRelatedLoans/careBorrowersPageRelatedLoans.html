@@ -34,13 +34,13 @@
                             <div class="slide-content">
                   <div class="ImageDiv" style={item.imageUrl}></div>
                        <div class="BottomDiv ">
-                    <div style="display:block;width:100%;">
+                    <div style="display:block;width:-webkit-fill-available;margin:0px 10px 0px 10px;">
                     <div class="progressBar">
                       <div class="progressBarInner" style={item.progressStyle}></div>
                     </div>
-                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 80%;">
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
                     
-                      <p style="color:white;width:%;margin-left:10px">${item.Lent} Lent</p>
+                      <p style="color:white;width:%;">${item.Lent} Lent</p>
                       <p style="color:white;display:flex;justify-content:right;">{item.Goal} Goal</p>
                     
                     </div>
@@ -48,12 +48,15 @@
                   </div>
                                 <!--<img src={item.imageUrl} alt={item.title} />-->
                   <div class="CarContent">
-                                <h3 style="height:35px" class="carTitle">{item.title}</h3>
+                                <h3 style="min-height:35px" class="carTitle">{item.title}</h3>
                     <div class="locastions">
-                      <div><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24">
-                        <path d="M12 2C8.13 2 5 5.13 5 9c0 4.25 6.75 12 7 12s7-7.75 7-12c0-3.87-3.13-7-7-7zm0 9.5A2.5 2.5 0 1 1 14.5 9 2.5 2.5 0 0 1 12 11.5z"/>
-                      </svg></div>
-                     <div> <p style="font-weight:800">{item.location}</p></div>
+                  <div><svg xmlns="http://www.w3.org/2000/svg" style="margin-right: 4px;" width="16" height="16" fill="#002A3A"
+                      class="bi bi-geo-alt" viewBox="0 0 16 16">
+                      <path
+                        d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z" />
+                      <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                    </svg></div>
+                     <div> <p style="font-weight:800;margin-top:2px;font-family: 'Helvetica Neue Bold Pro';">{item.location}</p></div>
                     </div>
                                 <p style="height: 70px;" class="carPara">{item.description}</p>
                   <button class="carButton">{item.Button}</button><br>
@@ -106,18 +109,23 @@
                     <!--<div class="dots">
                         
                     </div>-->
-                    <div class="dots"> <!-- style="margin-top:5px;margin-left:20px" -->
-                      <template if:true={displayPreviousButtom}>
-                        <button class="NaviButton" onclick={previousSlide} style="background:none;margin-top:-17px" >&#10094;</button>
-                      </template> 
-                      <template for:each={carouselItems} for:item="item" for:index="index">
-                        <span key={item.id} class="dotClass" onclick={handleDotClick} data-index={index} ></span> <!--style="background: #7F949C;width: 5px;height: 12px;border-style: none;border-radius: 50px;margin:5px;"-->
-                      </template>
-                      <template if:true={displayNextButtom}>
-                        <button class="NaviButton" onclick={nextSlide} style="background:none;margin-top:-17px" >&#10095;</button>
-                      </template>  
-                    </div>
+
                 </div>
+            </div>
+            <div style="width:100%;display:flex;justify-content:center;"> 
+						<div class="dots">
+							<!-- style="margin-top:5px;margin-left:20px" -->
+							<template if:true={displayPreviousButtom}>
+								<button class="NaviButton" onclick={previousSlide} style="background:none;" >&#10094;</button>
+							</template>
+							<template for:each={carouselItems} for:item="item" for:index="index">
+								<span key={item.id} class="dotClass" onclick={handleDotClick} data-index={index} ></span>
+								<!--style="background: #7F949C;width: 5px;height: 12px;border-style: none;border-radius: 50px;margin:5px;"-->
+							</template>
+							<template if:true={displayNextButtom}>
+								<button class="NaviButton" onclick={nextSlide} style="background:none;" >&#10095;</button>
+							</template>
+						</div>
             </div>
             </lightning-layout-item>
           </template>

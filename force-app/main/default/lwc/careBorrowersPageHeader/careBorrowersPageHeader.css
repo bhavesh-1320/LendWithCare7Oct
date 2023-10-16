@@ -319,7 +319,7 @@
     margin-top: 10px;
   }
   .progressBar {
-    width: 98%;
+    width: 100%;
     height: 10px;
     background-color: #ffffff;
     border-radius: 5px;
@@ -376,6 +376,10 @@
     padding:5px;
   }
   @media only screen and (max-width: 600px){
+    
+  .BorrowerspageHeader{
+    margin:20px 0px 20px 0px;
+  }
     .pad{
       padding-left: 20px;
       padding-right: 20px;
@@ -442,6 +446,9 @@
   }
   
   @media only screen and (min-width: 600px){
+      .BorrowerspageHeader{
+    margin:20px 0px 20px 0px;
+  }
     .pad{
       padding-left: 20px;
       padding-right: 20px;
@@ -508,6 +515,9 @@
   }
   
   @media only screen and (min-width: 768px){
+      .BorrowerspageHeader{
+    margin:20px 0px 20px 0px;
+  }
     .pad{
       padding-left: 10%;
       padding-right: 10%;
@@ -574,6 +584,9 @@
   }
   
   @media only screen and (min-width: 992px){
+      .BorrowerspageHeader{
+    margin:20px;
+  }
     .pad{
       padding-left: 10%;
       padding-right: 10%;
@@ -641,6 +654,9 @@
   }
   
   @media only screen and (min-width: 1200px){
+      .BorrowerspageHeader{
+    margin:20px;
+  }
     .pad{
       padding-left: 10%;
       padding-right: 10%;
@@ -707,6 +723,9 @@
   }
   
   @media only screen and (min-width: 1500px){
+      .BorrowerspageHeader{
+    margin:20px;
+  }
     .pad{
       padding-left: 10%;
       padding-right: 10%;
@@ -823,7 +842,7 @@
     font-family: 'Helvetica',sans-serif;
   }
   .progressBar {
-    width: 80%;
+    width: 100%;
     height: 10px;
     background-color: #ffffff;
     border-radius: 5px;

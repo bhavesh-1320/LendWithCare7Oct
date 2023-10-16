@@ -60,7 +60,7 @@ export default class CareBorrowersPageHeader extends LightningElement {
         //console.log('LoanId:');
         const tempId = 'loanId';//id
         this.loanId = atob(this.getUrlParamValue(window.location.href, tempId));
-        //console.log( this.loanId);
+        console.log('this.loanId -- ', this.loanId);
         this.spin = true;
         getLoanDetails({loanId:this.loanId})
         .then( result => {
@@ -127,21 +127,22 @@ export default class CareBorrowersPageHeader extends LightningElement {
                 }
                 this.Loan_Type__c=loan.Loan_Type__c;
                 this.Loan_Description__c=loan.LWC_Loan_Description__c != undefined && loan.LWC_Loan_Description__c !='' ? loan.LWC_Loan_Description__c:loan.Loan_Description__c;
-                this.Amount_Funded__c=loan.Amount_Funded__c!=undefined?loan.Amount_Funded__c : 0;
+                this.Amount_Funded__c=loan.Amount_Funded__c!=undefined?parseFloat(loan.Amount_Funded__c).toFixed(2) : 0;
                 console.log('131-->',this.Amount_Funded__c);
                 this.Loan_Term_Months__c=loan.Loan_Term_Months__c!=undefined?loan.Loan_Term_Months__c+' months':'';
                 this.Loan_Schedule__c=loan.Loan_Schedule__c;
-                this.Published_Amount_AUD__c=loan.Published_Amount_AUD__c!=undefined?'$'+Number(loan.Published_Amount_AUD__c)+' Goal' : '';
+                this.Published_Amount_AUD__c=loan.Published_Amount_AUD__c!=undefined?'$'+parseFloat(loan.Published_Amount_AUD__c).toFixed(2)+' Goal' : '';
                 if( loan.Stage__c=='Active' || loanAmtLeftForFunding==0 ){
                     this.showCart = false;
                 }
                 this.Funded__c = loan.Funded__c;
                 var len = this.Funded__c!= undefined ? this.Funded__c : 0;
+                var progressLength = (len >= 98.70) ? 99.00 : len;
                 if( this.Funded__c!= undefined && this.Funded__c > 85 ){
                     len-=1;
-                    this.progressStyle = 'background-color: #2a871f; width:'+len+'%;';
+                    this.progressStyle = 'background-color: #2a871f; width:'+progressLength+'%;';
                 } else{
-                    this.progressStyle = 'background-color: #ffd700;width:'+len+'%;';
+                    this.progressStyle = 'background-color: #ffd700;width:'+progressLength+'%;';
                 }
                 if( loan.Repayment_Schedules__r!= undefined && loan.Repayment_Schedules__r.length>0 ){
                     this.showRepaySchedules = true;
@@ -171,15 +172,16 @@ export default class CareBorrowersPageHeader extends LightningElement {
     }
 
     handleProgressChange( event ){
-        this.Amount_Funded__c = event.detail.amtFunded;
+        //this.Amount_Funded__c = event.detail.amtFunded;
         // this.Amount_Funded__c = this.Amount_Funded__c!=undefined?this.Amount_Funded__c:0;
         console.log('176-->',this.Amount_Funded__c);
         var len = event.detail.progress;
+        var progressLength = (len >= 98.70) ? 99.00 : len;
         if( len > 85 ){
             len-=1;
-            this.progressStyle = 'background-color: #2a871f; width:'+len+'%;';
+            this.progressStyle = 'background-color: #2a871f; width:'+progressLength+'%;';
         } else{
-            this.progressStyle = 'background-color: #ffd700;width:'+len+'%;';
+            this.progressStyle = 'background-color: #ffd700;width:'+progressLength+'%;';
         }
     }
 
