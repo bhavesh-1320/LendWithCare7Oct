@@ -47,6 +47,7 @@ import getPaypalPaymentLink from '@salesforce/apex/PaypalGetPaymentLink.getPaypa
 import capturePayPalOrder from '@salesforce/apex/PaypalGetPaymentLink.capturePayPalOrder';
 import processPayPal from '@salesforce/apex/StripePaymentController.processPayPal';*/
 import getAlert from '@salesforce/apex/LWC_AllLoansCtrl.getAlert';
+import getContent from '@salesforce/apex/CareHomePageCtrl.getContent';
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 // Define a debounce function
@@ -60,6 +61,8 @@ const debounce = (func, delay) => {
     };
 };
 export default class CareNavBar extends LightningElement {
+    changeChampionWindowBody;
+    nboxTitle;
     gotoContactUsPage() {
         window.location.assign('carecontactus');
     }
@@ -182,7 +185,7 @@ export default class CareNavBar extends LightningElement {
     showErrorMessage = false;
     cookieVal = [];
     isGuest = true;
-    //care cart 	
+    //care cart     
     @api loanidfromparent = [];
     @api carecart = false;
     @api cartmodules;
@@ -231,7 +234,7 @@ export default class CareNavBar extends LightningElement {
     amountFromParent = "50";
     @api amounttocart;
     @track setTime = 0;
-    @track timeDuration = 2700000;//2700000	
+    @track timeDuration = 2700000;//2700000 
     @track timerInterval;
     defaultDonationPercentage;
     totalAmount = 0;
@@ -488,6 +491,7 @@ export default class CareNavBar extends LightningElement {
         } catch (er) {
             console.log('eror from try catch rd ', er)
         }
+        this.rdAmount = this.rdData['npe03__Amount__c'];
         this.calculateTotalSelectedAmount();
 
     }
@@ -1075,7 +1079,6 @@ export default class CareNavBar extends LightningElement {
                     .reduce((total, item) => total + item.selectedAmount, 0);
 
             }
-            //console.log('currentCartItemsTotalAmount ',currentCartItemsTotalAmount);
             this.testTotal = currentCartItemsTotalAmount + (currentCartItemsTotalAmount) * Number(event.target.value) / 100
                 + this.topUpAmount + (this.rdData['npe03__Amount__c'] ? Number(this.rdData['npe03__Amount__c']) : 0);
             /* + (this.isAdded ? this.amountLeftToFullyFunded : 0);*/
@@ -1348,14 +1351,15 @@ export default class CareNavBar extends LightningElement {
 
     }
     closeCartPage() {
-        this.setPaymentMethods();
+        
         this.paymentToken = {};
         this.rdToken = {};
         this.createTokenForRd = false;
         this.cardPayment = false;
         this.paypalPayment = false;
         this.googlePayment = false;
-        this.processingAmount = this.testTotal;
+        this.setPaymentMethods();
+        this.processingAmount = parseFloat(this.testTotal).toFixed(2);
         if (this.currentStep == "2") {
             if (this.isGuest) {
                 this.currentStep = "1";
@@ -1406,10 +1410,10 @@ export default class CareNavBar extends LightningElement {
             this.thirdPage = true;
             this.fourthPage = false;
             this.currentStep = "3";
-            this.showCreditCard = this.isshowCreditCard;
+            /*this.showCreditCard = this.isshowCreditCard;
             this.showPaypal = this.isshowPaypal;
             this.showApplePay = this.isshowApplePay;
-            this.showGooglePay = this.isshowGooglePay;
+            this.showGooglePay = this.isshowGooglePay;*/
             this.LenderbalanceChecked = false;
         }
         else if (this.currentStep == "5") {
@@ -1418,10 +1422,10 @@ export default class CareNavBar extends LightningElement {
                 this.fourthPage = false
                 this.currentStep = "3";
                 this.fifthPage = false;
-                this.showCreditCard = this.isshowCreditCard;
+                /*this.showCreditCard = this.isshowCreditCard;
                 this.showPaypal = this.isshowPaypal;
                 this.showApplePay = this.isshowApplePay;
-                this.showGooglePay = this.isshowGooglePay;
+                this.showGooglePay = this.isshowGooglePay;*/
                 this.LenderbalanceChecked = false;
             }
             else {
@@ -2258,104 +2262,88 @@ console.log('2332');
         this.handleCC();
         this.testTimer();
         this.handleVD();
-        /*const tempId1 = 'token';
-        const encodedValue1 = this.getUrlParamValue(window.location.href, tempId1);
-        if (encodedValue1) {
-            this.token = decodeURIComponent(encodedValue1);
-        }
-        const tempId2 = 'CartModules';
-        const encodedValue2 = this.getUrlParamValue(window.location.href, tempId2);
-        if (encodedValue2) {
-            this.CartModules = decodeURIComponent(encodedValue2);
-        }
-        const tempIdcart = 'carecart';
-        const encodedValueCart = this.getUrlParamValue(window.location.href, tempIdcart);
-        if (encodedValueCart) {
-            this.carecart = decodeURIComponent(encodedValueCart);
-        }
-        const tempId3 = 'accesstoken';
-        const encodedValue3 = this.getUrlParamValue(window.location.href, tempId3);
-        if (encodedValue3) {
-            this.accesstoken = decodeURIComponent(encodedValue3);
-
-        }
-        const tempId4 = 'OpenThankyouPageWithNavBar';
-        const encodedValue4 = this.getUrlParamValue(window.location.href, tempId4);
-        if (encodedValue4) {
-            this.OpenThankyouPageWithNavBar = decodeURIComponent(encodedValue4);
-        }
-        const tempId5 = 'usedLenderBalance';
-        const encodedValue5 = this.getUrlParamValue(window.location.href, tempId5);
-        if (encodedValue5) {
-            this.usedLenderBalanceToSend = decodeURIComponent(encodedValue5);
-            console.log('usedLenderBalanceToSend: ' + this.usedLenderBalanceToSend);
-        }
-        let transactionIds = [];
-        var paymentArrays = localStorage.getItem('myArray');
-        console.log('paymentArrays: ' + paymentArrays);
-        console.log('transactionIds: before loans ' + transactionIds);
-        if (paymentArrays != undefined && paymentArrays != '' && paymentArrays != 'undefined') {
-            paymentArrays = JSON.parse(paymentArrays);
-            transactionIds = paymentArrays.map(item => item.TransactionId).filter(Boolean);
-            console.log('paymentArrays: transactionIds ',transactionIds)
-        }
-        if (this.TopupTransactionId != null) {
-            transactionIds.push(this.TopupTransactionId);
-        }
-        let vdtranId = localStorage.getItem('vdId');
-        if (vdtranId != '' && vdtranId != null && vdtranId != undefined && vdtranId != 'null'
-            && vdtranId.length >= 15 && vdtranId.length <= 18) {
-            transactionIds.push(vdtranId);
-        }
-        console.log('ConnectedIds: after loans ' + transactionIds);
-        if (this.accesstoken != null && this.token != null && transactionIds != null) {
-            capturePayPalOrder({ accesstoken: this.accesstoken, orderId: this.token })
-                .then(result => {
-                    console.log('OrderStatus: ', JSON.stringify(result))
-                    if (result != null || result.length != 0) {
-                        this.paymentDetailPaypal = {
-                            object: 'paypal',
-                            id: result.id
-                        }
-                        console.log('paymentDetailPaypal: ' + JSON.stringify(this.paymentDetailPaypal));
-                        let request = {
-                            contactId: result.referenceId,
-                            paymentResponse: JSON.stringify(this.paymentDetailPaypal),
-                            transactionsIds: transactionIds.filter(id => id !== null && id !== undefined && id != 'null'),
-                            usedLenderBalance: this.usedLenderBalance
-                        };
-                        console.log('request: ' + JSON.stringify(request));
-                        processPayPal(request)
-                            .then(result => {
-                                console.log('SuccessPaypal: ', JSON.stringify(result))
-                                this.usedLenderBalanceToSend = 0;
-                                this.accesstoken = '';
-                                this.token = '';
-                                /*paymentArrays = [];
-                                localStorage.setItem('paymentArray', JSON.stringify(paymentArrays));
-                                this.loanidfromparent = [];
-                                localStorage.setItem('myArray', JSON.stringify(this.loanidfromparent));
-                                localStorage.setItem('isVoluntary', false);
-                                localStorage.setItem('vdId', null);
-                                localStorage.setItem('isCC', null);
-                                this.rdData['Id'] = '';
-                                this.rdData['npe03__Amount__c'] = 0;
-                                localStorage.setItem('isTopup', false);
-                                localStorage.setItem('TopupTransactionId', null);
-                                localStorage.setItem('topupAmountfromStorage', null);
-                            })
-                            .catch(error => {
-                                console.log('RecordUpdattion error: ', JSON.stringify(error))
-                            })
-                    }
-                })
-                .catch(error => {
-                    this.paymentError = this.reduceErrors(error) + ' Please select the payment method again';
-                    console.log('OrderStatus error: ', JSON.stringify(error))
-                })
-        }*/
-
+        this.getCMSContent();
     }
+    sectionName = 'Why LWC';
+    getCMSContent() {
+        getContent({ channelName: this.sectionName }).then(res => {
+            var r = JSON.parse(res);
+            //console.log(r);
+            if (r != undefined) {
+                var arr = [];
+                var i = 1;
+                for (var val of r.items) {
+                    if (val.type == 'CareAustraliaSite' && val.contentNodes.Tag != undefined) {
+
+                        if (val.contentNodes.Tag.value == 'ChangeChampionWindow') {
+                            var boxTitle = val.contentNodes.Title.value;
+                            //console.log('@@@ boxTitle part :', boxTitle);
+                            if (boxTitle != undefined) {
+                                var nboxTitle = boxTitle.split('$');
+                                var i = 0;
+                                var arr2 = [];
+                                for (var val2 of nboxTitle) {
+                                    //console.log('OUTPUT : ', val2);
+                                    var obj = {};
+                                    if (i != 0) {
+                                        obj = { 'changeColor': true, 'body': '$' + val2.substring(0, val2.indexOf(' ')) };
+                                        var obj2 = { 'changeColor': false, 'body': val2.substring(val2.indexOf(' ')) };
+                                        i++;
+                                        arr2.push(obj);
+                                        arr2.push(obj2);
+                                        continue;
+                                    } else {
+                                        obj = { 'changeColor': false, 'body': val2 };
+                                    }
+                                    i++;
+                                    arr2.push(obj);
+                                }
+                                //console.log('OBJ:', arr2);
+                                this.nboxTitle = arr2;
+                                console.log('@@@ nboxTitle', this.nboxTitle);
+                            }
+                            //console.log('@@@ body1 part:', val.contentNodes);
+                            var body = this.htmlDecode(this.htmlDecode(val.contentNodes.Body.value));
+                           
+                            if (body != undefined) {
+                                var changeChampionWindowBody = body.split('$');
+                                //console.log('@@@change champion body', changeChampionWindowBody)
+                                var i = 0;
+                                var arr3 = [];
+                                for (var val3 of changeChampionWindowBody) {
+                                    //console.log('OUTPUT : ', val3);
+                                    var obj = {};
+                                    if (i != 0) {
+                                        obj = { 'changeColor': true, 'body': '$' + val3.substring(0, val3.indexOf(' ')) };
+                                        var obj3 = { 'changeColor': false, 'body': val3.substring(val3.indexOf(' ')) };
+                                        i++;
+                                        arr3.push(obj);
+                                        arr3.push(obj3);
+                                        continue;
+                                    } else {
+                                        obj = { 'changeColor': false, 'body': val3 };
+                                    }
+                                    i++;
+                                    arr3.push(obj);
+                                }
+                                //console.log('OBJ:', arr3);
+                                this.changeChampionWindowBody = arr3;
+
+                            }
+                            //this.boxButton = val.contentNodes.ButtonName.value;
+                            //console.log('@@@ ChangeChampionWindow button part :', this.boxButton);
+
+                        }
+
+                    }
+                }
+            }
+        }).catch(e => {
+            console.log('OUTPUT : error ', e.toString());
+            console.log('OUTPUT : error ', e);
+        })
+    }
+
     handleVD() {
         let isVD = localStorage.getItem('isVoluntary');
         console.log('isVoluntary ', isVD)
@@ -2494,11 +2482,13 @@ console.log('2332');
         this.calculateTotalSelectedAmount();
 
     }
+    contactChampion = false;
     currentUser() {
         getCurrentUser()
             .then(result => {
                 console.log('logged in user ', result.ContactId)
                 this.contactid = result.ContactId;
+                this.contactChampion = result.Contact!= undefined ? result.Contact.Champion__c : '';
                 console.log('1535 navbar page ', this.contactid);
             })
             .catch(error => {
@@ -2635,10 +2625,12 @@ console.log('2332');
             'CareHelpcentre': currentPageUrl2 + 'carehelpcentre',
             'CareDashboard': currentPageUrl2 + 'login',
             'login': currentPageUrl2 + 'login',
-            'createAccount': createAcc
+            'createAccount': createAcc,
+            'cd':currentPageUrl2 + 'caredashboard'
         };
-        if (window.location.href == this.navComponentLinks['CareDashboard']) {
+        if (window.location.href == this.navComponentLinks['cd']) {
             var sessionVal = sessionStorage.getItem('UniqueValue');
+            console.log('Dash:',sessionVal);
             if (sessionVal != '' && sessionVal != ' ' && sessionVal != undefined && sessionVal == '1234') {
                 this.carecart = true;
                 this.CartModules = true;
@@ -2902,7 +2894,6 @@ console.log('2332');
                 this.showApplePay = false;
                 this.showGooglePay = false;
                 this.LenderbalanceChecked = false;
-                console.log('2383 ')
                 this.processingAmount = parseFloat(this.topUpAmount + (this.rdData['npe03__Amount__c'] ? Number(this.rdData['npe03__Amount__c']) : 0)).toFixed(2);
                 
             }
@@ -2913,7 +2904,6 @@ console.log('2332');
                 this.showApplePay = false;
                 this.showGooglePay = false;
                 this.LenderbalanceChecked = false;
-                console.log('2383 ')
                 this.processingAmount = parseFloat(this.topUpAmount + (this.rdData['npe03__Amount__c'] ? Number(this.rdData['npe03__Amount__c']) : 0)).toFixed(2);
                 
             }
@@ -3015,7 +3005,7 @@ console.log('2332');
             else if (this.LoanAndRDAmount > this.lenderBalanceAmount && this.lenderBalanceAmount != 0) {
                 this.withLenderBalanceOnlyTemplate = false;
                 this.withLenderBalanceAndOthersTemplate = true;
-                this.remainingBalanceAmount = this.LoanAndRDAmount - this.lenderBalanceAmount;
+                this.remainingBalanceAmount = parseFloat(this.LoanAndRDAmount - this.lenderBalanceAmount).toFixed(2);
                 /*(this.rdData['npe03__Amount__c'] ? Number(this.rdData['npe03__Amount__c']) : 0)
                 - (this.LenderTopup == true? this.topUpAmount:0);*/
                 this.isRemainingBalance = true;

@@ -158,7 +158,7 @@ export default class CareAboutUs extends LightningElement {
                         }
 
                         if (val.contentNodes.Tag.value == 'Ourimpact') {
-                            var location  = val.contentNodes.Location.value;
+                            var location  = val.contentNodes.Location!=undefined?val.contentNodes.Location.value:'';
                             var body = val.contentNodes.Body.value;
                             body = this.htmlDecode(body);
                             console.log('-->',val);

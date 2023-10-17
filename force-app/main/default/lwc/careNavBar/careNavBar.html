@@ -114,6 +114,9 @@
           <p class="ErrorMessage">Please enter a Value</p>
         </template>
     </div>
+     <div class="showmorebutton">
+      <button class="carButtonImpact1 slds-align_absolute-center" style="border:none;" onclick={searchLoans}>Show results</button>
+    </div>
     
   </div>
   
@@ -301,18 +304,18 @@
 					</div>
 					<div><a onclick={closechangeChampionTemplate} class="slds-float_right">&#10006;</a></div>
 				</div>
+        <!--<p class="CartParagraph" style="color:white;margin-top:10px">Every <span style="color:#FEBE10">$1</span> that
+					you donate<br>can generate <span style="color:#FEBE10">$5</span> in loans.</p>-->
         
 				<p class="CartParagraph" style="color:#002A3A;margin-top:10px;font-family: 'Helvetica Neue Bold';">  <!-- style="color:white;margin-top:10px" -->
           <template for:each={nboxTitle} for:item="nt">
 
 			<template if:true={nt.changeColor}>
-				<span key={nt.body} style="color:#E4761E">{nt.body}</span>
+				<span class="CartParagraph" key={nt.body} style="color:#FEBE10;margin-top:10px">{nt.body}</span>
 			</template>
 			<template if:false={nt.changeColor}>
-				<span key={nt.body}>{nt.body}</span>
+				<span class="CartParagraph" style="color:white;margin-top:10px" key={nt.body}>{nt.body}</span>
 			</template>
-	<!-- <span style="color:#E4761E">{nt.yellow}</span> {nt.black}<br>{nt.black}
-	<span style="color:#E4761E">{nt.yellow}</span> {nt.black}</p> -->
 		</template>
         </p>
 		
@@ -330,8 +333,25 @@
 				<template if:true={errorOnRDAmount}>
 					<p class="VolPara"><span style="color:red">amount should be more than $ 10</span></p>
 				</template>
-				<p class="CartParagraph" style="color:white;margin-top:5px">A <span style="color:#FEBE10">$1</span> you donate
-					will generate <span style="color:#FEBE10">$540</span> in loans.</p>
+				<!--<p class="CartParagraph" style="color:white;margin-top:5px">A <span style="color:#FEBE10">$1</span> you donate
+					will generate <span style="color:#FEBE10">$540</span> in loans.</p>-->
+          <p class="CartParagraph"
+		style="color:#002A3A;margin-top:5px;font-family: 'Helvetica Neue Bold';font-size:14px;line-height:17px;">
+		<template for:each={changeChampionWindowBody} for:item="cc">
+			<template if:true={cc.changeColor}>
+				<span key={cc.body} class="CartParagraph" style="color:#FEBE10;margin-top:10px">
+					<lightning-formatted-rich-text value={cc.body}>
+					</lightning-formatted-rich-text>
+				</span>
+			</template> 
+			<template if:false={cc.changeColor}>
+				<span class="CartParagraph" style="color:white;margin-top:10px" key={cc.body}>
+					<lightning-formatted-rich-text value={cc.body}>
+					</lightning-formatted-rich-text>
+				</span>
+			</template>
+		</template>
+	</p>
 		
 			</div>
 		</template>
@@ -444,15 +464,9 @@ Please reduce the top-up amount or <a onclick={gotoContactUsPage} style="color:w
 		</template>
 
     <lightning-layout multiple-rows>
-      <div class="displayTotal">
-            <lightning-layout-item size="12" padding="around-small" small-device-size="6" 
-            medium-device-size="6" large-device-size="6" >
-              <div class="slds-float_left"><h3  style="font-size:24px;color:#002A3A;font-weight:800;font-family:'Helvetica Neue Bold';line-height:32px;">Total</h3></div>
-            </lightning-layout-item>
-            <lightning-layout-item size="12" padding="around-small" small-device-size="6" 
-            medium-device-size="6" large-device-size="6">
-              <div class="slds-float_right"><h3 style="font-size:24px;color:#002A3A;font-weight:800;font-family:'Helvetica Neue Bold';line-height:32px;">$ {testTotal}</h3></div><!-- {totalCartAmount} {totalCartAmount} -->
-            </lightning-layout-item>
+      <div class="grid-containerdisplaytotal">
+        <div><h3 style="font-size:24px;color:#002A3A;font-weight:800;font-family:'Helvetica Neue Bold';line-height:32px;float:left;">Total</h3></div>
+        <div><h3 style="font-size:24px;color:#002A3A;font-weight:800;font-family:'Helvetica Neue Bold';line-height:32px;float:right;">$ {testTotal}</h3></div>
       </div>
           <template if:true={amountZero}>
             <lightning-layout-item size="12" padding="around-small" small-device-size="12" 
@@ -788,23 +802,6 @@ Please reduce the top-up amount or <a onclick={gotoContactUsPage} style="color:w
 
   <template if:true={fourthPage}>
     <div class="search-header">
-    <!--<lightning-layout multiple-rows>
-      <lightning-layout-item size="12" padding="around-small" small-device-size="12" 
-      medium-device-size="12" large-device-size="12" >
-        <h3 style="font-weight:bold;">Postcode</h3>
-        <lightning-input type="text" variant="standard" name="name"></lightning-input>
-      </lightning-layout-item>
-      <lightning-layout-item size="12" padding="around-small" small-device-size="12" 
-      medium-device-size="12" large-device-size="12">
-        <h3 style="font-weight:bold;">Mobile</h3>
-        <lightning-input type="text" variant="standard" name="name"></lightning-input>
-      </lightning-layout-item>
-      <lightning-layout-item size="12" padding="around-small" small-device-size="12" 
-      medium-device-size="12" large-device-size="12">
-         <button class="custombuttomwithdraw" style="width: -webkit-fill-available;" onclick={gotoFifthPage}>Continue</button>
-      </lightning-layout-item>
-      
-    </lightning-layout>-->
     <div class="para2" style="padding:10px">
       <div class="form-container">
         
@@ -867,7 +864,7 @@ Please reduce the top-up amount or <a onclick={gotoContactUsPage} style="color:w
         <template if:true={changeChampionTemplate}>
           <div class="grid-container">
           <div class="slds-float_left">
-              <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;" >Changechampion Amount</p>
+              <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;" >Change champion Amount</p>
             </div>
             <div class="slds-float_right" style="display: flex;justify-content: right;">
              <p style="font-size:16px;font-family:'Helvetica Neue Regular';line-height:16px;" >$ {AddedChangeChampionAmount}</p>
@@ -952,9 +949,13 @@ Please reduce the top-up amount or <a onclick={gotoContactUsPage} style="color:w
         <h3 class="CartHeadingforthankyou">Thank you for your <span style="color:#FEBE10">contribution</span></h3>
               <p class="CartParagraphforthankyou" style="">An email will be sent containing information of your loan. Your contribution details will also be available in your user profile. If you have any questions regarding your donation feel free to email us at <a href="#" style="color:#FEBE10"><u>help@lendwithcare.com.au</u></a></p>
               <button class="custombuttomwithdrawCA" style="width: -webkit-fill-available;margin-top:20px" onclick={OpenDashboardPage}>&#x1F464;&nbsp; Go to dashboard</button>
-              <hr style="margin:4px">
-              <p class="CartParagraphforthankyou">You can help ensure the continuation of Lendwithcare for years to come by becoming a Lendwithcare Change Champion and making a regular monthly donation.</p>
-              <button class="custombuttomwithdrawCA" style="width: -webkit-fill-available;margin-top:20px" onclick={OpenHomePage}>Become a Change Champion today</button>
+              <template if:false={contactChampion}>
+                <template if:false={changeChampionTemplate}>
+                  <hr style="margin:4px">
+                  <p class="CartParagraphforthankyou">You can help ensure the continuation of Lendwithcare for years to come by becoming a Lendwithcare Change Champion and making a regular monthly donation.</p>
+                  <button class="custombuttomwithdrawCA" style="width: -webkit-fill-available;margin-top:20px" onclick={OpenHomePage}>Become a Change Champion today</button>
+                </template>
+              </template>
       </div>
   </div>
 </div>

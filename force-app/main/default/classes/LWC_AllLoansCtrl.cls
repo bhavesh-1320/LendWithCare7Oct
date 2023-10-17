@@ -378,8 +378,8 @@ public without sharing class LWC_AllLoansCtrl {
         Set<Id> loanIds = new Set<Id>();
         //System.debug( 'Cont:'+ contactid);
         List<Transaction__c> transactions = new List<Transaction__c>();
-        if( contactid == null ) transactions = [ SELECT Loan__c FROM Transaction__c WHERE Status__c = 'Completed' ];
-        else    transactions = [ SELECT Loan__c FROM Transaction__c WHERE Lender__c = :contactid AND Status__c = 'Completed' ];
+        if( contactid == null ) transactions = [ SELECT Loan__c FROM Transaction__c WHERE Status__c = 'Completed' AND Type__c='Loan' ];
+        else    transactions = [ SELECT Loan__c FROM Transaction__c WHERE Lender__c = :contactid AND Status__c = 'Completed' AND Type__c='Loan' ];
         //System.debug( 'Size:'+transactions.size() );
         for (Transaction__c trans : transactions) {
             loanIds.add(trans.Loan__c);
@@ -1294,8 +1294,8 @@ public without sharing class LWC_AllLoansCtrl {
     public static User getCurrentUser() {
         try{
             //return null;
-            return [SELECT Id, Name, Contact.Id, Contact.Name, Contact.Email FROM User WHERE Id = :UserInfo.getUserId()];
-        } catch (Exception e) {
+            return [SELECT Id, Name, Contact.Id, Contact.Name, Contact.Champion__c, Contact.Email FROM User WHERE Id = :UserInfo.getUserId()];
+        } catch (Exception e) { 
             return null;
         }
     }

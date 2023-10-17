@@ -144,9 +144,10 @@ FONT_CSS_URL = 'https://hello.mystatic/fonts.net/count/3bca71';
                         var title = this.htmlDecode(val.title);
                         var idx = val.contentNodes.SortOrder!=undefined?val.contentNodes.SortOrder.value:100;
                         title = title.length > 35? title.substring(0,35)+'...' : title;
+                        var location = val.contentNodes.Location!=undefined?val.contentNodes.Location.value:'';
                         var obj = {'title':title, 'pubDate':pubDate,'body':body, 'img':'background-image: url(\''+this.imgUrl+imgBlog+'\');background-size: cover; background-repeat: no-repeat;', 'button':val.contentNodes.ButtonName.value,
                         'button':val.contentNodes.ButtonName.value,'buttonlink':this.blogpostUrl +linkValue+ '?contentKey='+btoa(contentkeyvalue),'idx':parseInt(idx),
-                        'location': val.contentNodes.Location.value};
+                        'location': location};
                          console.log('@@@ OBJ',obj);
                         arr.push(obj);
                     } else if( val.contentNodes.Tag.value == 'OurImpact-Title' ){

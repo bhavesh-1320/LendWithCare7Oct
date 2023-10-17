@@ -1511,7 +1511,7 @@ margin: 10px 20px 10px 20px;
     margin-top: 10px;
     color: #002A3A;
     font-family: 'Helvetica Neue Bold Pro';
-    border-radius: 5px;
+    border-radius: 4px;
  }
  .ErrorMessage{
    color: red;
@@ -1610,9 +1610,7 @@ margin: 10px 20px 10px 20px;
     width: -webkit-fill-available;
     margin-top:-10px;
 }
-	.displayTotal{
-		display: inline-flex;
-	}
+
   .grid-containerVolDonation{
   display: grid;
   grid-template-columns: auto auto;
@@ -1628,6 +1626,7 @@ margin: 10px 20px 10px 20px;
 }
 
 @media only screen and (min-width: 411px) and (max-width: 600px){
+
     .PillsCardButtons1{
     padding: 10px 15px 10px 15px;
     border-radius: 30px;
@@ -1651,9 +1650,6 @@ margin: 10px 20px 10px 20px;
     color: white;
     width: -webkit-fill-available;
     margin-top:-10px;
-}
-.displayTotal{
-	display: contents;
 }
 .grid-containerVolDonation{
   display: grid;
@@ -1862,4 +1858,12 @@ margin: 10px 20px 10px 20px;
   width: -webkit-fill-available;
   padding: 10px;
 }
+}
+
+.grid-containerdisplaytotal{
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 10px 20px;
+  margin: 0px 10px 0px 10px;
+  width: 100%;
 }
